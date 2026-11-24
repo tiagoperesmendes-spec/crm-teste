@@ -1,0 +1,58 @@
+name: CI & Qualidade do CRM
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validação de Integridade e Sintaxe
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: package.json
+
+      - name: Validar Ficheiros de Configuração JSON
+        run: |
+          node -e "
+            const fs = require('fs');
+            ['package.json', 'vercel.json', 'tsconfig.json'].forEach(file => {
+              if (fs.existsSync(file)) {
+                JSON.parse(fs.readFileSync(file, 'utf8'));
+                console.log('✓ ' + file + ' é válido.');
+              }
+            });
+          "
+
+      - name: Validar Integridade do index.html
+        run: |
+          node -e "
+            const fs = require('fs');
+            const html = fs.readFileSync('index.html', 'utf8');
+            if (!html.includes('<!DOCTYPE html>')) throw new Error('index.html inválido ou sem doctype');
+            if (!html.includes('supabase')) console.warn('Atenção: Supabase client não encontrado no HTML');
+            console.log('✓ index.html íntegro (' + html.length + ' bytes)');
+          "
+
+      - name: Verificar Migrações SQL
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = 'supabase/migrations/20261117_master_schema_rls.sql';
+            if (fs.existsSync(path)) {
+              const sql = fs.readFileSync(path, 'utf8');
+              if (sql.length < 500) throw new Error('Ficheiro SQL master muito curto ou incompleto');
+              console.log('✓ Script master SQL validado (' + sql.length + ' bytes)');
+            }
+          "

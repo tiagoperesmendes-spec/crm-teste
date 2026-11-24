@@ -1,0 +1,226 @@
+const DEFAULT_SAMPLE_OUTLETS = [
+  {
+    id: 'out-1',
+    name: 'Expresso',
+    media_group: 'Grupo Impresa',
+    address: 'Edifício São Francisco de Sales, Rua Calvet de Magalhães, 242, 2770-022 Paço de Arcos',
+    website_url: 'https://expresso.pt',
+    agenda_email: 'agenda@expresso.impresa.pt',
+    contact_email: 'redacao@expresso.impresa.pt',
+    phone: '+351 214 698 000',
+    social_links: {
+      twitter_x: 'https://x.com/expresso',
+      linkedin: 'https://linkedin.com/company/jornal-expresso',
+      facebook: 'https://facebook.com/jornalexpresso',
+      instagram: 'https://instagram.com/jornalexpresso'
+    },
+    erc_type: 'Publicação Periódica Impressa e Digital',
+    erc_registration: 'ERC-10112',
+    specialties: ['Economia & Negócios', 'Política & Sociedade', 'Opinião & Internacional'],
+    formats: ['papel', 'online', 'podcast'],
+    scope: 'nacional',
+    periodicity: 'semanal',
+    estimated_audience: 480000,
+    status: 'ativo'
+  },
+  {
+    id: 'out-2',
+    name: 'Público',
+    media_group: 'Sonaecom',
+    address: 'Edifício Diogo Cão, Doca de Alcântara Norte, 1350-352 Lisboa',
+    website_url: 'https://publico.pt',
+    agenda_email: 'agenda@publico.pt',
+    contact_email: 'redacao@publico.pt',
+    phone: '+351 210 111 000',
+    social_links: {
+      twitter_x: 'https://x.com/publico',
+      linkedin: 'https://linkedin.com/company/publico',
+      instagram: 'https://instagram.com/publico.pt'
+    },
+    erc_type: 'Publicação Periódica Impressa e Digital',
+    erc_registration: 'ERC-10234',
+    specialties: ['Sustentabilidade & ESG', 'Cultura & Estilo de Vida', 'Política & Sociedade'],
+    formats: ['papel', 'online', 'podcast'],
+    scope: 'nacional',
+    periodicity: 'diario',
+    estimated_audience: 520000,
+    status: 'ativo'
+  },
+  {
+    id: 'out-3',
+    name: 'ECO Economia Online',
+    media_group: 'Swipe News',
+    address: 'Avenida da Liberdade, 245, 4º Dto, 1250-143 Lisboa',
+    website_url: 'https://eco.sapo.pt',
+    agenda_email: 'agenda@eco.pt',
+    contact_email: 'redacao@eco.pt',
+    phone: '+351 211 387 100',
+    social_links: {
+      twitter_x: 'https://x.com/ecopt',
+      linkedin: 'https://linkedin.com/company/eco-economia-online'
+    },
+    erc_type: 'Publicação Periódica Digital',
+    erc_registration: 'ERC-12654',
+    specialties: ['Economia & Negócios', 'Tecnologia & Inovação', 'Mercados & Finanças'],
+    formats: ['online', 'podcast'],
+    scope: 'nacional',
+    periodicity: 'continua',
+    estimated_audience: 650000,
+    status: 'ativo'
+  },
+  {
+    id: 'out-4',
+    name: 'SIC Notícias',
+    media_group: 'Grupo Impresa',
+    address: 'Estrada da Outurela, 119, 2794-052 Carnaxide',
+    website_url: 'https://sicnoticias.pt',
+    agenda_email: 'agendatv@sic.impresa.pt',
+    contact_email: 'redacaotv@sic.impresa.pt',
+    phone: '+351 214 179 000',
+    social_links: {
+      twitter_x: 'https://x.com/sicnoticias',
+      youtube: 'https://youtube.com/sicnoticias'
+    },
+    erc_type: 'Operador de Televisão',
+    erc_registration: 'ERC-30145',
+    specialties: ['Política & Sociedade', 'Economia & Negócios', 'Saúde & Farmacêutica'],
+    formats: ['tv', 'online', 'podcast'],
+    scope: 'nacional',
+    periodicity: 'continua',
+    estimated_audience: 1100000,
+    status: 'ativo'
+  },
+  {
+    id: 'out-5',
+    name: 'RTP / Antena 1',
+    media_group: 'Rádio e Televisão de Portugal (RTP)',
+    address: 'Avenida Marechal Gomes da Costa, 37, 1849-030 Lisboa',
+    website_url: 'https://rtp.pt/noticias',
+    agenda_email: 'agenda.informacao@rtp.pt',
+    contact_email: 'noticias@rtp.pt',
+    phone: '+351 217 947 000',
+    social_links: {
+      twitter_x: 'https://x.com/rtpnoticias',
+      facebook: 'https://facebook.com/rtpnoticias'
+    },
+    erc_type: 'Operador de Serviço Público (Rádio e TV)',
+    erc_registration: 'ERC-40101',
+    specialties: ['Política & Sociedade', 'Cultura & Estilo de Vida', 'Saúde & Farmacêutica'],
+    formats: ['tv', 'radio', 'online'],
+    scope: 'nacional',
+    periodicity: 'continua',
+    estimated_audience: 1850000,
+    status: 'ativo'
+  },
+  {
+    id: 'out-6',
+    name: 'Jornal de Negócios',
+    media_group: 'Medialivre',
+    address: 'Rua Luciana Stegagno Picchio, 3, 1549-023 Lisboa',
+    website_url: 'https://jornaldenegocios.pt',
+    agenda_email: 'agenda@negocios.pt',
+    contact_email: 'negocios@medialivre.pt',
+    phone: '+351 210 494 000',
+    social_links: {
+      twitter_x: 'https://x.com/negociospt',
+      linkedin: 'https://linkedin.com/company/jornal-de-negocios'
+    },
+    erc_type: 'Publicação Periódica Impressa e Digital',
+    erc_registration: 'ERC-10389',
+    specialties: ['Mercados & Finanças', 'Economia & Negócios', 'Sustentabilidade & ESG'],
+    formats: ['papel', 'online'],
+    scope: 'nacional',
+    periodicity: 'diario',
+    estimated_audience: 390000,
+    status: 'ativo'
+  },
+  {
+    id: 'out-7',
+    name: 'Observador',
+    media_group: 'Grupo Observador',
+    address: 'Rua Laura Alves, 12, 1050-138 Lisboa',
+    website_url: 'https://observador.pt',
+    agenda_email: 'agenda@observador.pt',
+    contact_email: 'redacao@observador.pt',
+    phone: '+351 210 495 500',
+    social_links: {
+      twitter_x: 'https://x.com/observadorpt',
+      instagram: 'https://instagram.com/observador.pt'
+    },
+    erc_type: 'Publicação Periódica Digital e Operador de Rádio',
+    erc_registration: 'ERC-12490',
+    specialties: ['Política & Sociedade', 'Opinião & Internacional', 'Tecnologia & Inovação'],
+    formats: ['online', 'radio', 'podcast'],
+    scope: 'nacional',
+    periodicity: 'continua',
+    estimated_audience: 720000,
+    status: 'ativo'
+  },
+  {
+    id: 'out-8',
+    name: 'TSF Rádio Notícias',
+    media_group: 'Global Media Group',
+    address: 'Rua Tomás da Fonseca, Torre G - 4º, 1600-209 Lisboa',
+    website_url: 'https://tsf.pt',
+    agenda_email: 'agenda@tsf.pt',
+    contact_email: 'redacao@tsf.pt',
+    phone: '+351 218 424 400',
+    social_links: {
+      twitter_x: 'https://x.com/tsfradio',
+      facebook: 'https://facebook.com/tsfradio'
+    },
+    erc_type: 'Operador de Rádio de Âmbito Nacional',
+    erc_registration: 'ERC-20156',
+    specialties: ['Política & Sociedade', 'Economia & Negócios', 'Cultura & Estilo de Vida'],
+    formats: ['radio', 'online', 'podcast'],
+    scope: 'nacional',
+    periodicity: 'continua',
+    estimated_audience: 410000,
+    status: 'ativo'
+  },
+  {
+    id: 'out-9',
+    name: 'Lusa — Agência de Notícias',
+    media_group: 'Agência Lusa',
+    address: 'Rua Dr. João Pedro de Andrade, 2, 1998-001 Lisboa',
+    website_url: 'https://lusa.pt',
+    agenda_email: 'agenda@lusa.pt',
+    contact_email: 'nacional@lusa.pt',
+    phone: '+351 217 115 000',
+    social_links: {
+      twitter_x: 'https://x.com/lusa_noticias',
+      linkedin: 'https://linkedin.com/company/agencia-lusa'
+    },
+    erc_type: 'Agência Noticiosa',
+    erc_registration: 'ERC-50001',
+    specialties: ['Política & Sociedade', 'Economia & Negócios', 'Opinião & Internacional'],
+    formats: ['agencia_noticiosa', 'online'],
+    scope: 'nacional',
+    periodicity: 'continua',
+    estimated_audience: 950000,
+    status: 'ativo'
+  },
+  {
+    id: 'out-10',
+    name: 'CNN Portugal',
+    media_group: 'Media Capital',
+    address: 'Rua Mário Castrim, 4, 1600-503 Lisboa',
+    website_url: 'https://cnnportugal.iol.pt',
+    agenda_email: 'agenda@cnnportugal.pt',
+    contact_email: 'redacao@cnnportugal.pt',
+    phone: '+351 214 347 500',
+    social_links: {
+      twitter_x: 'https://x.com/cnnportugal',
+      instagram: 'https://instagram.com/cnnportugal'
+    },
+    erc_type: 'Operador de Televisão e Digital',
+    erc_registration: 'ERC-30299',
+    specialties: ['Opinião & Internacional', 'Política & Sociedade', 'Mercados & Finanças'],
+    formats: ['tv', 'online'],
+    scope: 'nacional',
+    periodicity: 'continua',
+    estimated_audience: 890000,
+    status: 'ativo'
+  }
+];
+
