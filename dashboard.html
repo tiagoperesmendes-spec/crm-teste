@@ -1800,12 +1800,7 @@
             <span id="journalists-summary-header" class="text-xs text-[#6B6B6B] font-normal">20 jornalistas · 6 sem contacto há mais de 15 dias</span>
           </div>
           <div class="flex items-center gap-2.5">
-            <button onclick="triggerJournalistsCsvImport()" id="view-journalists-import-btn" class="btn-secondary py-2 px-3.5 text-xs font-medium flex items-center gap-2 cursor-pointer shadow-xs">
-              <svg class="w-3.5 h-3.5 text-[#1A1A1A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m4-8l4-4m0 0l4 4m-4-4v12"></path>
-              </svg>
-              <span>Importar CSV</span>
-            </button>
+
             <input type="file" id="jour-csv-file-input" accept=".csv" class="hidden" onchange="handleJournalistCsvSelected(event)">
             
             <button onclick="openJournalistModal()" id="view-journalists-add-btn" class="btn-primary py-2 px-4 text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-xs">
@@ -1891,12 +1886,7 @@
             <span id="outlets-summary-header" class="text-xs text-[#6B6B6B] font-normal">10 meios · 9 grupos</span>
           </div>
           <div class="flex items-center gap-2.5">
-            <button onclick="exportOutletsCsv()" id="view-outlets-export-btn" class="btn-secondary py-2 px-3.5 text-xs font-medium flex items-center gap-2 cursor-pointer shadow-xs">
-              <svg class="w-3.5 h-3.5 text-[#1A1A1A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-              </svg>
-              <span>Exportar</span>
-            </button>
+
             <button onclick="openOutletModal()" id="view-outlets-add-btn" class="btn-primary py-2 px-4 text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-xs">
               <span>+ Novo meio</span>
             </button>
@@ -1970,7 +1960,7 @@
             <div class="p-3.5 border-b border-[#E4DDD3] bg-[#FBF9F6] space-y-2.5">
               <div class="flex items-center justify-between">
                 <h3 class="text-xs font-bold text-[#1A1A1A] font-title uppercase tracking-wider">Conversas</h3>
-                <span class="text-[10px] text-[#6B6B6B] bg-[#E9E5E0] px-2 py-0.5 rounded-full font-medium" id="chat-active-count">5 contactos</span>
+                <span class="text-[10px] text-[#6B6B6B] bg-[#E9E5E0] px-2 py-0.5 rounded-full font-medium" id="chat-active-count">2 conversas</span>
               </div>
               <div class="relative">
                 <svg class="w-3.5 h-3.5 text-[#8A8A8A] absolute left-3 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2008,7 +1998,7 @@
 
                 <div class="min-w-0">
                   <h3 id="active-chat-name" class="text-xs font-semibold text-[#1A1A1A] font-title truncate">Canal Geral (Equipa MODO)</h3>
-                  <p id="active-chat-role" class="text-[11px] text-[#6B6B6B] truncate">Toda a Agência · 5 membros ativos</p>
+                  <p id="active-chat-role" class="text-[11px] text-[#6B6B6B] truncate">Toda a Agência · 2 membros ativos</p>
                 </div>
               </div>
 
@@ -12237,26 +12227,13 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         id: 'channel-geral',
         type: 'group',
         name: 'Canal Geral (Equipa MODO)',
-        role: 'Toda a Agência · 5 membros',
+        role: 'Toda a Agência · 2 membros ativos',
         avatar: 'GE',
         avatarBg: 'bg-[#1C2526]',
         online: true,
         lastMessage: 'Perfeito. Se precisares de validação das declarações do porta-voz, estou disponível no gabinete.',
         lastTime: '11:05',
         unread: 0
-      },
-      {
-        id: 'dm-tiago',
-        type: 'direct',
-        email: 'tiagoperesmendes@gmail.com',
-        name: 'Tiago Mendes',
-        role: 'Diretor Geral',
-        avatar: 'TM',
-        avatarBg: 'bg-[#1C2526]',
-        online: true,
-        lastMessage: 'Aprovação da nota de imprensa Q4 confirmada.',
-        lastTime: '11:20',
-        unread: 1
       },
       {
         id: 'dm-leonor',
@@ -12272,30 +12249,17 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         unread: 0
       },
       {
-        id: 'dm-helena',
+        id: 'dm-tiago',
         type: 'direct',
-        email: 'helena.ramos@modo.pt',
-        name: 'Helena Ramos',
-        role: 'Consultora de Relações Públicas',
-        avatar: 'HR',
-        avatarBg: 'bg-[#5A4378]',
+        email: 'tiagoperesmendes@gmail.com',
+        name: 'Tiago Mendes',
+        role: 'Diretor Geral',
+        avatar: 'TM',
+        avatarBg: 'bg-[#1C2526]',
         online: true,
-        lastMessage: 'O clipping do Expresso já está carregado na pasta do projeto.',
-        lastTime: 'Ontem',
-        unread: 0
-      },
-      {
-        id: 'dm-carlos',
-        type: 'direct',
-        email: 'carlos.silva@modo.pt',
-        name: 'Carlos Silva',
-        role: 'Gestor de Contas',
-        avatar: 'CS',
-        avatarBg: 'bg-[#8A3E22]',
-        online: false,
-        lastMessage: 'Confirmo a presença na conferência de imprensa de amanhã.',
-        lastTime: '22 Nov',
-        unread: 0
+        lastMessage: 'Aprovação da nota de imprensa Q4 confirmada.',
+        lastTime: '11:20',
+        unread: 1
       }
     ];
 
@@ -12377,28 +12341,6 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
           date: 'Hoje',
           text: 'Já enviei o follow-up para o Nuno Abreu no ECO e confirmei que a Sofia Martins na SIC está a acompanhar a pauta.'
         }
-      ],
-      'dm-helena': [
-        {
-          id: 'm-h-1',
-          senderEmail: 'helena.ramos@modo.pt',
-          senderName: 'Helena Ramos',
-          senderRole: 'Consultora de Relações Públicas',
-          time: '16:40',
-          date: 'Ontem',
-          text: 'O clipping do Expresso já está carregado na pasta do projeto e registado no sistema.'
-        }
-      ],
-      'dm-carlos': [
-        {
-          id: 'm-c-1',
-          senderEmail: 'carlos.silva@modo.pt',
-          senderName: 'Carlos Silva',
-          senderRole: 'Gestor de Contas',
-          time: '14:10',
-          date: '22 Nov',
-          text: 'Confirmo a presença na conferência de imprensa de amanhã com o cliente.'
-        }
       ]
     };
 
@@ -12416,16 +12358,33 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         localAnnouncements = [...INITIAL_ANNOUNCEMENTS];
       }
 
+      // Filtrar conversas para incluir estritamente conversas de contas ativas autorizadas
+      const validIds = INITIAL_CHAT_CONVERSATIONS.map(c => c.id);
       const savedConvs = localStorage.getItem('rep_chat_conversations');
       if (savedConvs) {
-        try { localChatConversations = JSON.parse(savedConvs); } catch(e) { localChatConversations = [...INITIAL_CHAT_CONVERSATIONS]; }
+        try {
+          const parsed = JSON.parse(savedConvs);
+          localChatConversations = parsed.filter(c => validIds.includes(c.id));
+          if (localChatConversations.length === 0) {
+            localChatConversations = [...INITIAL_CHAT_CONVERSATIONS];
+          }
+        } catch(e) {
+          localChatConversations = [...INITIAL_CHAT_CONVERSATIONS];
+        }
       } else {
         localChatConversations = [...INITIAL_CHAT_CONVERSATIONS];
       }
 
       const savedMsgs = localStorage.getItem('rep_chat_messages_map');
       if (savedMsgs) {
-        try { localChatMessagesMap = JSON.parse(savedMsgs); } catch(e) { localChatMessagesMap = { ...INITIAL_CHAT_MESSAGES_MAP }; }
+        try {
+          const parsed = JSON.parse(savedMsgs);
+          localChatMessagesMap = { ...INITIAL_CHAT_MESSAGES_MAP, ...parsed };
+          delete localChatMessagesMap['dm-helena'];
+          delete localChatMessagesMap['dm-carlos'];
+        } catch(e) {
+          localChatMessagesMap = { ...INITIAL_CHAT_MESSAGES_MAP };
+        }
       } else {
         localChatMessagesMap = { ...INITIAL_CHAT_MESSAGES_MAP };
       }
@@ -12633,6 +12592,11 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         }
         return true;
       });
+
+      const countEl = document.getElementById('chat-active-count');
+      if (countEl) {
+        countEl.innerText = convs.length + (convs.length === 1 ? ' conversa' : ' conversas');
+      }
 
       if (q) {
         convs = convs.filter(c =>
@@ -12972,16 +12936,10 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       if (!q) {
         if (clearBtn) clearBtn.classList.add('hidden');
         if (popover) popover.classList.add('hidden');
-        renderDashboardTodayTasks('');
-        renderDashboardAtRiskProjects('');
         return;
       }
 
       if (clearBtn) clearBtn.classList.remove('hidden');
-
-      // Filtrar listas presentes na Dashboard
-      renderDashboardTodayTasks(q);
-      renderDashboardAtRiskProjects(q);
 
       // Pesquisar entidades
       const matchProjects = (localProjects || []).filter(p => {
