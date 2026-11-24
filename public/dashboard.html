@@ -469,9 +469,8 @@
     </div>
     <span id="toast-msg" class="text-xs font-medium">Notificação</span>
   </div>
-
   <!-- ======================================================== -->
-  <!-- ECRÃ DE LOGIN / AUTENTICAÇÃO (APPLE/NOTION CLEAN)        -->
+  <!-- ECRÃ DE LOGIN / AUTENTICAÇÃO (ACESSO RESTRITO)          -->
   <!-- ======================================================== -->
   <div id="auth-container" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#EDE6DE] overflow-y-auto">
 
@@ -487,23 +486,7 @@
         <p class="text-xs font-normal text-[#6B6B6B]">CRM &amp; Plataforma de Gestão de Imprensa</p>
       </div>
 
-      <!-- Abas Limpas: Iniciar Sessão vs Criar Conta vs Recuperar -->
-      <div class="flex p-1 bg-[#F6F2EC] rounded-xl text-xs font-medium">
-        <button type="button" onclick="switchAuthTab('login')" id="tab-auth-login"
-          class="flex-1 py-2 rounded-lg bg-white text-[#1A1A1A] shadow-xs transition-all">
-          Iniciar Sessão
-        </button>
-        <button type="button" onclick="switchAuthTab('register')" id="tab-auth-register"
-          class="flex-1 py-2 rounded-lg text-[#6B6B6B] hover:text-[#1A1A1A] transition-all">
-          Criar Conta
-        </button>
-        <button type="button" onclick="switchAuthTab('recover')" id="tab-auth-recover"
-          class="flex-1 py-2 rounded-lg text-[#6B6B6B] hover:text-[#1A1A1A] transition-all">
-          Recuperar
-        </button>
-      </div>
-
-      <!-- FORMULÁRIO 1: INICIAR SESSÃO -->
+      <!-- FORMULÁRIO DE INÍCIO DE SESSÃO -->
       <form id="form-login" onsubmit="handleLoginSubmit(event)" class="space-y-4">
 
         <div id="auth-error-msg"
@@ -516,7 +499,7 @@
         <div>
           <label class="block text-xs font-medium text-[#1A1A1A] mb-1">Email Institucional *</label>
           <div class="relative">
-            <input type="email" id="login-email" required value="tiagoperesmendes@gmail.com"
+            <input type="email" id="login-email" required value=""
               placeholder="nome@organizacao.pt" class="crm-input pl-9 pr-3 py-2.5 text-xs font-mono">
             <svg class="w-4 h-4 text-[#6B6B6B] absolute left-3 top-3" fill="none" stroke="currentColor"
               viewBox="0 0 24 24">
@@ -528,15 +511,11 @@
         </div>
 
         <div>
-          <div class="flex items-center justify-between mb-1">
+          <div class="mb-1">
             <label class="block text-xs font-medium text-[#1A1A1A]">Palavra-passe *</label>
-            <button type="button" onclick="switchAuthTab('recover')"
-              class="text-[11px] font-medium text-[#6C1C37] hover:underline">
-              Esqueceu-se da palavra-passe?
-            </button>
           </div>
           <div class="relative">
-            <input type="password" id="login-password" required value="Direcao2026!" placeholder="Inserir palavra-passe"
+            <input type="password" id="login-password" required value="" placeholder="Inserir palavra-passe"
               class="crm-input pl-9 pr-10 py-2.5 text-xs font-mono">
             <svg class="w-4 h-4 text-[#6B6B6B] absolute left-3 top-3" fill="none" stroke="currentColor"
               viewBox="0 0 24 24">
@@ -545,7 +524,7 @@
               </path>
             </svg>
             <button type="button" onclick="togglePasswordVisibility('login-password')"
-              class="absolute right-3 top-2.5 text-[#6B6B6B] hover:text-[#1A1A1A] p-1" title="Ver palavra-passe">
+              class="absolute right-3 top-2.5 text-[#6B6B6B] hover:text-[#1A1A1A] p-1 cursor-pointer" title="Ver palavra-passe">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -565,160 +544,19 @@
           </label>
         </div>
 
-        <button type="submit" id="login-submit-btn" class="w-full btn-primary py-2.5 text-xs font-medium">
+        <button type="submit" id="login-submit-btn" class="w-full btn-primary py-2.5 text-xs font-medium cursor-pointer">
           <span>Entrar no Gabinete</span>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
           </svg>
         </button>
 
-        <!-- Acessos Rápidos de Demonstração (As 3 Contas Configuradas) -->
-        <div class="pt-3 border-t border-[#E4DDD3]/70">
-          <p class="text-[11px] text-[#6B6B6B] mb-2 font-medium">Contas de Acesso Disponíveis:</p>
-          <div class="grid grid-cols-3 gap-2">
-            <button type="button" onclick="quickFillAccount('tiagoperesmendes@gmail.com', 'Direcao2026!')" class="p-2 text-left rounded-xl border border-[#E4DDD3] bg-[#FBF9F6] hover:bg-white text-[11px] hover:border-[#6C1C37] transition-all cursor-pointer">
-              <span class="font-semibold block text-[#1A1A1A]">Geral</span>
-              <span class="text-[10px] text-[#6B6B6B] block truncate">Tiago Mendes</span>
-            </button>
-            <button type="button" onclick="quickFillAccount('leonor.rp.faculdade@gmail.com', 'Modo2026!')" class="p-2 text-left rounded-xl border border-[#E4DDD3] bg-[#FBF9F6] hover:bg-white text-[11px] hover:border-[#6C1C37] transition-all cursor-pointer">
-              <span class="font-semibold block text-[#1A1A1A]">Técnico</span>
-              <span class="text-[10px] text-[#6B6B6B] block truncate">Leonor R.</span>
-            </button>
-            <button type="button" onclick="quickFillAccount('tiagoperesmendesps4@gmail.com', 'Convidado2026!')" class="p-2 text-left rounded-xl border border-[#E4DDD3] bg-[#FBF9F6] hover:bg-white text-[11px] hover:border-[#6C1C37] transition-all cursor-pointer">
-              <span class="font-semibold block text-[#1A1A1A]">Leitura</span>
-              <span class="text-[10px] text-[#6B6B6B] block truncate">Convidado</span>
-            </button>
-          </div>
-        </div>
-
       </form>
-
-      <!-- FORMULÁRIO 2: CRIAR CONTA COM REGRAS DE PASSWORD -->
-      <form id="form-register" onsubmit="handleRegisterSubmit(event)" class="space-y-4 hidden">
-
-        <div id="auth-register-error-msg"
-          class="hidden p-3 bg-[#F6D9D5] border border-[#F1D9CE] rounded-xl text-[#A3281E] text-xs font-medium"></div>
-        <div id="auth-register-success-msg"
-          class="hidden p-3 bg-[#DDEBDD] border border-[#DFE7D6] rounded-xl text-[#2F6B3A] text-xs font-medium">
-        </div>
-
-        <div>
-          <label class="block text-xs font-medium text-[#1A1A1A] mb-1">Nome Completo *</label>
-          <input type="text" id="register-name" required placeholder="Tiago Mendes" class="crm-input py-2.5 text-xs">
-        </div>
-
-        <div>
-          <label class="block text-xs font-medium text-[#1A1A1A] mb-1">Email Institucional *</label>
-          <input type="email" id="register-email" required value="tiagoperesmendes@gmail.com"
-            class="crm-input py-2.5 text-xs font-mono">
-        </div>
-
-        <div>
-          <label class="block text-xs font-medium text-[#1A1A1A] mb-1">Nível de Permissão / Cargo *</label>
-          <select id="register-role" class="crm-input py-2.5 text-xs font-medium">
-            <option value="director" selected>Diretor(a) de RP — Acesso Total</option>
-            <option value="press_officer">Assessor(a) de Imprensa — Gestão</option>
-            <option value="junior">Técnico(a) de Clipping — Registo</option>
-            <option value="viewer">Observador(a) — Consulta</option>
-          </select>
-        </div>
-
-        <input type="hidden" id="register-invite-code" value="RP2026">
-
-        <div>
-          <label class="block text-xs font-medium text-[#1A1A1A] mb-1">Criar Palavra-passe *</label>
-          <div class="relative">
-            <input type="password" id="register-password" required oninput="validateRegisterPasswordLive(this.value)"
-              placeholder="Ex: Diretor@2026" class="crm-input pl-3 pr-10 py-2.5 text-xs font-mono">
-            <button type="button" onclick="togglePasswordVisibility('register-password')"
-              class="absolute right-3 top-2.5 text-[#6B6B6B] hover:text-[#1A1A1A] p-1">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                </path>
-              </svg>
-            </button>
-          </div>
-
-          <!-- Validações em tempo real da palavra-passe -->
-          <div class="mt-2.5 p-3 bg-[#FBF9F6] rounded-xl border border-[#E4DDD3] text-[11px] space-y-1.5">
-            <p class="font-medium text-[#1A1A1A]">Requisitos da palavra-passe:</p>
-            <div id="rule-upper" class="flex items-center gap-2 text-[#6B6B6B]">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#E4DDD3] rule-dot"></span>
-              <span>Primeira letra deve ser maiúscula (A-Z)</span>
-            </div>
-            <div id="rule-special" class="flex items-center gap-2 text-[#6B6B6B]">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#E4DDD3] rule-dot"></span>
-              <span>Pelo menos um carácter especial (! @ # $ % & * ...)</span>
-            </div>
-            <div id="rule-len" class="flex items-center gap-2 text-[#6B6B6B]">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#E4DDD3] rule-dot"></span>
-              <span>Mínimo de 6 caracteres</span>
-            </div>
-          </div>
-        </div>
-
-        <button type="submit" id="register-submit-btn" class="w-full btn-primary py-2.5 text-xs font-medium">
-          <span>Criar Conta</span>
-        </button>`r`n`r`n      </form>
-
-      <!-- FORMULÁRIO 3: RECUPERAÇÃO DE CONTA (RESET DE PALAVRA-PASSE) -->
-      <form id="form-recover" onsubmit="handleRecoverSubmit(event)" class="space-y-4 hidden">
-
-        <div id="auth-recover-msg"
-          class="hidden p-3 bg-[#DCE7F0] border border-[#DDE6EE] rounded-xl text-[#2C5576] text-xs font-medium"></div>
-
-        <div>
-          <h3 class="text-xs font-semibold text-[#1A1A1A] font-title">Recuperação de Acesso</h3>
-          <p class="text-[11px] text-[#6B6B6B] mt-0.5">Insere o teu email e define a nova palavra-passe com os
-            requisitos de segurança.</p>
-        </div>
-
-        <div>
-          <label class="block text-xs font-medium text-[#1A1A1A] mb-1">Email da Conta *</label>
-          <input type="email" id="recover-email" required value="tiagoperesmendes@gmail.com"
-            class="crm-input py-2.5 text-xs font-mono">
-        </div>
-
-        <div>
-          <label class="block text-xs font-medium text-[#1A1A1A] mb-1">Nova Palavra-passe *</label>
-          <div class="relative">
-            <input type="password" id="recover-new-password" required oninput="validateRecoverPasswordLive(this.value)"
-              placeholder="Ex: Diretor@2026" class="crm-input pl-3 pr-10 py-2.5 text-xs font-mono">
-            <button type="button" onclick="togglePasswordVisibility('recover-new-password')"
-              class="absolute right-3 top-2.5 text-[#6B6B6B] hover:text-[#1A1A1A] p-1">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                </path>
-              </svg>
-            </button>
-          </div>
-
-          <div class="mt-2 p-2.5 bg-[#FBF9F6] rounded-xl border border-[#E4DDD3] text-[11px] space-y-1">
-            <div id="rec-rule-upper" class="flex items-center gap-2 text-[#6B6B6B]">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#E4DDD3]"></span>
-              <span>Primeira letra maiúscula</span>
-            </div>
-            <div id="rec-rule-special" class="flex items-center gap-2 text-[#6B6B6B]">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#E4DDD3]"></span>
-              <span>Carácter especial</span>
-            </div>
-          </div>
-        </div>
-
-        <button type="submit" id="recover-submit-btn" class="w-full btn-primary py-2.5 text-xs font-medium">
-          <span>Redefinir Palavra-passe</span>
-        </button>`r`n`r`n      </form>
 
     </div>
   </div>
 
-  <!-- ======================================================== -->
+<!-- ======================================================== -->
   <!-- APLICAÇÃO PRINCIPAL (PROTEGIDA POR LOGIN)                -->
   <!-- ======================================================== -->
   <div id="app-container" class="flex-1 flex flex-col md:flex-row min-h-screen hidden">
@@ -3971,27 +3809,26 @@
     // SISTEMA DE AUTENTICAÇÃO (LOGIN / REGISTO / RECUPERAÇÃO)
     // ==========================================
     async function checkAuthSession() {
-      if (supabaseClient) {
-        try {
-          const { data: { session } } = await supabaseClient.auth.getSession();
-          if (session && session.user) {
-            setAuthenticatedUser(session.user);
-            return;
-          }
-        } catch (e) { }
-      }
-
       const savedUser = localStorage.getItem('rep_auth_user');
       if (savedUser) {
         try {
           const parsed = JSON.parse(savedUser);
-          if (parsed && parsed.email) {
+          const email = (parsed && parsed.email ? parsed.email.toLowerCase().trim() : '');
+          const authAccount = AUTHORIZED_ACCOUNTS[email];
+          if (authAccount) {
+            parsed.user_metadata = {
+              full_name: authAccount.name,
+              role: authAccount.role,
+              full_title: authAccount.title
+            };
             setAuthenticatedUser(parsed);
             return;
           }
         } catch (e) { }
       }
 
+      localStorage.removeItem('rep_auth_user');
+      currentUser = null;
       showLoginScreen();
     }
 
@@ -4063,19 +3900,22 @@
         name: 'Tiago Mendes',
         role: 'director',
         title: 'Diretor(a) de Comunicação',
-        password: 'Direcao2026!'
+        password: 'Direcao2026!',
+        passwords: ['Direcao2026!', 'Direção2026!']
       },
       'leonor.rp.faculdade@gmail.com': {
         name: 'Leonor Rodrigues',
         role: 'tech',
         title: 'Técnico(a) de Comunicação',
-        password: 'Modo2026!'
+        password: 'Modo2026!',
+        passwords: ['Modo2026!']
       },
       'tiagoperesmendesps4@gmail.com': {
         name: 'Tiago Mendes (Convidado)',
         role: 'viewer',
         title: 'Visualização (Apenas Leitura)',
-        password: 'Convidado2026!'
+        password: 'Convidado2026!',
+        passwords: ['Convidado2026!']
       }
     };
 
@@ -4085,14 +3925,14 @@
     }
 
     function applyUserPermissions(roleKey) {
-      const perms = ROLE_PERMISSIONS[roleKey] || ROLE_PERMISSIONS['director'];
+      const perms = ROLE_PERMISSIONS[roleKey] || ROLE_PERMISSIONS['viewer'];
 
       // 1. Sidebar: Nome e Cargo do Utilizador
       const sidebarTitle = document.getElementById('sidebar-user-title');
       const sidebarName = document.getElementById('sidebar-user-name');
       if (sidebarTitle) sidebarTitle.innerText = perms.fullTitle || perms.label;
 
-      const userEmail = (currentUser?.email || '').toLowerCase();
+      const userEmail = (currentUser?.email || '').toLowerCase().trim();
       if (userEmail.includes('leonor')) {
         if (sidebarName) sidebarName.innerText = 'Leonor Rodrigues';
       } else if (userEmail.includes('ps4') || roleKey === 'viewer') {
@@ -4101,14 +3941,16 @@
         if (sidebarName) sidebarName.innerText = 'Tiago Mendes';
       }
 
-      // 2. Botões de Criação na Toolbar das Bases
-      const jourAddBtn = document.getElementById('btn-open-modal-add-jour') || document.querySelector('button[onclick="openAddJournalistModal()"]');
-      const outletAddBtn = document.getElementById('btn-open-modal-add-outlet') || document.querySelector('button[onclick="openAddOutletModal()"]');
+      // 2. Botões de Criação de Jornalistas e Meios
+      const jourAddBtn = document.getElementById('view-journalists-add-btn') || document.getElementById('btn-open-modal-add-jour');
+      const outletAddBtn = document.getElementById('view-outlets-add-btn') || document.getElementById('btn-open-modal-add-outlet');
+      const csvBtn = document.getElementById('jour-csv-file-input')?.previousElementSibling;
       if (jourAddBtn) jourAddBtn.style.display = perms.canCreateJournalists ? '' : 'none';
       if (outletAddBtn) outletAddBtn.style.display = perms.canCreateOutlets ? '' : 'none';
+      if (csvBtn) csvBtn.style.display = perms.canCreateJournalists ? '' : 'none';
 
       // 3. Botões de Eliminar (Apenas Geral / Direção)
-      document.querySelectorAll('.btn-delete-record').forEach(el => {
+      document.querySelectorAll('.btn-delete-record, [data-action="delete"]').forEach(el => {
         el.style.display = perms.canDeleteRecords ? '' : 'none';
       });
 
@@ -4140,6 +3982,11 @@
       if (dashTaskBtn) dashTaskBtn.style.display = perms.canCreateTasks ? '' : 'none';
       if (dashContactBtn) dashContactBtn.style.display = perms.canCreateContacts ? '' : 'none';
       if (dashProjectBtn) dashProjectBtn.style.display = perms.canCreateProjects ? '' : 'none';
+
+      // 6. Botão de Criar Anúncio (Apenas Direção)
+      const annAddBtn = document.getElementById('btn-open-announcement-modal');
+      const isDirector = (roleKey === 'director') || (userEmail === 'tiagoperesmendes@gmail.com');
+      if (annAddBtn) annAddBtn.style.display = isDirector ? 'flex' : 'none';
     }
 
     function setAuthenticatedUser(user) {
@@ -4168,19 +4015,36 @@
     }
 
     function showLoginScreen() {
-      document.getElementById('auth-container').classList.remove('hidden');
-      document.getElementById('auth-container').classList.add('flex');
-      document.getElementById('app-container').classList.add('hidden');
-      document.getElementById('app-container').classList.remove('flex');
+      const authEl = document.getElementById('auth-container');
+      const appEl = document.getElementById('app-container');
+      if (authEl) {
+        authEl.classList.remove('hidden');
+        authEl.classList.add('flex');
+      }
+      if (appEl) {
+        appEl.classList.add('hidden');
+        appEl.classList.remove('flex');
+      }
+      const emailEl = document.getElementById('login-email');
+      const passEl = document.getElementById('login-password');
+      if (emailEl) emailEl.value = '';
+      if (passEl) passEl.value = '';
+      const errorMsg = document.getElementById('auth-error-msg');
+      if (errorMsg) errorMsg.classList.add('hidden');
     }
 
     function showAppScreen() {
-      document.getElementById('auth-container').classList.add('hidden');
-      document.getElementById('auth-container').classList.remove('flex');
-      document.getElementById('app-container').classList.remove('hidden');
-      document.getElementById('app-container').classList.add('flex');
+      const authEl = document.getElementById('auth-container');
+      const appEl = document.getElementById('app-container');
+      if (authEl) {
+        authEl.classList.add('hidden');
+        authEl.classList.remove('flex');
+      }
+      if (appEl) {
+        appEl.classList.remove('hidden');
+        appEl.classList.add('flex');
+      }
 
-      // Determinar a vista inicial a partir do hash da URL (ex: #projects, #tasks) ou padrão 'dashboard'
       const validViews = ['dashboard', 'tasks', 'projects', 'journalists', 'outlets', 'communication', 'announcements'];
       const rawHash = window.location.hash.replace('#', '');
       const initialView = validViews.includes(rawHash) ? rawHash : 'dashboard';
@@ -4194,34 +4058,6 @@
       switchView(initialView, false);
     }
 
-    function switchAuthTab(tab) {
-      const loginTab = document.getElementById('tab-auth-login');
-      const registerTab = document.getElementById('tab-auth-register');
-      const recoverTab = document.getElementById('tab-auth-recover');
-      const formLogin = document.getElementById('form-login');
-      const formRegister = document.getElementById('form-register');
-      const formRecover = document.getElementById('form-recover');
-
-      loginTab.className = "flex-1 py-2 rounded-lg text-[#6B6B6B] hover:text-[#1A1A1A] transition-all";
-      registerTab.className = "flex-1 py-2 rounded-lg text-[#6B6B6B] hover:text-[#1A1A1A] transition-all";
-      recoverTab.className = "flex-1 py-2 rounded-lg text-[#6B6B6B] hover:text-[#1A1A1A] transition-all";
-
-      formLogin.classList.add('hidden');
-      formRegister.classList.add('hidden');
-      formRecover.classList.add('hidden');
-
-      if (tab === 'register') {
-        registerTab.className = "flex-1 py-2 rounded-lg bg-white text-[#1A1A1A] shadow-xs transition-all";
-        formRegister.classList.remove('hidden');
-      } else if (tab === 'recover') {
-        recoverTab.className = "flex-1 py-2 rounded-lg bg-white text-[#1A1A1A] shadow-xs transition-all";
-        formRecover.classList.remove('hidden');
-      } else {
-        loginTab.className = "flex-1 py-2 rounded-lg bg-white text-[#1A1A1A] shadow-xs transition-all";
-        formLogin.classList.remove('hidden');
-      }
-    }
-
     function togglePasswordVisibility(inputId) {
       const el = document.getElementById(inputId);
       if (el) {
@@ -4229,52 +4065,29 @@
       }
     }
 
-    // A. SUBMETER LOGIN COM CONTROLO DE TENTATIVAS & PERMISSÕES
+    // A. SUBMETER LOGIN COM CONTROLO ESTRITO DE CREDENCIAIS
     async function handleLoginSubmit(e) {
       if (e && e.preventDefault) e.preventDefault();
 
       const emailEl = document.getElementById('login-email');
       const passEl = document.getElementById('login-password');
-      const email = emailEl ? emailEl.value.trim() : 'tiagoperesmendes@gmail.com';
-      const password = passEl ? passEl.value : '';
+      const email = emailEl ? emailEl.value.trim().toLowerCase() : '';
+      const rawPassword = passEl ? passEl.value : '';
+      const password = rawPassword.trim();
       const errorMsg = document.getElementById('auth-error-msg');
       const btn = document.getElementById('login-submit-btn');
 
       if (btn) {
         btn.disabled = true;
-        btn.innerHTML = '<span>A aceder ao gabinete...</span>';
+        btn.innerHTML = '<span>A verificar credenciais...</span>';
       }
       if (errorMsg) errorMsg.classList.add('hidden');
 
-      const cleanEmail = email.toLowerCase();
-      const authAccount = AUTHORIZED_ACCOUNTS[cleanEmail];
-
-      if (authAccount) {
-        // Se a password foi inserida e não coincide, avisar
-        if (password && password !== authAccount.password) {
-          if (errorMsg) {
-            errorMsg.innerText = 'Palavra-passe incorreta para ' + cleanEmail + '. Verifica e tenta novamente.';
-            errorMsg.classList.remove('hidden');
-          }
-          if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = '<span>Entrar no Gabinete &rarr;</span>';
-          }
-          return;
+      if (!email || !password) {
+        if (errorMsg) {
+          errorMsg.innerText = 'Por favor, introduz o email institucional e a palavra-passe.';
+          errorMsg.classList.remove('hidden');
         }
-
-        recordSuccessfulLogin();
-        const localUser = {
-          id: 'user-' + authAccount.role,
-          email: cleanEmail,
-          user_metadata: {
-            full_name: authAccount.name,
-            role: authAccount.role,
-            full_title: authAccount.title
-          }
-        };
-        setAuthenticatedUser(localUser);
-        showToast('Sessão iniciada como ' + (ROLE_PERMISSIONS[authAccount.role]?.label || authAccount.role) + '.');
         if (btn) {
           btn.disabled = false;
           btn.innerHTML = '<span>Entrar no Gabinete &rarr;</span>';
@@ -4282,195 +4095,49 @@
         return;
       }
 
-      // Se for diretor pelo email
-      const isDirector = cleanEmail.includes('tiago') || cleanEmail.includes('diretor') || cleanEmail === 'tiagoperesmendes@gmail.com';
-      const assignedRole = isDirector ? 'director' : (cleanEmail.includes('leonor') ? 'tech' : 'viewer');
-      const assignedName = isDirector ? 'Tiago Mendes' : (cleanEmail.includes('leonor') ? 'Leonor Rodrigues' : cleanEmail.split('@')[0]);
+      const authAccount = AUTHORIZED_ACCOUNTS[email];
+
+      const normalizeStr = (str) => (str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+
+      let isMatch = false;
+      if (authAccount) {
+        const allowedList = [authAccount.password, ...(authAccount.passwords || [])];
+        const normAccountPass = normalizeStr(authAccount.password);
+
+        isMatch = allowedList.includes(rawPassword) ||
+                  allowedList.includes(password) ||
+                  normalizeStr(rawPassword) === normAccountPass ||
+                  normalizeStr(password) === normAccountPass;
+      }
+
+      if (!authAccount || !isMatch) {
+        if (errorMsg) {
+          errorMsg.innerText = 'Email ou palavra-passe incorretos. Apenas contas autorizadas têm acesso ao gabinete.';
+          errorMsg.classList.remove('hidden');
+        }
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<span>Entrar no Gabinete &rarr;</span>';
+        }
+        return;
+      }
 
       recordSuccessfulLogin();
-      const fallbackUser = {
-        id: 'user-' + Date.now(),
-        email: cleanEmail,
+      const localUser = {
+        id: 'user-' + authAccount.role,
+        email: email,
         user_metadata: {
-          full_name: assignedName,
-          role: assignedRole,
-          full_title: ROLE_PERMISSIONS[assignedRole]?.fullTitle || 'Diretor(a) de Comunicação'
+          full_name: authAccount.name,
+          role: authAccount.role,
+          full_title: authAccount.title
         }
       };
-      setAuthenticatedUser(fallbackUser);
-      showToast('Sessão iniciada como ' + (ROLE_PERMISSIONS[assignedRole]?.label || assignedRole) + '.');
+      setAuthenticatedUser(localUser);
+      showToast('Sessão iniciada como ' + (ROLE_PERMISSIONS[authAccount.role]?.label || authAccount.role) + '.');
       if (btn) {
         btn.disabled = false;
         btn.innerHTML = '<span>Entrar no Gabinete &rarr;</span>';
       }
-    }
-
-    function quickFillAccount(email, pass) {
-      const emailEl = document.getElementById('login-email');
-      const passEl = document.getElementById('login-password');
-      if (emailEl) emailEl.value = email;
-      if (passEl) passEl.value = pass;
-      setTimeout(() => {
-        handleLoginSubmit();
-      }, 50);
-    }
-
-    // B. CRIAR CONTA COM PERMISSÕES & CÓDIGO INSTITUCIONAL
-    async function handleRegisterSubmit(e) {
-      e.preventDefault();
-      const name = document.getElementById('register-name').value.trim();
-      const email = document.getElementById('register-email').value.trim();
-      const role = document.getElementById('register-role')?.value || 'press_officer';
-      const inviteCode = (document.getElementById('register-invite-code')?.value || '').trim().toUpperCase();
-      const password = document.getElementById('register-password').value;
-      const errorMsg = document.getElementById('auth-register-error-msg');
-      const successMsg = document.getElementById('auth-register-success-msg');
-      const btn = document.getElementById('register-submit-btn');
-
-      const validCodes = ['RP2026', 'DIR2026', 'PRESS2026', 'TIAGO2026'];
-      if (!validCodes.includes(inviteCode)) {
-        errorMsg.innerText = 'Código institucional inválido. O acesso a este gabinete é restrito e reservado a membros autorizados.';
-        errorMsg.classList.remove('hidden');
-        return;
-      }
-
-      const policy = checkPasswordPolicy(password);
-      if (!policy.isValid) {
-        let issues = [];
-        if (!policy.startsUpper) issues.push('a primeira letra deve ser maiúscula (A-Z)');
-        if (!policy.hasSpecial) issues.push('deve conter pelo menos um carácter especial (! @ # $ % & ...)');
-        if (!policy.minLength) issues.push('mínimo de 6 caracteres');
-
-        errorMsg.innerText = 'Requisitos em falta: ' + issues.join(', ') + '.';
-        errorMsg.classList.remove('hidden');
-        return;
-      }
-
-      btn.disabled = true;
-      btn.innerHTML = '<span>A registar conta...</span>';
-      errorMsg.classList.add('hidden');
-      successMsg.classList.add('hidden');
-
-      const registeredUsers = JSON.parse(localStorage.getItem('rep_registered_users') || '{}');
-      registeredUsers[email.toLowerCase()] = { name, role };
-      localStorage.setItem('rep_registered_users', JSON.stringify(registeredUsers));
-
-      if (supabaseClient) {
-        try {
-          const { data, error } = await supabaseClient.auth.signUp({
-            email,
-            password,
-            options: {
-              data: { full_name: name, role: role }
-            }
-          });
-
-          if (!error) {
-            recordSuccessfulLogin();
-            successMsg.innerText = 'Conta criada com sucesso com perfil de ' + (ROLE_PERMISSIONS[role]?.label || role) + '. A aceder...';
-            successMsg.classList.remove('hidden');
-            setTimeout(() => {
-              setAuthenticatedUser(data.user || { email, user_metadata: { full_name: name, role: role } });
-              showToast('Conta criada com sucesso.');
-            }, 1000);
-            return;
-          } else {
-            errorMsg.innerText = 'Erro no registo: ' + error.message;
-            errorMsg.classList.remove('hidden');
-          }
-        } catch (err) {
-          errorMsg.innerText = 'Erro: ' + err.message;
-          errorMsg.classList.remove('hidden');
-        }
-      } else {
-        recordSuccessfulLogin();
-        setAuthenticatedUser({ email, user_metadata: { full_name: name, role: role } });
-        showToast('Conta criada com perfil de ' + (ROLE_PERMISSIONS[role]?.label || role) + '.');
-      }
-
-      btn.disabled = false;
-      btn.innerHTML = '<span>Criar Conta</span>';
-    }
-
-    // C. RECUPERAÇÃO DE CONTA (RESET DE PALAVRA-PASSE)
-    async function handleRecoverSubmit(e) {
-      e.preventDefault();
-      const email = document.getElementById('recover-email').value.trim();
-      const newPassword = document.getElementById('recover-new-password').value;
-      const msgEl = document.getElementById('auth-recover-msg');
-      const btn = document.getElementById('recover-submit-btn');
-
-      const policy = checkPasswordPolicy(newPassword);
-      if (!policy.isValid) {
-        msgEl.className = "p-3 bg-[#F6D9D5] border border-[#F1D9CE] rounded-xl text-[#A3281E] text-xs font-medium";
-        msgEl.innerText = 'A nova palavra-passe tem de começar com letra maiúscula e conter pelo menos um carácter especial.';
-        msgEl.classList.remove('hidden');
-        return;
-      }
-
-      btn.disabled = true;
-      btn.innerHTML = '<span>A atualizar palavra-passe...</span>';
-
-      recordSuccessfulLogin();
-
-      if (supabaseClient) {
-        try {
-          await supabaseClient.auth.resetPasswordForEmail(email);
-        } catch (e) { }
-      }
-
-      msgEl.className = "p-3 bg-[#DDEBDD] border border-[#DFE7D6] rounded-xl text-[#2F6B3A] text-xs font-medium";
-      msgEl.innerText = 'Palavra-passe redefinida com sucesso. A redirecionar para o início de sessão...';
-      msgEl.classList.remove('hidden');
-
-      setTimeout(() => {
-        switchAuthTab('login');
-        document.getElementById('login-email').value = email;
-        document.getElementById('login-password').value = newPassword;
-        showToast('Palavra-passe atualizada.');
-      }, 1500);
-
-      btn.disabled = false;
-      btn.innerHTML = '<span>Redefinir Palavra-passe</span>';
-    }
-
-    // D. ACESSO RÁPIDO MULTI-PERFIL (DEMO & TESTE DE PERMISSÕES)
-    function quickLoginRole(roleKey) {
-      recordSuccessfulLogin();
-      let email = 'tiagoperesmendes@gmail.com';
-      let name = 'Leonor Rodrigues';
-      let role = 'director';
-
-      if (roleKey === 'press_officer') {
-        email = 'assessor@gabinete.pt';
-        name = 'Sofia Ramos';
-        role = 'press_officer';
-      } else if (roleKey === 'junior') {
-        email = 'clipping@gabinete.pt';
-        name = 'Gonçalo Neves';
-        role = 'junior';
-      } else if (roleKey === 'viewer') {
-        email = 'administracao@empresa.pt';
-        name = 'Administração';
-        role = 'viewer';
-      }
-
-      const user = {
-        id: 'user-' + roleKey,
-        email: email,
-        user_metadata: {
-          full_name: name,
-          role: role
-        }
-      };
-
-      setAuthenticatedUser(user);
-      const roleObj = ROLE_PERMISSIONS[role] || ROLE_PERMISSIONS['director'];
-      showToast('Sessão iniciada como ' + roleObj.label + '.');
-    }
-
-    function quickDirectorLogin() {
-      quickLoginRole('director');
     }
 
     // E. TERMINAR SESSÃO (LOGOUT)
