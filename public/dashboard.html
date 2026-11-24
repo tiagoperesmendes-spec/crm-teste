@@ -1931,7 +1931,7 @@
         </div>
 
         <!-- Ecrã WhatsApp de 2 Colunas -->
-        <div class="bg-white rounded-2xl border border-[#E4DDD3] shadow-card overflow-hidden flex flex-col md:flex-row h-[640px]">
+        <div class="glass-dense rounded-[24px] border border-white/70 shadow-lg overflow-hidden flex flex-col md:flex-row h-[660px]">
           
           <!-- COLUNA ESQUERDA: LISTA DE CONTACTOS / CONVERSAS -->
           <div id="chat-sidebar-panel" class="w-full md:w-80 border-b md:border-b-0 md:border-r border-[#E4DDD3] flex flex-col bg-[#FBF9F6]/80 shrink-0">
@@ -10322,8 +10322,8 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
                 <!-- 6. PROGRESSO -->
                 <td class="py-3.5 px-4 whitespace-nowrap">
                   <div class="flex items-center gap-3">
-                    <div class="w-24 sm:w-28 bg-[#EDE6DE] rounded-full h-1.5 overflow-hidden">
-                      <div class="h-1.5 rounded-full transition-all duration-300" style="width: ${pct}%; background-color: ${isCompleted ? '#1E4D25' : '#6C1C37'};"></div>
+                    <div class="w-24 sm:w-28 progress-track-petroleum">
+                      <div class="progress-fill-petroleum" style="width: ${pct}%;"></div>
                     </div>
                     <span class="text-xs text-[#6B6B6B] font-mono min-w-[28px]">${doneTasks}/${totalTasks}</span>
                   </div>
@@ -12720,10 +12720,10 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
                 <div class="w-7 h-7 rounded-full ${avatarBg} text-white flex items-center justify-center text-[10px] font-bold shrink-0 mb-1 font-title shadow-2xs">
                   ${initials}
                 </div>
-                <div class="bg-white border border-[#E4DDD3] rounded-2xl rounded-bl-xs p-3 shadow-2xs space-y-1">
-                  ${isGroup ? `<div class="text-[10px] font-semibold text-[#6C1C37]">${msg.senderName} <span class="text-[#8A8A8A] font-normal">(${msg.senderRole || 'Consultor'})</span></div>` : ''}
-                  <div class="text-xs text-[#1A1A1A] leading-relaxed whitespace-pre-wrap">${escapeHtml(msg.text)}</div>
-                  <div class="text-[10px] text-[#8A8A8A] text-right mt-0.5">${msg.time || 'Agora'}</div>
+                <div class="bg-white/85 border border-white/80 rounded-2xl rounded-bl-xs p-3.5 shadow-xs space-y-1 backdrop-blur-md">
+                  ${isGroup ? `<div class="text-[10px] font-semibold text-[#1F6F78]">${msg.senderName} <span class="text-[#5B6668] font-normal">(${msg.senderRole || 'Consultor'})</span></div>` : ''}
+                  <div class="text-xs text-[#1F2A2B] leading-relaxed whitespace-pre-wrap">${escapeHtml(msg.text)}</div>
+                  <div class="text-[10px] text-[#5B6668] text-right mt-0.5">${msg.time || 'Agora'}</div>
                 </div>
               </div>
             `;
