@@ -968,9 +968,9 @@
       <div id="view-dashboard"
         class="p-4 sm:p-6 lg:p-8 xl:p-10 space-y-6 w-full max-w-none transition-all duration-300">
 
-                <!-- BARRA DE TOPO (CARTÃO DE VIDRO COM DEGRADÉ PASTEL 110DEG) -->
-        <div class="glass-topbar-card rounded-[24px] p-5 sm:p-7 border border-white/70 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-5"
-          style="background: linear-gradient(110deg, rgba(207, 232, 234, 0.70) 0%, rgba(251, 246, 236, 0.70) 50%, rgba(249, 227, 211, 0.70) 100%), rgba(255, 255, 255, 0.55); backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 8px 32px rgba(31, 70, 80, 0.10);">
+                <!-- BARRA DE TOPO (CARTÃO DE VIDRO COM DEGRADÉ PASTEL 110DEG - COM Z-INDEX SUPERIOR PARA PESQUISA) -->
+        <div class="glass-topbar-card relative z-40 rounded-[24px] p-5 sm:p-7 border border-white/70 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-5"
+          style="position: relative; z-index: 40; background: linear-gradient(110deg, rgba(207, 232, 234, 0.70) 0%, rgba(251, 246, 236, 0.70) 50%, rgba(249, 227, 211, 0.70) 100%), rgba(255, 255, 255, 0.55); backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 8px 32px rgba(31, 70, 80, 0.10);">
           <div>
             <h1 class="text-[28px] sm:text-[32px] font-bold text-[#1F2A2B] tracking-[-0.03em] leading-tight" id="dash-greeting">
               Bom dia, Tiago
@@ -981,23 +981,22 @@
           </div>
 
           <div class="flex items-center gap-3 shrink-0 flex-wrap sm:flex-nowrap">
-            <!-- Campo de Pesquisa em Pílula com ⌘K -->
-            <div class="relative w-64 sm:w-72" id="dash-search-container">
+            <!-- Campo de Pesquisa em Pílula Limpo (Sem Ícone Estranho) -->
+            <div class="relative z-50 w-64 sm:w-72" id="dash-search-container">
               <input type="text" id="dash-global-search-input" oninput="handleDashboardSearch(this.value)" onfocus="handleDashboardSearch(this.value)"
                 placeholder="Pesquisar..."
-                class="w-full bg-white/80 border border-white/70 rounded-full pl-9 pr-12 py-2 text-xs text-[#1F2A2B] placeholder-[#8C9698] focus:outline-none focus:bg-white focus:border-[#1F6F78] shadow-sm backdrop-blur-md" />
+                class="w-full bg-white/80 border border-white/70 rounded-full pl-9 pr-8 py-2 text-xs text-[#1F2A2B] placeholder-[#8C9698] focus:outline-none focus:bg-white focus:border-[#1F6F78] shadow-sm backdrop-blur-md" />
               <svg class="w-4 h-4 text-[#8C9698] absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
-              <span class="absolute right-3 top-2 text-[10px] font-mono font-medium text-[#8C9698] bg-white/60 px-1.5 py-0.5 rounded border border-[#1F2A2B]/10 pointer-events-none">⌘K</span>
               <button id="dash-search-clear-btn" type="button" onclick="clearDashboardSearch()"
-                class="hidden absolute right-10 top-2 text-[#8C9698] hover:text-[#1F2A2B] cursor-pointer text-xs p-0.5" title="Limpar pesquisa">
+                class="hidden absolute right-3 top-2 text-[#8C9698] hover:text-[#1F2A2B] cursor-pointer text-xs p-0.5" title="Limpar pesquisa">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
               </button>
 
-              <!-- Popover de Resultados em Tempo Real -->
+              <!-- Popover de Resultados em Tempo Real (Flutuante Sempre por Cima) -->
               <div id="dash-search-results-popover"
-                class="hidden absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white/95 backdrop-blur-xl border border-white/80 rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-[#1F2A2B]/10 max-h-[420px] overflow-y-auto">
+                class="hidden absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white border border-[#1F2A2B]/15 rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-[#1F2A2B]/10 max-h-[420px] overflow-y-auto" style="background-color: #FFFFFF !important;">
               </div>
             </div>
 
@@ -1007,12 +1006,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
               </svg>
               <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#C0392B]"></span>
-            </button>
-
-            <!-- UMA Ação Principal em Botão Escuro (+ Novo contacto) -->
-            <button onclick="openContactModal()" class="btn-primary py-2.5 px-4 text-xs font-semibold rounded-2xl flex items-center gap-1.5 cursor-pointer shadow-md">
-              <span class="text-base leading-none font-normal">+</span>
-              <span>Novo contacto</span>
             </button>
           </div>
         </div>
