@@ -278,6 +278,36 @@
     /* ======================================================== */
     /* BOTÕES, INPUTS E CONTROLOS LIQUID GLASS                  */
     /* ======================================================== */
+    .hidden { display: none !important; }
+    #toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      max-width: 380px;
+    }
+    #toast svg, #toast-icon-container svg {
+      width: 16px !important;
+      height: 16px !important;
+      min-width: 16px !important;
+      min-height: 16px !important;
+      max-width: 16px !important;
+      max-height: 16px !important;
+      display: block !important;
+    }
+        img {
+      max-width: 100%;
+    }
+    aside img {
+      height: 28px !important;
+      max-width: 155px !important;
+      object-fit: contain !important;
+    }
+    #auth-container img {
+      height: 48px !important;
+      max-width: 210px !important;
+      object-fit: contain !important;
+    }
     /* Botão Principal Escuro #1C2526 */
     .btn-primary, #login-submit-btn, .btn-primary-dark {
       background-color: var(--brand-primary) !important;
@@ -286,7 +316,7 @@
       font-size: 13px !important;
       font-weight: 600 !important;
       padding: 9px 18px !important;
-      display: inline-flex !important;
+      display: inline-flex;
       align-items: center !important;
       justify-content: center !important;
       gap: 7px !important;
@@ -313,7 +343,7 @@
       font-size: 13px !important;
       font-weight: 500 !important;
       padding: 8px 16px !important;
-      display: inline-flex !important;
+      display: inline-flex;
       align-items: center !important;
       justify-content: center !important;
       gap: 6px !important;
@@ -340,7 +370,7 @@
       padding: 5px 14px !important;
       transition: all var(--trans-fast) !important;
       cursor: pointer !important;
-      display: inline-flex !important;
+      display: inline-flex;
       align-items: center !important;
       gap: 4px !important;
     }
@@ -357,7 +387,7 @@
       font-size: 12px !important;
       font-weight: 500 !important;
       padding: 6px 12px !important;
-      display: inline-flex !important;
+      display: inline-flex;
       align-items: center !important;
       gap: 6px !important;
       transition: all var(--trans-fast) !important;
@@ -1185,7 +1215,7 @@
               <h3 class="text-lg font-bold text-[#1F2A2B] font-title">Contactos de hoje</h3>
               <p class="text-xs text-[#5B6668] mt-0.5">38 de 50 esta semana</p>
             </div>
-            <button onclick="openContactModal()" class="text-xs font-semibold text-[#1F6F78] hover:underline cursor-pointer flex items-center gap-1">
+            <button onclick="openContactModal()" id="dash-contact-action-btn" class="text-xs font-semibold text-[#1F6F78] hover:underline cursor-pointer flex items-center gap-1">
               <span>+ Registar novo contacto</span>
             </button>
           </div>
@@ -1276,7 +1306,8 @@
         </section>
 
         <!-- Contentores ocultos de compatibilidade funcional (mantém RLS e queries seguras) -->
-        <div class="hidden" id="dash-at-risk-projects-container"></div>`n        <div class="hidden">
+        <div class="hidden" id="dash-at-risk-projects-container"></div>
+        <div class="hidden">
           <span id="kpi-open-projects">7</span>
           <span id="kpi-tasks-today">5</span>
           <span id="kpi-tasks-today-sub">3 alta prioridade</span>
@@ -1769,7 +1800,7 @@
             <span id="journalists-summary-header" class="text-xs text-[#6B6B6B] font-normal">20 jornalistas · 6 sem contacto há mais de 15 dias</span>
           </div>
           <div class="flex items-center gap-2.5">
-            <button onclick="triggerJournalistsCsvImport()" class="btn-secondary py-2 px-3.5 text-xs font-medium flex items-center gap-2 cursor-pointer shadow-xs">
+            <button onclick="triggerJournalistsCsvImport()" id="view-journalists-import-btn" class="btn-secondary py-2 px-3.5 text-xs font-medium flex items-center gap-2 cursor-pointer shadow-xs">
               <svg class="w-3.5 h-3.5 text-[#1A1A1A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m4-8l4-4m0 0l4 4m-4-4v12"></path>
               </svg>
@@ -1860,7 +1891,7 @@
             <span id="outlets-summary-header" class="text-xs text-[#6B6B6B] font-normal">10 meios · 9 grupos</span>
           </div>
           <div class="flex items-center gap-2.5">
-            <button onclick="exportOutletsCsv()" class="btn-secondary py-2 px-3.5 text-xs font-medium flex items-center gap-2 cursor-pointer shadow-xs">
+            <button onclick="exportOutletsCsv()" id="view-outlets-export-btn" class="btn-secondary py-2 px-3.5 text-xs font-medium flex items-center gap-2 cursor-pointer shadow-xs">
               <svg class="w-3.5 h-3.5 text-[#1A1A1A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
               </svg>
@@ -4073,71 +4104,93 @@
     }
 
     function applyUserPermissions(roleKey) {
-      const perms = ROLE_PERMISSIONS[roleKey] || ROLE_PERMISSIONS['viewer'];
+        const perms = ROLE_PERMISSIONS[roleKey] || ROLE_PERMISSIONS['viewer'];
+        const isViewer = (roleKey === 'viewer') || (perms.isReadOnly === true);
 
-      // 1. Sidebar: Nome e Cargo do Utilizador
-      const sidebarTitle = document.getElementById('sidebar-user-title');
-      const sidebarName = document.getElementById('sidebar-user-name');
-      if (sidebarTitle) sidebarTitle.innerText = perms.fullTitle || perms.label;
+        const setVisibility = (el, visible) => {
+          if (!el) return;
+          if (visible) {
+            el.classList.remove('hidden');
+            el.style.removeProperty('display');
+          } else {
+            el.classList.add('hidden');
+            el.style.setProperty('display', 'none', 'important');
+          }
+        };
 
-      const userEmail = (currentUser?.email || '').toLowerCase().trim();
-      if (userEmail.includes('leonor')) {
-        if (sidebarName) sidebarName.innerText = 'Leonor Rodrigues';
-      } else if (userEmail.includes('ps4') || roleKey === 'viewer') {
-        if (sidebarName) sidebarName.innerText = 'Tiago Mendes (Convidado)';
-      } else {
-        if (sidebarName) sidebarName.innerText = 'Tiago Mendes';
+        // 1. Sidebar: Nome e Cargo do Utilizador
+        const sidebarTitle = document.getElementById('sidebar-user-title');
+        const sidebarName = document.getElementById('sidebar-user-name');
+        if (sidebarTitle) sidebarTitle.innerText = perms.fullTitle || perms.label;
+
+        const userEmail = (currentUser?.email || '').toLowerCase().trim();
+        if (userEmail.includes('leonor')) {
+          if (sidebarName) sidebarName.innerText = 'Leonor Rodrigues';
+        } else if (userEmail.includes('ps4') || roleKey === 'viewer') {
+          if (sidebarName) sidebarName.innerText = 'Tiago Mendes (Convidado)';
+        } else {
+          if (sidebarName) sidebarName.innerText = 'Tiago Mendes';
+        }
+
+        // 2. Botões de Criação e Importação/Exportação na Base de Jornalistas e Meios
+        const jourAddBtn = document.getElementById('view-journalists-add-btn') || document.getElementById('btn-open-modal-add-jour');
+        const jourImportBtn = document.getElementById('view-journalists-import-btn') || document.getElementById('jour-csv-file-input')?.previousElementSibling;
+        const outletAddBtn = document.getElementById('view-outlets-add-btn') || document.getElementById('btn-open-modal-add-outlet');
+        const outletExportBtn = document.getElementById('view-outlets-export-btn') || document.querySelector('button[onclick*="exportOutlets"]');
+
+        setVisibility(jourAddBtn, !isViewer && perms.canCreateJournalists);
+        setVisibility(jourImportBtn, !isViewer && perms.canCreateJournalists);
+        setVisibility(outletAddBtn, !isViewer && perms.canCreateOutlets);
+        setVisibility(outletExportBtn, !isViewer);
+
+        // 3. Botões de Tarefas e Projetos (Ocultar estritamente para Convidado)
+        const viewTaskAddBtn = document.getElementById('view-tasks-add-btn');
+        const viewProjectAddBtn = document.getElementById('view-projects-add-btn');
+        setVisibility(viewTaskAddBtn, !isViewer && perms.canCreateTasks);
+        setVisibility(viewProjectAddBtn, !isViewer && perms.canCreateProjects);
+
+        // 4. Botão de Registar Contacto no Dashboard
+        const dashContactActionBtn = document.getElementById('dash-contact-action-btn') || document.querySelector('button[onclick*="openContactModal"]');
+        setVisibility(dashContactActionBtn, !isViewer && perms.canCreateContacts);
+
+        // 5. Botões de Eliminar (Apenas Geral / Direção)
+        document.querySelectorAll('.btn-delete-record, [data-action="delete"]').forEach(el => {
+          setVisibility(el, perms.canDeleteRecords);
+        });
+
+        const jdDeleteBtn = document.getElementById('jd-btn-delete');
+        setVisibility(jdDeleteBtn, perms.canDeleteRecords);
+        const odDeleteBtn = document.getElementById('od-btn-delete');
+        setVisibility(odDeleteBtn, perms.canDeleteRecords);
+
+        // 6. Checkboxes e Botões de Conclusão / Registo em Linha
+        document.querySelectorAll('input[type="checkbox"][onchange*="toggleTask"]').forEach(cb => {
+          if (isViewer || !perms.canCompleteTasks) {
+            cb.disabled = true;
+            cb.classList.add('cursor-not-allowed', 'opacity-50');
+          } else {
+            cb.disabled = false;
+            cb.classList.remove('cursor-not-allowed', 'opacity-50');
+          }
+        });
+
+        // Ocultar botões de ação em pílula ("Registar", "Concluída") para o convidado
+        if (isViewer) {
+          document.querySelectorAll('.btn-pill-action').forEach(btn => {
+            const txt = (btn.innerText || '').toLowerCase();
+            if (txt.includes('registar') || txt.includes('conclu')) {
+              setVisibility(btn, false);
+            }
+          });
+        }
+
+        // 7. Botão de Criar Anúncio (Apenas Direção)
+        const annAddBtn = document.getElementById('btn-open-announcement-modal');
+        const isDirector = (roleKey === 'director') || (userEmail === 'tiagoperesmendes@gmail.com');
+        setVisibility(annAddBtn, isDirector);
       }
 
-      // 2. Botões de Criação de Jornalistas e Meios
-      const jourAddBtn = document.getElementById('view-journalists-add-btn') || document.getElementById('btn-open-modal-add-jour');
-      const outletAddBtn = document.getElementById('view-outlets-add-btn') || document.getElementById('btn-open-modal-add-outlet');
-      const csvBtn = document.getElementById('jour-csv-file-input')?.previousElementSibling;
-      if (jourAddBtn) jourAddBtn.style.display = perms.canCreateJournalists ? '' : 'none';
-      if (outletAddBtn) outletAddBtn.style.display = perms.canCreateOutlets ? '' : 'none';
-      if (csvBtn) csvBtn.style.display = perms.canCreateJournalists ? '' : 'none';
-
-      // 3. Botões de Eliminar (Apenas Geral / Direção)
-      document.querySelectorAll('.btn-delete-record, [data-action="delete"]').forEach(el => {
-        el.style.display = perms.canDeleteRecords ? '' : 'none';
-      });
-
-      const jdDeleteBtn = document.getElementById('jd-btn-delete');
-      if (jdDeleteBtn) jdDeleteBtn.style.display = perms.canDeleteRecords ? '' : 'none';
-      const odDeleteBtn = document.getElementById('od-btn-delete');
-      if (odDeleteBtn) odDeleteBtn.style.display = perms.canDeleteRecords ? '' : 'none';
-
-      // 4. Checkboxes de Conclusão de Tarefas
-      document.querySelectorAll('input[type="checkbox"][onchange*="toggleTask"]').forEach(cb => {
-        if (perms.isReadOnly || !perms.canCompleteTasks) {
-          cb.disabled = true;
-          cb.classList.add('cursor-not-allowed', 'opacity-50');
-        } else {
-          cb.disabled = false;
-          cb.classList.remove('cursor-not-allowed', 'opacity-50');
-        }
-      });
-
-      // 5. Botões Globais de Adicionar Tarefa / Projeto
-      const viewTaskAddBtn = document.getElementById('view-tasks-add-btn');
-      const viewProjectAddBtn = document.getElementById('view-projects-add-btn');
-      const dashTaskBtn = document.getElementById('dash-task-btn');
-      const dashContactBtn = document.getElementById('dash-contact-btn');
-      const dashProjectBtn = document.getElementById('dash-project-btn');
-
-      if (viewTaskAddBtn) viewTaskAddBtn.style.display = perms.canCreateTasks ? '' : 'none';
-      if (viewProjectAddBtn) viewProjectAddBtn.style.display = perms.canCreateProjects ? '' : 'none';
-      if (dashTaskBtn) dashTaskBtn.style.display = perms.canCreateTasks ? '' : 'none';
-      if (dashContactBtn) dashContactBtn.style.display = perms.canCreateContacts ? '' : 'none';
-      if (dashProjectBtn) dashProjectBtn.style.display = perms.canCreateProjects ? '' : 'none';
-
-      // 6. Botão de Criar Anúncio (Apenas Direção)
-      const annAddBtn = document.getElementById('btn-open-announcement-modal');
-      const isDirector = (roleKey === 'director') || (userEmail === 'tiagoperesmendes@gmail.com');
-      if (annAddBtn) annAddBtn.style.display = isDirector ? 'flex' : 'none';
-    }
-
-    function setAuthenticatedUser(user) {
+      function setAuthenticatedUser(user) {
       currentUser = user;
       localStorage.setItem('rep_auth_user', JSON.stringify(user));
 
@@ -6265,13 +6318,11 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       const container = document.getElementById('dash-today-tasks-container');
       if (!container) return;
 
-      let tasks = localTasks.filter(t => t.status !== 'completed' && isDueToday(t.due_date));
-      if (tasks.length === 0) {
-        tasks = localTasks.filter(t => t.status !== 'completed' && t.status !== 'concluida').slice(0, 4);
-      }
+      let pending = (localTasks || []).filter(t => t.status !== 'completed' && t.status !== 'concluida');
+
       if (filterQuery) {
         const q = filterQuery.toLowerCase();
-        tasks = (localTasks || []).filter(t => {
+        pending = pending.filter(t => {
           return (t.title || '').toLowerCase().includes(q) ||
                  (t.project_name || '').toLowerCase().includes(q) ||
                  (t.responsible || t.assignee || '').toLowerCase().includes(q) ||
@@ -6279,16 +6330,27 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         });
       }
 
-      tasks.sort((a, b) => {
-        const timeA = a.due_time || '18:00';
-        const timeB = b.due_time || '18:00';
-        return timeA.localeCompare(timeB);
+      // Ordenar prioritariamente: tarefas de hoje no topo, depois em atraso, depois próximas
+      pending.sort((a, b) => {
+        const aToday = isDueToday(a.due_date) ? 1 : 0;
+        const bToday = isDueToday(b.due_date) ? 1 : 0;
+        if (aToday !== bToday) return bToday - aToday;
+
+        const aOver = isOverdue(a.due_date) ? 1 : 0;
+        const bOver = isOverdue(b.due_date) ? 1 : 0;
+        if (aOver !== bOver) return bOver - aOver;
+
+        return (a.due_date || '').localeCompare(b.due_date || '');
       });
+
+      // Apresentar até 6 tarefas na secção de Próximas Ações
+      const tasks = pending.slice(0, 6);
 
       const todayCounterEl = document.getElementById('dash-today-tasks-counter');
       if (todayCounterEl) {
+        const todayCount = localTasks.filter(t => t.status !== 'completed' && isDueToday(t.due_date)).length;
         const overdueCount = localTasks.filter(t => t.status !== 'completed' && isOverdue(t.due_date)).length;
-        todayCounterEl.innerHTML = `${tasks.length} hoje ${overdueCount > 0 ? '· <span class="text-[#C0392B] font-medium">' + overdueCount + ' em atraso</span>' : ''}`;
+        todayCounterEl.innerHTML = `${todayCount} hoje ${overdueCount > 0 ? '· <span class="text-[#C0392B] font-medium">' + overdueCount + ' em atraso</span>' : ''}`;
       }
 
       if (tasks.length === 0) {
@@ -6543,6 +6605,7 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       // renderAnalyticsResponseView removed
       populateDropdowns();
       updateKpis();
+      applyUserPermissions(currentUser?.user_metadata?.role || 'viewer'); // Re-aplicar no fim de renderAll
     }
 
     function updateKpis() {
@@ -6635,6 +6698,7 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       }
 
       currentActiveView = viewName;
+        applyUserPermissions(currentUser?.user_metadata?.role || 'viewer'); // Re-aplicar RBAC
 
       // Ocultar todas as vistas
       const allViewIds = [
@@ -6753,6 +6817,7 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       }
 
       updateKpis();
+      applyUserPermissions(currentUser?.user_metadata?.role || 'viewer'); // Re-aplicar no fim de renderAll
       const mainEl = document.getElementById('section-top');
       if (mainEl) mainEl.scrollTop = 0;
     }
@@ -7115,6 +7180,7 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       contact.status = newStatus;
       syncLocalStorage();
       updateKpis();
+      applyUserPermissions(currentUser?.user_metadata?.role || 'viewer'); // Re-aplicar no fim de renderAll
       showAutoSaveToast(`Estado do contacto alterado para ${newStatus}.`);
     }
 
@@ -7318,6 +7384,7 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       localTasks.unshift(newTask);
       syncLocalStorage();
       updateKpis();
+      applyUserPermissions(currentUser?.user_metadata?.role || 'viewer'); // Re-aplicar no fim de renderAll
       showToast(`Tarefa de follow-up criada para hoje: "${title}".`);
       switchView('tasks', true, { filter: 'today' });
     }
@@ -11973,6 +12040,7 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       task[property] = value;
       syncLocalStorage();
       updateKpis();
+      applyUserPermissions(currentUser?.user_metadata?.role || 'viewer'); // Re-aplicar no fim de renderAll
 
       showAutoSaveToast('Alteração guardada.', () => {
         if (lastEditedTaskBackup) {
