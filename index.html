@@ -1215,8 +1215,9 @@
               <h3 class="text-lg font-bold text-[#1F2A2B] font-title">Contactos de hoje</h3>
               <p class="text-xs text-[#5B6668] mt-0.5">38 de 50 esta semana</p>
             </div>
-            <button onclick="openContactModal()" id="dash-contact-action-btn" class="text-xs font-semibold text-[#1F6F78] hover:underline cursor-pointer flex items-center gap-1">
-              <span>+ Registar novo contacto</span>
+            <button onclick="openContactModal()" id="dash-contact-action-btn" class="text-xs font-semibold text-[#1F6F78] hover:underline cursor-pointer flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              <span>Registar novo contacto</span>
             </button>
           </div>
 
@@ -1804,7 +1805,8 @@
             <input type="file" id="jour-csv-file-input" accept=".csv" class="hidden" onchange="handleJournalistCsvSelected(event)">
             
             <button onclick="openJournalistModal()" id="view-journalists-add-btn" class="btn-primary py-2 px-4 text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-xs">
-              <span>+ Novo jornalista</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              <span>Novo jornalista</span>
             </button>
           </div>
         </div>
@@ -1888,7 +1890,8 @@
           <div class="flex items-center gap-2.5">
 
             <button onclick="openOutletModal()" id="view-outlets-add-btn" class="btn-primary py-2 px-4 text-xs font-medium flex items-center gap-1.5 cursor-pointer shadow-xs">
-              <span>+ Novo meio</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              <span>Novo meio</span>
             </button>
           </div>
         </div>
@@ -12372,8 +12375,8 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         avatar: 'LR',
         avatarBg: 'bg-[#3F5A2E]',
         online: true,
-        lastMessage: 'Já enviei o follow-up para o Nuno Abreu no ECO.',
-        lastTime: '10:45',
+        lastMessage: 'Sim, acabei de rever e está aprovada. Podes avançar com o envio para os contactos prioritários.',
+        lastTime: '11:20',
         unread: 0
       },
       {
@@ -12385,11 +12388,19 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         avatar: 'TM',
         avatarBg: 'bg-[#1C2526]',
         online: true,
-        lastMessage: 'Aprovação da nota de imprensa Q4 confirmada.',
+        lastMessage: 'Sim, acabei de rever e está aprovada. Podes avançar com o envio para os contactos prioritários.',
         lastTime: '11:20',
-        unread: 1
+        unread: 0
       }
     ];
+
+    function getChatThreadKey(chatId) {
+      if (!chatId) return 'channel-geral';
+      if (chatId === 'dm-tiago' || chatId === 'dm-leonor' || chatId === 'dm-tiago-leonor') {
+        return 'dm-tiago-leonor';
+      }
+      return chatId;
+    }
 
     const INITIAL_CHAT_MESSAGES_MAP = {
       'channel-geral': [
@@ -12430,7 +12441,25 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
           text: 'Perfeito. Se precisares de validação das declarações do porta-voz, estou disponível no gabinete.'
         }
       ],
-      'dm-tiago': [
+      'dm-tiago-leonor': [
+        {
+          id: 'm-l-1',
+          senderEmail: 'tiagoperesmendes@gmail.com',
+          senderName: 'Tiago Mendes',
+          senderRole: 'Diretor Geral',
+          time: '10:30',
+          date: 'Hoje',
+          text: 'Leonor, como correu o contacto telefónico com a redação da SIC Notícias?'
+        },
+        {
+          id: 'm-l-2',
+          senderEmail: 'leonor.rp.faculdade@gmail.com',
+          senderName: 'Leonor Rodrigues',
+          senderRole: 'Técnica de Comunicação',
+          time: '10:45',
+          date: 'Hoje',
+          text: 'Já enviei o follow-up para o Nuno Abreu no ECO e confirmei que a Sofia Martins na SIC está a acompanhar a pauta.'
+        },
         {
           id: 'm-t-1',
           senderEmail: 'leonor.rp.faculdade@gmail.com',
@@ -12449,28 +12478,10 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
           date: 'Hoje',
           text: 'Sim, acabei de rever e está aprovada. Podes avançar com o envio para os contactos prioritários.'
         }
-      ],
-      'dm-leonor': [
-        {
-          id: 'm-l-1',
-          senderEmail: 'tiagoperesmendes@gmail.com',
-          senderName: 'Tiago Mendes',
-          senderRole: 'Diretor Geral',
-          time: '10:30',
-          date: 'Hoje',
-          text: 'Leonor, como correu o contacto telefónico com a redação da SIC Notícias?'
-        },
-        {
-          id: 'm-l-2',
-          senderEmail: 'leonor.rp.faculdade@gmail.com',
-          senderName: 'Leonor Rodrigues',
-          senderRole: 'Técnica de Comunicação',
-          time: '10:45',
-          date: 'Hoje',
-          text: 'Já enviei o follow-up para o Nuno Abreu no ECO e confirmei que a Sofia Martins na SIC está a acompanhar a pauta.'
-        }
       ]
     };
+    INITIAL_CHAT_MESSAGES_MAP['dm-tiago'] = INITIAL_CHAT_MESSAGES_MAP['dm-tiago-leonor'];
+    INITIAL_CHAT_MESSAGES_MAP['dm-leonor'] = INITIAL_CHAT_MESSAGES_MAP['dm-tiago-leonor'];
 
     let localAnnouncements = [];
     let localChatConversations = [];
@@ -12510,11 +12521,27 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
           localChatMessagesMap = { ...INITIAL_CHAT_MESSAGES_MAP, ...parsed };
           delete localChatMessagesMap['dm-helena'];
           delete localChatMessagesMap['dm-carlos'];
+
+          if (!localChatMessagesMap['dm-tiago-leonor']) {
+            localChatMessagesMap['dm-tiago-leonor'] = [...INITIAL_CHAT_MESSAGES_MAP['dm-tiago-leonor']];
+          }
+          const legacyMsgs = [...(parsed['dm-tiago'] || []), ...(parsed['dm-leonor'] || [])];
+          legacyMsgs.forEach(m => {
+            if (!localChatMessagesMap['dm-tiago-leonor'].some(existing => existing.id === m.id || (existing.text === m.text && existing.time === m.time && existing.senderEmail === m.senderEmail))) {
+              localChatMessagesMap['dm-tiago-leonor'].push(m);
+            }
+          });
+          localChatMessagesMap['dm-tiago'] = localChatMessagesMap['dm-tiago-leonor'];
+          localChatMessagesMap['dm-leonor'] = localChatMessagesMap['dm-tiago-leonor'];
         } catch(e) {
           localChatMessagesMap = { ...INITIAL_CHAT_MESSAGES_MAP };
+          localChatMessagesMap['dm-tiago'] = localChatMessagesMap['dm-tiago-leonor'];
+          localChatMessagesMap['dm-leonor'] = localChatMessagesMap['dm-tiago-leonor'];
         }
       } else {
         localChatMessagesMap = { ...INITIAL_CHAT_MESSAGES_MAP };
+        localChatMessagesMap['dm-tiago'] = localChatMessagesMap['dm-tiago-leonor'];
+        localChatMessagesMap['dm-leonor'] = localChatMessagesMap['dm-tiago-leonor'];
       }
     }
 
@@ -12609,8 +12636,20 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         if (viewerNotice) viewerNotice.classList.add('hidden');
       }
 
-      renderChatContactsList();
-      renderTeamChat();
+      // Validar conversa ativa para o utilizador atual
+      const userEmail = (currentUser?.email || '').toLowerCase();
+      const availableConvs = (localChatConversations || []).filter(c => {
+        if (c.type === 'direct' && c.email && c.email.toLowerCase() === userEmail) {
+          return false;
+        }
+        return true;
+      });
+
+      if (!availableConvs.some(c => c.id === activeChatId)) {
+        activeChatId = availableConvs[0]?.id || 'channel-geral';
+      }
+
+      selectChatConversation(activeChatId);
     }
 
     function renderAnnouncementsList() {
@@ -12818,10 +12857,11 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       const box = document.getElementById('team-chat-messages');
       if (!box) return;
 
-      const msgs = localChatMessagesMap[activeChatId] || [];
+      const threadKey = getChatThreadKey(activeChatId);
+      const msgs = localChatMessagesMap[threadKey] || [];
       const currentEmail = (currentUser?.email || '').toLowerCase();
-      const currentName = currentUser?.name || currentUser?.user_metadata?.full_name || 'Tiago Mendes';
-      const myInitials = currentName.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() || 'TM';
+      const currentName = currentUser?.name || currentUser?.user_metadata?.full_name || (currentEmail.includes('leonor') ? 'Leonor Rodrigues' : 'Tiago Mendes');
+      const myInitials = currentName.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() || (currentEmail.includes('leonor') ? 'LR' : 'TM');
 
       const activeConv = localChatConversations.find(c => c.id === activeChatId);
       const isGroup = activeConv && activeConv.type === 'group';
@@ -12943,17 +12983,24 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         text: text
       };
 
-      if (!localChatMessagesMap[activeChatId]) {
-        localChatMessagesMap[activeChatId] = [];
+      const threadKey = getChatThreadKey(activeChatId);
+      if (!localChatMessagesMap[threadKey]) {
+        localChatMessagesMap[threadKey] = [];
       }
-      localChatMessagesMap[activeChatId].push(newMsg);
+      localChatMessagesMap[threadKey].push(newMsg);
 
-      // Atualizar última mensagem na lista de conversas
-      const conv = localChatConversations.find(c => c.id === activeChatId);
-      if (conv) {
-        conv.lastMessage = text;
-        conv.lastTime = timeStr;
+      if (threadKey === 'dm-tiago-leonor') {
+        localChatMessagesMap['dm-tiago'] = localChatMessagesMap['dm-tiago-leonor'];
+        localChatMessagesMap['dm-leonor'] = localChatMessagesMap['dm-tiago-leonor'];
       }
+
+      // Atualizar última mensagem na lista de conversas para ambos os intervenientes
+      localChatConversations.forEach(c => {
+        if (c.id === activeChatId || (threadKey === 'dm-tiago-leonor' && (c.id === 'dm-tiago' || c.id === 'dm-leonor'))) {
+          c.lastMessage = text;
+          c.lastTime = timeStr;
+        }
+      });
 
       syncCommunicationStorage();
       input.value = '';
@@ -12977,6 +13024,24 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       const year = d.getFullYear();
       return `${day}/${month}/${year} às ${hours}:${minutes}`;
     }
+
+    // Sincronização em tempo real entre abas para chat e comunicados
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'rep_chat_messages_map' || e.key === 'rep_chat_conversations') {
+        initCommunicationData();
+        updateCommunicationCounts();
+        if (typeof currentView !== 'undefined' && currentView === 'communication') {
+          renderChatContactsList();
+          renderTeamChat();
+        }
+      } else if (e.key === 'rep_announcements') {
+        initCommunicationData();
+        updateCommunicationCounts();
+        if (typeof currentView !== 'undefined' && currentView === 'announcements') {
+          renderAnnouncementsList();
+        }
+      }
+    });
 
     function openAnnouncementModal() {
       const isDirector = (currentUser?.user_metadata?.role === 'director') || ((currentUser?.email || '').toLowerCase().includes('tiagoperesmendes@gmail.com'));
