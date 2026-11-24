@@ -1008,318 +1008,274 @@
           </div>
         </div>
 
-        <!-- LINHA DE 4 CARTÕES (NÚMERO GRANDE + LEGENDA PEQUENA, CLICÁVEIS) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <!-- Cartão 1: Projetos em curso -->
+                <!-- LINHA DE 4 CARTÕES DE INDICADORES (FAMÍLIA DE TONS DECORATIVOS: PETRÓLEO, MENTA, AREIA, AZUL) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- Cartão 1: Projetos em aberto (Tom Petróleo) -->
           <div onclick="switchView('projects')"
-            class="bg-white/95 rounded-2xl border border-[#E4DDD3] p-5 shadow-xs hover:border-[#6C1C37]/40 transition-all cursor-pointer group">
-            <span class="text-xs text-[#6B6B6B] font-medium block">Projetos em curso</span>
-            <div class="text-3xl font-semibold text-[#1A1A1A] font-title tracking-tight my-1 group-hover:text-[#6C1C37] transition-colors" id="dash-card-open-projects">
-              7
+            class="kpi-card-1 glass-surface rounded-[24px] p-6 shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-[#5B6668]">Projetos em aberto</span>
+              <div class="kpi-icon-box tone-petroleum-bg tone-petroleum-text">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                </svg>
+              </div>
             </div>
-            <span class="text-xs text-[#6B6B6B] block" id="dash-card-open-projects-sub">
-              2 a terminar esta semana
-            </span>
+            <div>
+              <div class="text-[36px] sm:text-[44px] font-bold text-[#1F2A2B] font-title tracking-tight leading-none my-2 group-hover:text-[#1F6F78] transition-colors" id="dash-card-open-projects">
+                7
+              </div>
+              <span class="text-xs text-[#5B6668] block" id="dash-card-open-projects-sub">
+                3 com entregas esta semana
+              </span>
+            </div>
           </div>
 
-          <!-- Cartão 2: Entregas esta semana -->
+          <!-- Cartão 2: Peças publicadas no mês / Entregas (Tom Menta) -->
           <div onclick="switchView('tasks', true, { filter: 'overdue' })"
-            class="bg-white/95 rounded-2xl border border-[#E4DDD3] p-5 shadow-xs hover:border-[#6C1C37]/40 transition-all cursor-pointer group">
-            <span class="text-xs text-[#6B6B6B] font-medium block">Entregas esta semana</span>
-            <div class="text-3xl font-semibold text-[#1A1A1A] font-title tracking-tight my-1 group-hover:text-[#6C1C37] transition-colors" id="dash-card-week-deliveries">
-              12
+            class="kpi-card-2 glass-surface rounded-[24px] p-6 shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-[#5B6668]">Peças publicadas no mês</span>
+              <div class="kpi-icon-box tone-mint-bg tone-mint-text">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 012 2v1m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                </svg>
+              </div>
             </div>
-            <span class="text-xs text-[#A3281E] font-medium block" id="dash-card-week-deliveries-sub">
-              2 em atraso
-            </span>
+            <div>
+              <div class="text-[36px] sm:text-[44px] font-bold text-[#1F2A2B] font-title tracking-tight leading-none my-2 group-hover:text-[#3F7A5A] transition-colors" id="dash-card-week-deliveries">
+                47
+              </div>
+              <span class="text-xs text-[#3E7A32] font-medium block" id="dash-card-week-deliveries-sub">
+                +8 face ao mês anterior
+              </span>
+            </div>
           </div>
 
-          <!-- Cartão 3: A aguardar cliente -->
-          <div onclick="switchView('tasks')"
-            class="bg-white/95 rounded-2xl border border-[#E4DDD3] p-5 shadow-xs hover:border-[#6C1C37]/40 transition-all cursor-pointer group">
-            <span class="text-xs text-[#6B6B6B] font-medium block">A aguardar cliente</span>
-            <div class="text-3xl font-semibold text-[#1A1A1A] font-title tracking-tight my-1 group-hover:text-[#6C1C37] transition-colors" id="dash-card-waiting-client">
-              4
-            </div>
-            <span class="text-xs text-[#6B6B6B] block">
-              Aprovações e feedback pendentes
-            </span>
-          </div>
-
-          <!-- Cartão 4: Contactos hoje -->
+          <!-- Cartão 3: Contactos hoje (Tom Areia) -->
           <div onclick="switchView('contacts', true, { period: 'today' })"
-            class="bg-white/95 rounded-2xl border border-[#E4DDD3] p-5 shadow-xs hover:border-[#6C1C37]/40 transition-all cursor-pointer group">
-            <span class="text-xs text-[#6B6B6B] font-medium block">Contactos hoje</span>
-            <div class="text-3xl font-semibold text-[#1A1A1A] font-title tracking-tight my-1 group-hover:text-[#6C1C37] transition-colors" id="dash-card-contacts-today">
-              3 / 7
+            class="kpi-card-3 glass-surface rounded-[24px] p-6 shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-[#5B6668]">Contactos hoje</span>
+              <div class="kpi-icon-box tone-sand-bg tone-sand-text">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+              </div>
             </div>
-            <span class="text-xs text-[#6B6B6B] block" id="dash-card-contacts-today-sub">
-              4 planeados para a tarde
-            </span>
+            <div>
+              <div class="text-[36px] sm:text-[44px] font-bold text-[#1F2A2B] font-title tracking-tight leading-none my-2 group-hover:text-[#8A6A1C] transition-colors" id="dash-card-contacts-today">
+                6
+              </div>
+              <span class="text-xs text-[#5B6668] block" id="dash-card-contacts-today-sub">
+                38 de 50 esta semana
+              </span>
+              <div class="progress-track-petroleum mt-2">
+                <div class="progress-fill-petroleum" style="width: 76%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cartão 4: Taxa de resposta / A aguardar (Tom Azul) -->
+          <div onclick="switchView('tasks')"
+            class="kpi-card-4 glass-surface rounded-[24px] p-6 shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-[#5B6668]">Taxa de resposta</span>
+              <div class="kpi-icon-box tone-blue-bg tone-blue-text">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <div class="text-[36px] sm:text-[44px] font-bold text-[#1F2A2B] font-title tracking-tight leading-none my-2 group-hover:text-[#3F6585] transition-colors" id="dash-card-waiting-client">
+                42%
+              </div>
+              <span class="text-xs text-[#3E7A32] font-medium block" id="dash-card-waiting-client-sub">
+                +6 pp face ao mês anterior
+              </span>
+            </div>
           </div>
         </div>
 
-        <!-- ÁREA PRINCIPAL: DUAS COLUNAS -->
+        <!-- SEGUNDA LINHA: PRÓXIMAS AÇÕES (2/3) E AGENDA (1/3) -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <!-- PRÓXIMAS AÇÕES (8 COLUNAS) -->
+          <section class="lg:col-span-8 glass-surface glass-wash rounded-[24px] p-6 sm:p-7 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-[#1F2A2B]/10">
+              <div>
+                <h3 class="text-lg font-bold text-[#1F2A2B] font-title">Próximas ações</h3>
+                <p class="text-xs text-[#5B6668] mt-0.5" id="dash-today-tasks-counter">3 hoje · 1 em atraso</p>
+              </div>
+              <button onclick="switchView('tasks')" class="text-xs font-semibold text-[#1F6F78] hover:underline cursor-pointer flex items-center gap-1">
+                <span>Ver todas</span>
+                <span>&rarr;</span>
+              </button>
+            </div>
 
-          <!-- COLUNA ESQUERDA (7 COLS): PARA FAZER HOJE & EM ATRASO OU EM RISCO -->
-          <div class="lg:col-span-7 space-y-6">
+            <!-- Contentor de Tarefas com Respiração Generosa (16-20px) -->
+            <div id="dash-today-tasks-container" class="divide-y divide-[#1F2A2B]/10">
+              <!-- Preenchido dinamicamente por renderDashboardTodayTasks() -->
+            </div>
+          </section>
 
-            <!-- 1. PARA FAZER HOJE -->
-            <section class="bg-white/95 rounded-2xl border border-[#E4DDD3] p-5 sm:p-6 shadow-xs space-y-4">
-              <div class="flex items-center justify-between pb-3 border-b border-[#E4DDD3]/60">
-                <div>
-                  <h3 class="text-base font-semibold text-[#1A1A1A] font-title">Para fazer hoje</h3>
-                  <p class="text-[11px] text-[#6B6B6B] mt-0.5">Ordenado cronologicamente por prazo de entrega</p>
+          <!-- AGENDA (4 COLUNAS) -->
+          <section class="lg:col-span-4 glass-surface glass-wash rounded-[24px] p-6 sm:p-7 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-[#1F2A2B]/10">
+              <h3 class="text-lg font-bold text-[#1F2A2B] font-title">Agenda</h3>
+              <span class="text-xs text-[#5B6668]">3 entregas em 7 dias</span>
+            </div>
+
+            <div class="space-y-4">
+              <!-- Item 1 -->
+              <div onclick="switchView('tasks')" class="flex items-start gap-3.5 p-2 rounded-2xl hover:bg-white/40 transition-all cursor-pointer group">
+                <div class="w-13 h-13 rounded-[14px] bg-[#D5EAEC] border border-white/60 flex flex-col items-center justify-center shrink-0">
+                  <span class="text-[10px] uppercase font-bold text-[#1F6F78] leading-none tracking-wider">NOV</span>
+                  <span class="text-[20px] font-bold text-[#1F2A2B] leading-tight">23</span>
                 </div>
-                <button onclick="switchView('tasks', true, { filter: 'today' })"
-                  class="text-xs font-medium text-[#6C1C37] hover:underline cursor-pointer">
-                  Ver todas no gestor &rarr;
-                </button>
+                <div class="min-w-0 flex-1">
+                  <h4 class="text-xs font-semibold text-[#1F2A2B] group-hover:text-[#1F6F78] transition-colors truncate">
+                    Comunicado Solaris Energia
+                  </h4>
+                  <p class="text-[11px] text-[#5B6668] mt-0.5 truncate">10:00 · 14 jornalistas</p>
+                </div>
               </div>
 
-              <!-- Lista de Tarefas de Hoje (Checkbox, Tarefa, Cliente, Prazo, Responsável) -->
-              <div id="dash-today-tasks-container" class="divide-y divide-[#E4DDD3]/60">
-                <!-- Preenchido dinamicamente com renderDashboardTodayTasks() -->
-              </div>
-
-              <div class="pt-2 border-t border-[#E4DDD3]/60 flex items-center justify-between text-xs">
-                <span class="text-[#8A8A8A] text-[11px]" id="dash-today-tasks-counter">5 tarefas agendadas para hoje</span>
-                <button onclick="openTaskModal()"
-                  class="font-medium text-[#6C1C37] hover:underline cursor-pointer">
-                  + Nova Tarefa
-                </button>
-              </div>
-            </section>
-
-            <!-- 2. EM ATRASO OU EM RISCO -->
-            <section class="bg-white/95 rounded-2xl border border-[#E4DDD3] p-5 sm:p-6 shadow-xs space-y-4">
-              <div class="flex items-center justify-between pb-3 border-b border-[#E4DDD3]/60">
-                <div>
-                  <h3 class="text-base font-semibold text-[#1A1A1A] font-title">Em atraso ou em risco</h3>
-                  <p class="text-[11px] text-[#6B6B6B] mt-0.5">Projetos com prazo crítico (&lt; 3 dias) ou sem movimento recente</p>
+              <!-- Item 2 -->
+              <div onclick="switchView('tasks')" class="flex items-start gap-3.5 p-2 rounded-2xl hover:bg-white/40 transition-all cursor-pointer group">
+                <div class="w-13 h-13 rounded-[14px] bg-[#DCEDE2] border border-white/60 flex flex-col items-center justify-center shrink-0">
+                  <span class="text-[10px] uppercase font-bold text-[#3F7A5A] leading-none tracking-wider">NOV</span>
+                  <span class="text-[20px] font-bold text-[#1F2A2B] leading-tight">24</span>
                 </div>
-                <button onclick="switchView('projects')"
-                  class="text-xs font-medium text-[#6C1C37] hover:underline cursor-pointer">
-                  Ver todos os projetos &rarr;
-                </button>
-              </div>
-
-              <!-- Lista de Projetos em Risco -->
-              <div class="space-y-3" id="dash-at-risk-projects-container">
-                <!-- Preenchido dinamicamente com renderDashboardAtRiskProjects() -->
-              </div>
-            </section>
-
-          </div>
-
-          <!-- COLUNA DIREITA (5 COLS): PRÓXIMOS 7 DIAS, SEM CONTACTO HÁ +15 DIAS, ATIVIDADE RECENTE -->
-          <div class="lg:col-span-5 space-y-6">
-
-            <!-- 1. PRÓXIMOS 7 DIAS (AGENDA) -->
-            <section class="bg-white/95 rounded-2xl border border-[#E4DDD3] p-5 sm:p-6 shadow-xs space-y-4">
-              <div class="flex items-center justify-between pb-3 border-b border-[#E4DDD3]/60">
-                <h3 class="text-base font-semibold text-[#1A1A1A] font-title">Próximos 7 dias</h3>
-                <span class="text-xs text-[#8A8A8A]">Agenda da agência</span>
-              </div>
-
-              <div class="space-y-3">
-                <!-- Item 1 -->
-                <div onclick="switchView('tasks')" class="flex items-start gap-3 p-2 rounded-xl hover:bg-[#FBF9F6] transition-colors cursor-pointer group">
-                  <div class="w-11 h-12 rounded-xl bg-[#F6F2EC] border border-[#E4DDD3] flex flex-col items-center justify-center shrink-0 group-hover:border-[#6C1C37]/40 transition-colors">
-                    <span class="text-[9px] uppercase font-bold text-[#8A8A8A] leading-none">NOV</span>
-                    <span class="text-sm font-bold text-[#1A1A1A] leading-tight">23</span>
-                  </div>
-                  <div class="min-w-0">
-                    <h4 class="text-xs font-semibold text-[#1A1A1A] group-hover:text-[#6C1C37] transition-colors truncate">
-                      Entrevista CEO — Expresso
-                    </h4>
-                    <p class="text-[11px] text-[#6B6B6B] mt-0.5 truncate">10:30 · Sede, Lisboa · Briefing preparado</p>
-                  </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div onclick="switchView('tasks')" class="flex items-start gap-3 p-2 rounded-xl hover:bg-[#FBF9F6] transition-colors cursor-pointer group">
-                  <div class="w-11 h-12 rounded-xl bg-[#F6F2EC] border border-[#E4DDD3] flex flex-col items-center justify-center shrink-0 group-hover:border-[#6C1C37]/40 transition-colors">
-                    <span class="text-[9px] uppercase font-bold text-[#8A8A8A] leading-none">NOV</span>
-                    <span class="text-sm font-bold text-[#1A1A1A] leading-tight">25</span>
-                  </div>
-                  <div class="min-w-0">
-                    <h4 class="text-xs font-semibold text-[#1A1A1A] group-hover:text-[#6C1C37] transition-colors truncate">
-                      Conferência de Imprensa: Hospital Lusíadas
-                    </h4>
-                    <p class="text-[11px] text-[#6B6B6B] mt-0.5 truncate">11:00 · Hotel Tivoli, Lisboa</p>
-                  </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div onclick="switchView('tasks')" class="flex items-start gap-3 p-2 rounded-xl hover:bg-[#FBF9F6] transition-colors cursor-pointer group">
-                  <div class="w-11 h-12 rounded-xl bg-[#F6F2EC] border border-[#E4DDD3] flex flex-col items-center justify-center shrink-0 group-hover:border-[#6C1C37]/40 transition-colors">
-                    <span class="text-[9px] uppercase font-bold text-[#8A8A8A] leading-none">NOV</span>
-                    <span class="text-sm font-bold text-[#1A1A1A] leading-tight">27</span>
-                  </div>
-                  <div class="min-w-0">
-                    <h4 class="text-xs font-semibold text-[#1A1A1A] group-hover:text-[#6C1C37] transition-colors truncate">
-                      Embargo: Estudo de Sustentabilidade
-                    </h4>
-                    <p class="text-[11px] text-[#6B6B6B] mt-0.5 truncate">09:00 · 18 jornalistas com acesso</p>
-                  </div>
-                </div>
-
-                <!-- Item 4 -->
-                <div onclick="switchView('tasks')" class="flex items-start gap-3 p-2 rounded-xl hover:bg-[#FBF9F6] transition-colors cursor-pointer group">
-                  <div class="w-11 h-12 rounded-xl bg-[#F6F2EC] border border-[#E4DDD3] flex flex-col items-center justify-center shrink-0 group-hover:border-[#6C1C37]/40 transition-colors">
-                    <span class="text-[9px] uppercase font-bold text-[#8A8A8A] leading-none">NOV</span>
-                    <span class="text-sm font-bold text-[#1A1A1A] leading-tight">28</span>
-                  </div>
-                  <div class="min-w-0">
-                    <h4 class="text-xs font-semibold text-[#1A1A1A] group-hover:text-[#6C1C37] transition-colors truncate">
-                      Almoço Editorial com Direção do ECO
-                    </h4>
-                    <p class="text-[11px] text-[#6B6B6B] mt-0.5 truncate">13:00 · Clube de Jornalistas</p>
-                  </div>
+                <div class="min-w-0 flex-1">
+                  <h4 class="text-xs font-semibold text-[#1F2A2B] group-hover:text-[#3F7A5A] transition-colors truncate">
+                    Dossier Festival Lumen
+                  </h4>
+                  <p class="text-[11px] text-[#5B6668] mt-0.5 truncate">Entrega ao cliente</p>
                 </div>
               </div>
-            </section>
 
-            <!-- 2. SEM CONTACTO HÁ +15 DIAS -->
-            <section class="bg-white/95 rounded-2xl border border-[#E4DDD3] p-5 sm:p-6 shadow-xs space-y-4">
-              <div class="flex items-center justify-between pb-3 border-b border-[#E4DDD3]/60">
-                <h3 class="text-base font-semibold text-[#1A1A1A] font-title">Sem contacto há +15 dias</h3>
-                <span class="text-xs text-[#8A8A8A]">Atenção relacional</span>
-              </div>
-
-              <div class="space-y-3">
-                <!-- Cliente 1 -->
-                <div class="p-3 rounded-xl bg-[#FBF9F6] border border-[#E4DDD3]/70 flex items-center justify-between gap-3">
-                  <div class="min-w-0">
-                    <h4 class="text-xs font-semibold text-[#1A1A1A] truncate">BioPharma Portugal</h4>
-                    <p class="text-[11px] text-[#805B00] mt-0.5">Último contacto: 04 nov (há 18 dias)</p>
-                  </div>
-                  <button onclick="openContactModalWithClient('BioPharma Portugal')"
-                    class="px-3 py-1.5 rounded-xl text-xs font-medium text-white bg-[#6C1C37] hover:bg-[#58152B] transition-colors shrink-0 cursor-pointer shadow-2xs">
-                    Contactar
-                  </button>
+              <!-- Item 3 -->
+              <div onclick="switchView('tasks')" class="flex items-start gap-3.5 p-2 rounded-2xl hover:bg-white/40 transition-all cursor-pointer group">
+                <div class="w-13 h-13 rounded-[14px] bg-[#F6E8CC] border border-white/60 flex flex-col items-center justify-center shrink-0">
+                  <span class="text-[10px] uppercase font-bold text-[#8A6A1C] leading-none tracking-wider">NOV</span>
+                  <span class="text-[20px] font-bold text-[#1F2A2B] leading-tight">26</span>
                 </div>
-
-                <!-- Cliente 2 -->
-                <div class="p-3 rounded-xl bg-[#FBF9F6] border border-[#E4DDD3]/70 flex items-center justify-between gap-3">
-                  <div class="min-w-0">
-                    <h4 class="text-xs font-semibold text-[#1A1A1A] truncate">Logística Urbana SA</h4>
-                    <p class="text-[11px] text-[#A3281E] mt-0.5">Último contacto: 28 out (há 25 dias)</p>
-                  </div>
-                  <button onclick="openContactModalWithClient('Logística Urbana SA')"
-                    class="px-3 py-1.5 rounded-xl text-xs font-medium text-white bg-[#6C1C37] hover:bg-[#58152B] transition-colors shrink-0 cursor-pointer shadow-2xs">
-                    Contactar
-                  </button>
-                </div>
-
-                <!-- Cliente 3 -->
-                <div class="p-3 rounded-xl bg-[#FBF9F6] border border-[#E4DDD3]/70 flex items-center justify-between gap-3">
-                  <div class="min-w-0">
-                    <h4 class="text-xs font-semibold text-[#1A1A1A] truncate">Câmara de Comércio Luso-Francesa</h4>
-                    <p class="text-[11px] text-[#805B00] mt-0.5">Último contacto: 01 nov (há 21 dias)</p>
-                  </div>
-                  <button onclick="openContactModalWithClient('Câmara de Comércio Luso-Francesa')"
-                    class="px-3 py-1.5 rounded-xl text-xs font-medium text-white bg-[#6C1C37] hover:bg-[#58152B] transition-colors shrink-0 cursor-pointer shadow-2xs">
-                    Contactar
-                  </button>
-                </div>
-
-                <!-- Cliente 4 -->
-                <div class="p-3 rounded-xl bg-[#FBF9F6] border border-[#E4DDD3]/70 flex items-center justify-between gap-3">
-                  <div class="min-w-0">
-                    <h4 class="text-xs font-semibold text-[#1A1A1A] truncate">Inovação &amp; Retalho Ibérico</h4>
-                    <p class="text-[11px] text-[#805B00] mt-0.5">Último contacto: 05 nov (há 17 dias)</p>
-                  </div>
-                  <button onclick="openContactModalWithClient('Inovação & Retalho Ibérico')"
-                    class="px-3 py-1.5 rounded-xl text-xs font-medium text-white bg-[#6C1C37] hover:bg-[#58152B] transition-colors shrink-0 cursor-pointer shadow-2xs">
-                    Contactar
-                  </button>
+                <div class="min-w-0 flex-1">
+                  <h4 class="text-xs font-semibold text-[#1F2A2B] group-hover:text-[#8A6A1C] transition-colors truncate">
+                    Clipping Vinhos do Douro
+                  </h4>
+                  <p class="text-[11px] text-[#5B6668] mt-0.5 truncate">Relatório semanal</p>
                 </div>
               </div>
-            </section>
-
-            <!-- 3. ATIVIDADE RECENTE (FEED DAS ÚLTIMAS 5 AÇÕES DA EQUIPA) -->
-            <section class="bg-white/95 rounded-2xl border border-[#E4DDD3] p-5 sm:p-6 shadow-xs space-y-4">
-              <div class="flex items-center justify-between pb-3 border-b border-[#E4DDD3]/60">
-                <h3 class="text-base font-semibold text-[#1A1A1A] font-title">Atividade recente</h3>
-                <span class="text-xs text-[#8A8A8A]">Últimas 5 ações</span>
-              </div>
-
-              <div class="space-y-3">
-                <!-- Ação 1 -->
-                <div class="flex items-start gap-3 text-xs">
-                  <div class="w-7 h-7 rounded-full bg-[#B85D3B] text-white flex items-center justify-center font-bold text-[10px] shrink-0 font-title">
-                    RV
-                  </div>
-                  <div class="min-w-0 flex-1">
-                    <p class="text-[#1A1A1A] leading-snug">
-                      <span class="font-semibold">Rita Valente</span> registou contacto com Marta Figueiredo (Público)
-                    </p>
-                    <span class="text-[10px] text-[#8A8A8A] block mt-0.5">há 12 min</span>
-                  </div>
-                </div>
-
-                <!-- Ação 2 -->
-                <div class="flex items-start gap-3 text-xs">
-                  <div class="w-7 h-7 rounded-full bg-[#1A1A1A] text-white flex items-center justify-center font-bold text-[10px] shrink-0 font-title">
-                    TM
-                  </div>
-                  <div class="min-w-0 flex-1">
-                    <p class="text-[#1A1A1A] leading-snug">
-                      <span class="font-semibold">Tiago Mendes</span> concluiu a tarefa "Aprovação de nota de imprensa Q4"
-                    </p>
-                    <span class="text-[10px] text-[#8A8A8A] block mt-0.5">há 34 min</span>
-                  </div>
-                </div>
-
-                <!-- Ação 3 -->
-                <div class="flex items-start gap-3 text-xs">
-                  <div class="w-7 h-7 rounded-full bg-[#BD5D38] text-white flex items-center justify-center font-bold text-[10px] shrink-0 font-title">
-                    NA
-                  </div>
-                  <div class="min-w-0 flex-1">
-                    <p class="text-[#1A1A1A] leading-snug">
-                      <span class="font-semibold">Nuno Abreu</span> associou 3 jornalistas ao projeto "Lançamento Fundo Ibérico"
-                    </p>
-                    <span class="text-[10px] text-[#8A8A8A] block mt-0.5">há 1h</span>
-                  </div>
-                </div>
-
-                <!-- Ação 4 -->
-                <div class="flex items-start gap-3 text-xs">
-                  <div class="w-7 h-7 rounded-full bg-[#4A7C59] text-white flex items-center justify-center font-bold text-[10px] shrink-0 font-title">
-                    MF
-                  </div>
-                  <div class="min-w-0 flex-1">
-                    <p class="text-[#1A1A1A] leading-snug">
-                      <span class="font-semibold">Marta Figueiredo</span> arquivou clipping com sentimento positivo no Expresso
-                    </p>
-                    <span class="text-[10px] text-[#8A8A8A] block mt-0.5">há 2h</span>
-                  </div>
-                </div>
-
-                <!-- Ação 5 -->
-                <div class="flex items-start gap-3 text-xs">
-                  <div class="w-7 h-7 rounded-full bg-[#1A1A1A] text-white flex items-center justify-center font-bold text-[10px] shrink-0 font-title">
-                    TM
-                  </div>
-                  <div class="min-w-0 flex-1">
-                    <p class="text-[#1A1A1A] leading-snug">
-                      <span class="font-semibold">Tiago Mendes</span> agendou conferência de imprensa para 25 de novembro
-                    </p>
-                    <span class="text-[10px] text-[#8A8A8A] block mt-0.5">há 3h</span>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-          </div>
-
+            </div>
+          </section>
         </div>
 
-        <!-- Contentores ocultos de compatibilidade funcional -->
+        <!-- TERCEIRA LINHA: CONTACTOS DE HOJE (LARGURA TOTAL) -->
+        <section class="glass-surface glass-wash rounded-[24px] p-6 sm:p-7 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-[#1F2A2B]/10">
+            <div>
+              <h3 class="text-lg font-bold text-[#1F2A2B] font-title">Contactos de hoje</h3>
+              <p class="text-xs text-[#5B6668] mt-0.5">38 de 50 esta semana</p>
+            </div>
+            <button onclick="openContactModal()" class="text-xs font-semibold text-[#1F6F78] hover:underline cursor-pointer flex items-center gap-1">
+              <span>+ Registar novo contacto</span>
+            </button>
+          </div>
+
+          <!-- Linhas de contactos com respiração generosa -->
+          <div class="divide-y divide-[#1F2A2B]/10">
+            <!-- Contacto 1 -->
+            <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group hover:bg-white/40 -mx-3 px-3 rounded-2xl transition-all cursor-pointer"
+              onclick="openContactModalWithClient('Sara Magalhães')">
+              <div class="flex items-center gap-3.5 min-w-0">
+                <div class="w-10 h-10 rounded-full tone-blue-bg tone-blue-text font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
+                  SM
+                </div>
+                <div class="min-w-0">
+                  <span class="text-sm font-semibold text-[#1F2A2B] block truncate group-hover:text-[#1F6F78] transition-colors">
+                    Sara Magalhães
+                  </span>
+                  <span class="text-xs text-[#5B6668] block truncate">
+                    Jornal de Negócios · 12:30
+                  </span>
+                </div>
+              </div>
+              <div class="flex items-center gap-4 shrink-0 justify-between sm:justify-end">
+                <span class="status-item">
+                  <span class="status-dot status-dot-green"></span>
+                  <span class="text-xs font-medium text-[#1F2A2B]">Respondeu</span>
+                </span>
+                <button onclick="event.stopPropagation(); openContactModalWithClient('Sara Magalhães')" class="btn-pill-action">
+                  Registar
+                </button>
+              </div>
+            </div>
+
+            <!-- Contacto 2 -->
+            <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group hover:bg-white/40 -mx-3 px-3 rounded-2xl transition-all cursor-pointer"
+              onclick="openContactModalWithClient('Beatriz Nogueira')">
+              <div class="flex items-center gap-3.5 min-w-0">
+                <div class="w-10 h-10 rounded-full tone-mint-bg tone-mint-text font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
+                  BN
+                </div>
+                <div class="min-w-0">
+                  <span class="text-sm font-semibold text-[#1F2A2B] block truncate group-hover:text-[#1F6F78] transition-colors">
+                    Beatriz Nogueira
+                  </span>
+                  <span class="text-xs text-[#5B6668] block truncate">
+                    Público · 11:05
+                  </span>
+                </div>
+              </div>
+              <div class="flex items-center gap-4 shrink-0 justify-between sm:justify-end">
+                <span class="status-item">
+                  <span class="status-dot status-dot-gray"></span>
+                  <span class="text-xs font-medium text-[#5B6668]">Sem resposta</span>
+                </span>
+                <button onclick="event.stopPropagation(); openContactModalWithClient('Beatriz Nogueira')" class="btn-pill-action">
+                  Registar
+                </button>
+              </div>
+            </div>
+
+            <!-- Contacto 3 -->
+            <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group hover:bg-white/40 -mx-3 px-3 rounded-2xl transition-all cursor-pointer"
+              onclick="openContactModalWithClient('Inês Carvalho')">
+              <div class="flex items-center gap-3.5 min-w-0">
+                <div class="w-10 h-10 rounded-full tone-petroleum-bg tone-petroleum-text font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
+                  IC
+                </div>
+                <div class="min-w-0">
+                  <span class="text-sm font-semibold text-[#1F2A2B] block truncate group-hover:text-[#1F6F78] transition-colors">
+                    Inês Carvalho
+                  </span>
+                  <span class="text-xs text-[#5B6668] block truncate">
+                    Observador · 10:20
+                  </span>
+                </div>
+              </div>
+              <div class="flex items-center gap-4 shrink-0 justify-between sm:justify-end">
+                <span class="status-item">
+                  <span class="status-dot status-dot-green"></span>
+                  <span class="text-xs font-medium text-[#1F2A2B]">Publicou</span>
+                </span>
+                <button onclick="event.stopPropagation(); openContactModalWithClient('Inês Carvalho')" class="btn-pill-action">
+                  Registar
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contentores ocultos de compatibilidade funcional (mantém RLS e queries seguras) -->
+        <div class="hidden" id="dash-at-risk-projects-container"></div>
+        <div class="hidden">
         <div class="hidden">
           <span id="kpi-open-projects">7</span>
           <span id="kpi-tasks-today">5</span>
@@ -6311,7 +6267,7 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
 
       let tasks = localTasks.filter(t => t.status !== 'completed' && isDueToday(t.due_date));
       if (tasks.length === 0) {
-        tasks = localTasks.filter(t => t.status !== 'completed' && t.status !== 'concluida').slice(0, 5);
+        tasks = localTasks.filter(t => t.status !== 'completed' && t.status !== 'concluida').slice(0, 4);
       }
       if (filterQuery) {
         const q = filterQuery.toLowerCase();
@@ -6332,13 +6288,13 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       const todayCounterEl = document.getElementById('dash-today-tasks-counter');
       if (todayCounterEl) {
         const overdueCount = localTasks.filter(t => t.status !== 'completed' && isOverdue(t.due_date)).length;
-        todayCounterEl.innerHTML = `${tasks.length} tarefas agendadas para hoje ${overdueCount > 0 ? '· <span class="text-[#A3281E] font-medium">' + overdueCount + ' em atraso</span>' : ''}`;
+        todayCounterEl.innerHTML = `${tasks.length} hoje ${overdueCount > 0 ? '· <span class="text-[#C0392B] font-medium">' + overdueCount + ' em atraso</span>' : ''}`;
       }
 
       if (tasks.length === 0) {
         container.innerHTML = `
-          <div class="py-8 text-center text-xs text-[#6B6B6B]">
-            <p class="font-medium text-[#1A1A1A] mb-1">Nenhuma tarefa pendente para hoje.</p>
+          <div class="py-8 text-center text-xs text-[#5B6668]">
+            <p class="font-medium text-[#1F2A2B] mb-1">Nenhuma tarefa pendente para hoje.</p>
             <p>Todas as entregas correspondentes estão em dia.</p>
           </div>
         `;
@@ -6352,56 +6308,49 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
       };
 
-      const getAvatarColor = (initials) => {
-        const map = {
-          'LR': 'bg-[#6C1C37] text-white',
-          'TM': 'bg-[#1A1A1A] text-white',
-          'RV': 'bg-[#B85D3B] text-white',
-          'CS': 'bg-[#2F6B3A] text-white',
-          'HR': 'bg-[#805B00] text-white'
-        };
-        return map[initials] || 'bg-[#E4DDD3] text-[#1A1A1A]';
-      };
-
       container.innerHTML = tasks.map(task => {
-        const isDone = task.status === 'completed';
+        const isDone = task.status === 'completed' || task.status === 'concluida';
         const isOverdueTask = isOverdue(task.due_date);
-        const initials = getInitials(task.assignee);
-        const avatarColor = getAvatarColor(initials);
+        const initials = getInitials(task.assignee || task.responsible);
+        const tone = getStableToneById(task.assignee || task.responsible || task.id);
         const clientName = task.client_or_brand || task.project_name || 'Cliente';
         const timeDisplay = task.due_time || '18:00';
 
         return `
-          <div class="py-3 flex items-center justify-between gap-3 group hover:bg-[#F6F2EC]/60 -mx-2 px-2 rounded-xl transition-all cursor-pointer"
+          <div class="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group hover:bg-white/40 -mx-3 px-3 rounded-2xl transition-all cursor-pointer"
             onclick="openTaskDetail('${task.id}')">
-            <!-- Esquerda: Checkbox + Tarefa + Cliente -->
-            <div class="flex items-center gap-3 min-w-0 flex-1">
-              <button onclick="event.stopPropagation(); toggleTaskStatus('${task.id}')"
-                class="w-4 h-4 rounded-full ${isDone ? 'bg-[#2F6B3A] border-[#2F6B3A] text-white' : 'border border-[#D1C7BA] hover:border-[#6C1C37]'} flex items-center justify-center shrink-0 transition-colors cursor-pointer"
-                title="${isDone ? 'Reabrir tarefa' : 'Marcar como concluída'}">
-                ${isDone ? '<svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>' : ''}
-              </button>
-              
-              <div class="min-w-0 flex-1 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                <span class="text-xs ${isDone ? 'line-through text-[#6B6B6B]' : 'text-[#1A1A1A] font-medium'} truncate group-hover:text-[#6C1C37] transition-colors"
+            <!-- Esquerda: Avatar com tom estável + Título + Linha de apoio -->
+            <div class="flex items-center gap-3.5 min-w-0 flex-1">
+              <div class="w-10 h-10 rounded-full font-bold text-xs flex items-center justify-center shrink-0 shadow-xs"
+                style="background-color: ${tone.bg}; color: ${tone.color};">
+                ${initials}
+              </div>
+              <div class="min-w-0 flex-1">
+                <span class="text-sm font-semibold ${isDone ? 'line-through text-[#5B6668]' : 'text-[#1F2A2B]'} block truncate group-hover:text-[#1F6F78] transition-colors"
                   title="${task.title}">
                   ${task.title}
                 </span>
-                <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-medium bg-[#F6F2EC] text-[#6B6B6B] border border-[#E4DDD3]/60 truncate shrink-0 max-w-[140px]">
-                  ${clientName}
+                <span class="text-xs text-[#5B6668] block truncate mt-0.5">
+                  Resp. ${task.assignee || task.responsible || 'Equipa'} · ${clientName} · ${timeDisplay}
                 </span>
               </div>
             </div>
 
-            <!-- Direita: Prazo + Responsável -->
-            <div class="flex items-center gap-3 shrink-0" onclick="event.stopPropagation()">
-              <span class="text-xs font-mono font-medium ${isOverdueTask ? 'text-[#A3281E]' : 'text-[#1A1A1A]'} min-w-[42px] text-right">
-                ${timeDisplay}
+            <!-- Direita: Estado (ponto + texto) + Botões em Pílula alinhados à direita -->
+            <div class="flex items-center gap-3 shrink-0 justify-between sm:justify-end" onclick="event.stopPropagation()">
+              <span class="status-item">
+                <span class="status-dot ${isOverdueTask ? 'status-dot-red' : (isDone ? 'status-dot-green' : 'status-dot-amber')}"></span>
+                <span class="text-xs font-medium ${isOverdueTask ? 'text-[#C0392B]' : (isDone ? 'text-[#3E7A32]' : 'text-[#B97A12]')}">
+                  ${isOverdueTask ? 'Em atraso' : (isDone ? 'Concluída' : 'Hoje')}
+                </span>
               </span>
-              <div class="w-6 h-6 rounded-full ${avatarColor} flex items-center justify-center font-bold text-[10px] shrink-0 font-title shadow-2xs"
-                title="${task.assignee || 'Responsável'}">
-                ${initials}
-              </div>
+
+              <button onclick="openTaskDetail('${task.id}')" class="btn-pill-action">
+                Ver ficha
+              </button>
+              <button onclick="toggleTaskStatus('${task.id}')" class="btn-pill-action">
+                ${isDone ? 'Concluída' : 'Registar'}
+              </button>
             </div>
           </div>
         `;
