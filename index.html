@@ -3824,6 +3824,8 @@
       });
     }
 
+    let chatRealtimeChannel = null;
+
     function initSupabase() {
       const url = localStorage.getItem('reputation_sb_url') || DEFAULT_SUPABASE_URL;
       const key = localStorage.getItem('reputation_sb_key') || DEFAULT_SUPABASE_KEY;
@@ -3831,9 +3833,56 @@
       if (url && key && window.supabase) {
         try {
           supabaseClient = window.supabase.createClient(url, key);
+          initChatRealtime();
         } catch (e) {
           console.error("Erro ao inicializar Supabase:", e);
         }
+      }
+    }
+
+    function initChatRealtime() {
+      if (!supabaseClient) return;
+      if (chatRealtimeChannel) return;
+
+      try {
+        chatRealtimeChannel = supabaseClient.channel('pr_crm_team_chat');
+        chatRealtimeChannel
+          .on('broadcast', { event: 'new_chat_message' }, (data) => {
+            const payload = data && data.payload ? data.payload : null;
+            if (!payload || !payload.message) return;
+
+            const threadKey = payload.threadKey || getChatThreadKey(payload.chatId);
+            if (!localChatMessagesMap[threadKey]) {
+              localChatMessagesMap[threadKey] = [];
+            }
+
+            const exists = localChatMessagesMap[threadKey].some(m => 
+              m.id === payload.message.id || 
+              (m.text === payload.message.text && m.time === payload.message.time && m.senderEmail === payload.message.senderEmail)
+            );
+
+            if (!exists) {
+              localChatMessagesMap[threadKey].push(payload.message);
+              if (threadKey === 'dm-tiago-leonor') {
+                localChatMessagesMap['dm-tiago'] = localChatMessagesMap['dm-tiago-leonor'];
+                localChatMessagesMap['dm-leonor'] = localChatMessagesMap['dm-tiago-leonor'];
+              }
+
+              localChatConversations.forEach(c => {
+                if (c.id === payload.chatId || (threadKey === 'dm-tiago-leonor' && (c.id === 'dm-tiago' || c.id === 'dm-leonor'))) {
+                  c.lastMessage = payload.message.text;
+                  c.lastTime = payload.message.time;
+                }
+              });
+
+              syncCommunicationStorage();
+              renderChatContactsList();
+              renderTeamChat();
+            }
+          })
+          .subscribe();
+      } catch (err) {
+        console.warn('Realtime channel init:', err);
       }
     }
 
@@ -12375,8 +12424,8 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         avatar: 'LR',
         avatarBg: 'bg-[#3F5A2E]',
         online: true,
-        lastMessage: 'Sim, acabei de rever e está aprovada. Podes avançar com o envio para os contactos prioritários.',
-        lastTime: '11:20',
+        lastMessage: 'tudo bem?',
+        lastTime: '23:18',
         unread: 0
       },
       {
@@ -12388,8 +12437,8 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         avatar: 'TM',
         avatarBg: 'bg-[#1C2526]',
         online: true,
-        lastMessage: 'Sim, acabei de rever e está aprovada. Podes avançar com o envio para os contactos prioritários.',
-        lastTime: '11:20',
+        lastMessage: 'tudo bem?',
+        lastTime: '23:18',
         unread: 0
       }
     ];
@@ -12477,6 +12526,60 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
           time: '11:20',
           date: 'Hoje',
           text: 'Sim, acabei de rever e está aprovada. Podes avançar com o envio para os contactos prioritários.'
+        },
+        {
+          id: 'm-u-1',
+          senderEmail: 'leonor.rp.faculdade@gmail.com',
+          senderName: 'Leonor Rodrigues',
+          senderRole: 'Técnica de Comunicação',
+          time: '18:33',
+          date: 'Hoje',
+          text: 'Obrigada, Tiago.'
+        },
+        {
+          id: 'm-u-2',
+          senderEmail: 'tiagoperesmendes@gmail.com',
+          senderName: 'Tiago Mendes',
+          senderRole: 'Diretor Geral',
+          time: '21:40',
+          date: 'Hoje',
+          text: 'olaaaa'
+        },
+        {
+          id: 'm-u-3',
+          senderEmail: 'leonor.rp.faculdade@gmail.com',
+          senderName: 'Leonor Rodrigues',
+          senderRole: 'Técnica de Comunicação',
+          time: '21:41',
+          date: 'Hoje',
+          text: 'tudo bem?'
+        },
+        {
+          id: 'm-u-4',
+          senderEmail: 'tiagoperesmendes@gmail.com',
+          senderName: 'Tiago Mendes',
+          senderRole: 'Diretor Geral',
+          time: '22:10',
+          date: 'Hoje',
+          text: 'sim e contigo'
+        },
+        {
+          id: 'm-u-5',
+          senderEmail: 'tiagoperesmendes@gmail.com',
+          senderName: 'Tiago Mendes',
+          senderRole: 'Diretor Geral',
+          time: '23:18',
+          date: 'Hoje',
+          text: 'ola'
+        },
+        {
+          id: 'm-u-6',
+          senderEmail: 'tiagoperesmendes@gmail.com',
+          senderName: 'Tiago Mendes',
+          senderRole: 'Diretor Geral',
+          time: '23:18',
+          date: 'Hoje',
+          text: 'tudo bem?'
         }
       ]
     };
@@ -13002,6 +13105,21 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         }
       });
 
+      // Transmitir em tempo real via Supabase Realtime Broadcast para todos os navegadores/sessões
+      if (chatRealtimeChannel) {
+        try {
+          chatRealtimeChannel.send({
+            type: 'broadcast',
+            event: 'new_chat_message',
+            payload: {
+              chatId: activeChatId,
+              threadKey: threadKey,
+              message: newMsg
+            }
+          });
+        } catch(e) { }
+      }
+
       syncCommunicationStorage();
       input.value = '';
       renderChatContactsList();
@@ -13030,14 +13148,16 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       if (e.key === 'rep_chat_messages_map' || e.key === 'rep_chat_conversations') {
         initCommunicationData();
         updateCommunicationCounts();
-        if (typeof currentView !== 'undefined' && currentView === 'communication') {
+        const commView = document.getElementById('view-communication');
+        if (commView && !commView.classList.contains('hidden')) {
           renderChatContactsList();
           renderTeamChat();
         }
       } else if (e.key === 'rep_announcements') {
         initCommunicationData();
         updateCommunicationCounts();
-        if (typeof currentView !== 'undefined' && currentView === 'announcements') {
+        const annView = document.getElementById('view-announcements');
+        if (annView && !annView.classList.contains('hidden')) {
           renderAnnouncementsList();
         }
       }
