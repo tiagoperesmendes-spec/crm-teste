@@ -1814,21 +1814,21 @@
           </div>
         </div>
 
-        <!-- Tabela com 5 Colunas + Menu -->
-        <div class="crm-card overflow-hidden">
+        <!-- Tabela com 5 Colunas + Menu (Liquid Glass Denso) -->
+        <div class="glass-dense rounded-[24px] p-2 overflow-hidden border border-white/70 shadow-sm">
           <div class="overflow-x-auto">
             <table class="crm-table w-full" id="journalists-table">
               <thead>
-                <tr class="border-b border-[#E4DDD3] text-[11px] font-semibold text-[#6B6B6B] uppercase tracking-wider bg-[#FAF8F5]">
-                  <th class="py-3 px-4 text-left font-medium">Jornalista</th>
-                  <th class="py-3 px-4 text-left font-medium">Meio</th>
-                  <th class="py-3 px-4 text-left font-medium">Área</th>
-                  <th class="py-3 px-4 text-left font-medium">Contacto</th>
-                  <th class="py-3 px-4 text-left font-medium">Último contacto</th>
-                  <th class="py-3 px-4 text-right w-10"></th>
+                <tr class="border-b border-[#1F2A2B]/10 micro-label">
+                  <th class="py-3.5 px-4 text-left">Jornalista</th>
+                  <th class="py-3.5 px-4 text-left">Meio</th>
+                  <th class="py-3.5 px-4 text-left">Área</th>
+                  <th class="py-3.5 px-4 text-left">Contacto</th>
+                  <th class="py-3.5 px-4 text-left">Último contacto</th>
+                  <th class="py-3.5 px-4 text-right w-10"></th>
                 </tr>
               </thead>
-              <tbody id="journalists-table-body" class="divide-y divide-[#E4DDD3]/60 bg-white text-xs">
+              <tbody id="journalists-table-body" class="divide-y divide-[#1F2A2B]/10 text-xs">
                 <!-- Preenchido dinamicamente via renderJournalistsTable() -->
               </tbody>
             </table>
@@ -1884,22 +1884,22 @@
           </div>
         </div>
 
-        <!-- Tabela de Meios: 6 Colunas + Menu ⋯ -->
-        <div class="crm-card overflow-hidden">
+        <!-- Tabela de Meios: 6 Colunas + Menu ⋯ (Liquid Glass Denso) -->
+        <div class="glass-dense rounded-[24px] p-2 overflow-hidden border border-white/70 shadow-sm">
           <div class="overflow-x-auto">
             <table class="crm-table w-full" id="outlets-table">
               <thead>
-                <tr class="border-b border-[#E4DDD3] text-[11px] font-semibold text-[#6B6B6B] uppercase tracking-wider bg-[#FAF8F5]">
-                  <th class="py-3 px-4 text-left font-medium">Meio</th>
-                  <th class="py-3 px-4 text-left font-medium">Formatos</th>
-                  <th class="py-3 px-4 text-left font-medium">Âmbito</th>
-                  <th class="py-3 px-4 text-left font-medium">Especialidade</th>
-                  <th class="py-3 px-4 text-left font-medium">Email de agenda</th>
-                  <th class="py-3 px-4 text-left font-medium">Jornalistas</th>
-                  <th class="py-3 px-4 text-right w-10"></th>
+                <tr class="border-b border-[#1F2A2B]/10 micro-label">
+                  <th class="py-3.5 px-4 text-left">Meio</th>
+                  <th class="py-3.5 px-4 text-left">Formatos</th>
+                  <th class="py-3.5 px-4 text-left">Âmbito</th>
+                  <th class="py-3.5 px-4 text-left">Especialidade</th>
+                  <th class="py-3.5 px-4 text-left">Email de agenda</th>
+                  <th class="py-3.5 px-4 text-left">Jornalistas</th>
+                  <th class="py-3.5 px-4 text-right w-10"></th>
                 </tr>
               </thead>
-              <tbody id="outlets-table-body" class="divide-y divide-[#E4DDD3]/60 bg-white text-xs">
+              <tbody id="outlets-table-body" class="divide-y divide-[#1F2A2B]/10 text-xs">
                 <!-- Preenchido dinamicamente via renderOutletsTable() -->
               </tbody>
             </table>
@@ -2276,7 +2276,7 @@
   <!-- ======================================================== -->
   <div id="panel-journalist-detail" class="fixed inset-0 z-50 hidden">
     <!-- Backdrop com fechar ao clicar -->
-    <div onclick="closeJournalistDetailDrawer()" class="fixed inset-0 bg-[#1A1A1A]/30 backdrop-blur-xs transition-opacity"></div>
+    <div onclick="closeJournalistDetailDrawer()" class="fixed inset-0 bg-[#1F2A2B]/40 backdrop-blur-sm transition-opacity"></div>
 
     <!-- Gaveta Lateral Deslizante -->
     <div id="panel-journalist-container"
@@ -2433,7 +2433,7 @@
   <!-- ======================================================== -->
   <div id="panel-outlet-detail" class="fixed inset-0 z-50 hidden">
     <!-- Backdrop com fechar ao clicar -->
-    <div onclick="closeOutletDetailDrawer()" class="fixed inset-0 bg-[#1A1A1A]/30 backdrop-blur-xs transition-opacity"></div>
+    <div onclick="closeOutletDetailDrawer()" class="fixed inset-0 bg-[#1F2A2B]/40 backdrop-blur-sm transition-opacity"></div>
 
     <!-- Gaveta Lateral Deslizante -->
     <div id="panel-outlet-container"
@@ -7615,40 +7615,46 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         const lastProj = j.last_project_name || 'Ainda sem contacto';
 
         return `
-          <tr onclick="openJournalistDetailDrawer('${j.id}')" class="transition-colors cursor-pointer hover:bg-[#FAF8F5]/80 group">
+          <tr onclick="openJournalistDetailDrawer('${j.id}')" class="transition-colors cursor-pointer hover:bg-white/60 group">
             <!-- 1. Jornalista -->
-            <td class="py-3 px-4">
+            <td class="py-3.5 px-4">
               <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full ${colorClass} flex items-center justify-center font-bold text-xs shrink-0 select-none">
+                <div class="w-9 h-9 rounded-full font-bold text-xs flex items-center justify-center shrink-0 shadow-xs"
+                  style="background-color: ${getStableToneById(j.name || j.id).bg}; color: ${getStableToneById(j.name || j.id).color};">
                   ${initials}
                 </div>
                 <div>
-                  <span class="font-semibold text-[#1A1A1A] block text-xs group-hover:text-[#6C1C37] transition-colors">${j.name}</span>
-                  <span class="text-xs text-[#6B6B6B] block">${j.role_title || 'Jornalista'}</span>
+                  <span class="font-semibold text-[#1F2A2B] block text-xs group-hover:text-[#1F6F78] transition-colors">${j.name}</span>
+                  <span class="text-xs text-[#5B6668] block">${j.role_title || 'Jornalista'}</span>
                 </div>
               </div>
             </td>
 
             <!-- 2. Meio -->
-            <td class="py-3 px-4 text-xs text-[#1A1A1A] font-normal">
+            <td class="py-3.5 px-4 text-xs text-[#1F2A2B] font-normal">
               ${ocsDisplay}
             </td>
 
-            <!-- 3. Área -->
-            <td class="py-3 px-4">
-              ${areaBadge}
+            <!-- 3. Área (Etiqueta Neutra) -->
+            <td class="py-3.5 px-4">
+              <span class="category-tag-neutral">
+                ${j.area || j.editorial_desk || 'Geral'}
+              </span>
             </td>
 
             <!-- 4. Contacto -->
-            <td class="py-3 px-4 text-xs">
-              <span class="text-[#1A1A1A] block">${email}</span>
-              <span class="text-xs text-[#6B6B6B] block">${prefLabel}</span>
+            <td class="py-3.5 px-4 text-xs">
+              <span class="text-[#1F2A2B] block font-medium">${email}</span>
+              <span class="text-xs text-[#5B6668] block">${prefLabel}</span>
             </td>
 
-            <!-- 5. Último contacto -->
-            <td class="py-3 px-4 text-xs">
-              <span class="${timeClass} block">${contactTimeLabel}</span>
-              <span class="text-xs text-[#6B6B6B] block truncate max-w-[190px]" title="${lastProj}">${lastProj}</span>
+            <!-- 5. Último contacto (Ponto + Texto) -->
+            <td class="py-3.5 px-4 text-xs">
+              <span class="status-item">
+                <span class="status-dot ${isRed ? 'status-dot-red' : 'status-dot-green'}"></span>
+                <span class="text-xs font-medium ${isRed ? 'text-[#C0392B]' : 'text-[#1F2A2B]'}">${contactTimeLabel}</span>
+              </span>
+              <span class="text-xs text-[#5B6668] block truncate max-w-[190px]" title="${lastProj}">${lastProj}</span>
             </td>
 
             <!-- Menu ⋯ -->
@@ -7894,14 +7900,14 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         const jourCount = assocJour.length;
 
         return `
-          <tr onclick="openOutletDetailDrawer('${o.id}')" class="transition-colors cursor-pointer hover:bg-[#FAF8F5]/80 group">
+          <tr onclick="openOutletDetailDrawer('${o.id}')" class="transition-colors cursor-pointer hover:bg-white/60 group">
             <!-- 1. Meio (Logo + Nome + Grupo) -->
-            <td class="py-3 px-4">
+            <td class="py-3.5 px-4">
               <div class="flex items-center gap-3">
                 ${logoHtml}
                 <div>
-                  <span class="font-semibold text-[#1A1A1A] block text-xs group-hover:text-[#6C1C37] transition-colors">${o.name}</span>
-                  <span class="text-xs text-[#6B6B6B] block">${o.media_group || 'Sem grupo'}</span>
+                  <span class="font-semibold text-[#1F2A2B] block text-xs group-hover:text-[#1F6F78] transition-colors">${o.name}</span>
+                  <span class="text-xs text-[#5B6668] block">${o.media_group || 'Sem grupo'}</span>
                 </div>
               </div>
             </td>
