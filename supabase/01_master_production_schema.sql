@@ -1,6 +1,6 @@
 -- ==============================================================================
 -- REPUTATION OS / MODO CRM • ESQUEMA MESTRE DE PRODUÇÃO (SUPABASE + POSTGRESQL)
--- Versão 2.1 • Otimizado para Vercel, Supabase Realtime & Row Level Security (RLS)
+-- Versão 2.2 • Compatível com bases de dados novas ou já existentes
 -- ==============================================================================
 
 -- 1. EXTENSÕES
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Trigger de sincronização automática com novos utilizadores criados no Supabase Auth
+-- Trigger de sincronização com novos utilizadores criados no Supabase Auth
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -115,6 +115,17 @@ CREATE TABLE IF NOT EXISTS public.journalists (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
+-- Garantir colunas se a tabela journalists já existia
+ALTER TABLE public.journalists ADD COLUMN IF NOT EXISTS outlet_id UUID REFERENCES public.media_outlets(id) ON DELETE SET NULL;
+ALTER TABLE public.journalists ADD COLUMN IF NOT EXISTS outlet_name VARCHAR(255);
+ALTER TABLE public.journalists ADD COLUMN IF NOT EXISTS role_title VARCHAR(150) DEFAULT 'Jornalista';
+ALTER TABLE public.journalists ADD COLUMN IF NOT EXISTS intervention_area VARCHAR(150);
+ALTER TABLE public.journalists ADD COLUMN IF NOT EXISTS links TEXT;
+ALTER TABLE public.journalists ADD COLUMN IF NOT EXISTS registration_date DATE DEFAULT CURRENT_DATE;
+ALTER TABLE public.journalists ADD COLUMN IF NOT EXISTS last_contact_date DATE DEFAULT CURRENT_DATE;
+ALTER TABLE public.journalists ADD COLUMN IF NOT EXISTS notes TEXT;
+ALTER TABLE public.journalists ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now());
+
 -- 6. TABELA DE PROJETOS (DOSSIÊS DE COMUNICAÇÃO & CAMPANHAS)
 CREATE TABLE IF NOT EXISTS public.projects (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -131,6 +142,16 @@ CREATE TABLE IF NOT EXISTS public.projects (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
+
+-- Garantir colunas se a tabela projects já existia
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS client_or_brand VARCHAR(255) DEFAULT 'Institucional';
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS deadline DATE;
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS start_date DATE DEFAULT CURRENT_DATE;
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS manager_name VARCHAR(255) DEFAULT 'Leonor Rodrigues';
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS manager_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL;
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS team_members TEXT[] DEFAULT ARRAY['Leonor Rodrigues', 'Sofia Ramos']::TEXT[];
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS budget_eur NUMERIC(12, 2) DEFAULT 0.00;
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now());
 
 -- 7. TABELA DE TAREFAS ("O QUE TENHO PARA FAZER")
 CREATE TABLE IF NOT EXISTS public.tasks (
@@ -153,6 +174,19 @@ CREATE TABLE IF NOT EXISTS public.tasks (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
+-- Garantir colunas se a tabela tasks já existia
+ALTER TABLE public.tasks ADD COLUMN IF NOT EXISTS project_id UUID REFERENCES public.projects(id) ON DELETE CASCADE;
+ALTER TABLE public.tasks ADD COLUMN IF NOT EXISTS project_name VARCHAR(255) DEFAULT 'Geral';
+ALTER TABLE public.tasks ADD COLUMN IF NOT EXISTS due_time VARCHAR(10) DEFAULT '18:00';
+ALTER TABLE public.tasks ADD COLUMN IF NOT EXISTS assignee_name VARCHAR(255) DEFAULT 'Leonor Rodrigues';
+ALTER TABLE public.tasks ADD COLUMN IF NOT EXISTS assignee_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL;
+ALTER TABLE public.tasks ADD COLUMN IF NOT EXISTS client_or_brand VARCHAR(255);
+ALTER TABLE public.tasks ADD COLUMN IF NOT EXISTS description TEXT;
+ALTER TABLE public.tasks ADD COLUMN IF NOT EXISTS subtasks JSONB DEFAULT '[]'::JSONB;
+ALTER TABLE public.tasks ADD COLUMN IF NOT EXISTS comments JSONB DEFAULT '[]'::JSONB;
+ALTER TABLE public.tasks ADD COLUMN IF NOT EXISTS audit_log JSONB DEFAULT '[]'::JSONB;
+ALTER TABLE public.tasks ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now());
+
 -- 8. TABELA DE CONTACTOS DIÁRIOS (REGISTO DE INTERAÇÕES)
 CREATE TABLE IF NOT EXISTS public.daily_contacts (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -168,6 +202,14 @@ CREATE TABLE IF NOT EXISTS public.daily_contacts (
     user_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
+
+-- Garantir colunas se a tabela daily_contacts já existia
+ALTER TABLE public.daily_contacts ADD COLUMN IF NOT EXISTS journalist_id UUID REFERENCES public.journalists(id) ON DELETE SET NULL;
+ALTER TABLE public.daily_contacts ADD COLUMN IF NOT EXISTS outlet_name VARCHAR(255);
+ALTER TABLE public.daily_contacts ADD COLUMN IF NOT EXISTS contact_date DATE DEFAULT CURRENT_DATE;
+ALTER TABLE public.daily_contacts ADD COLUMN IF NOT EXISTS contact_time VARCHAR(10) DEFAULT '11:00';
+ALTER TABLE public.daily_contacts ADD COLUMN IF NOT EXISTS project_id UUID REFERENCES public.projects(id) ON DELETE SET NULL;
+ALTER TABLE public.daily_contacts ADD COLUMN IF NOT EXISTS user_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL;
 
 -- Trigger: Atualização automática da data de último contacto do jornalista
 CREATE OR REPLACE FUNCTION public.update_journalist_last_contact()
@@ -228,6 +270,14 @@ CREATE TABLE IF NOT EXISTS public.clippings (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
+-- Garantir colunas se a tabela clippings já existia
+ALTER TABLE public.clippings ADD COLUMN IF NOT EXISTS outlet_id UUID REFERENCES public.media_outlets(id) ON DELETE SET NULL;
+ALTER TABLE public.clippings ADD COLUMN IF NOT EXISTS journalist_id UUID REFERENCES public.journalists(id) ON DELETE SET NULL;
+ALTER TABLE public.clippings ADD COLUMN IF NOT EXISTS project_id UUID REFERENCES public.projects(id) ON DELETE SET NULL;
+ALTER TABLE public.clippings ADD COLUMN IF NOT EXISTS related_request_id UUID REFERENCES public.pr_requests(id) ON DELETE SET NULL;
+ALTER TABLE public.clippings ADD COLUMN IF NOT EXISTS reach_impressions BIGINT DEFAULT 0;
+ALTER TABLE public.clippings ADD COLUMN IF NOT EXISTS ave_value_eur NUMERIC(12, 2) DEFAULT 0.00;
+
 -- 11. TABELA DE PRESS RELEASES / COMUNICADOS
 CREATE TABLE IF NOT EXISTS public.press_releases (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -281,7 +331,6 @@ BEGIN
         EXECUTE format('DROP POLICY IF EXISTS "Acesso Escrita Autenticada em %s" ON public.%s;', t, t);
         EXECUTE format('CREATE POLICY "Acesso Escrita Autenticada em %s" ON public.%s FOR ALL TO authenticated USING (true) WITH CHECK (true);', t, t);
 
-        -- Política aberta adicional para suportar consultas públicas de anon key se necessário
         EXECUTE format('DROP POLICY IF EXISTS "Acesso Anon Leitura em %s" ON public.%s;', t, t);
         EXECUTE format('CREATE POLICY "Acesso Anon Leitura em %s" ON public.%s FOR SELECT TO anon USING (true);', t, t);
 
