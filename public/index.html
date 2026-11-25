@@ -1913,14 +1913,14 @@
           <div class="overflow-x-auto">
             <table class="crm-table w-full" id="outlets-table">
               <thead>
-                <tr class="border-b border-[#1F2A2B]/10 micro-label">
-                  <th class="py-3.5 px-4 text-left">Meio</th>
-                  <th class="py-3.5 px-4 text-left">Formatos</th>
-                  <th class="py-3.5 px-4 text-left">Âmbito</th>
-                  <th class="py-3.5 px-4 text-left">Especialidade</th>
-                  <th class="py-3.5 px-4 text-left">Email de agenda</th>
-                  <th class="py-3.5 px-4 text-left">Jornalistas</th>
-                  <th class="py-3.5 px-4 text-right w-10"></th>
+                <tr class="border-b border-[#E4DDD3] micro-label bg-[#FAF8F5]/80">
+                  <th class="py-3 px-4 text-left font-semibold text-[#6B7677] text-[11px] uppercase tracking-[0.08em]">Meio</th>
+                  <th class="py-3 px-4 text-left font-semibold text-[#6B7677] text-[11px] uppercase tracking-[0.08em]">Formatos</th>
+                  <th class="py-3 px-4 text-left font-semibold text-[#6B7677] text-[11px] uppercase tracking-[0.08em]">Âmbito</th>
+                  <th class="py-3 px-4 text-left font-semibold text-[#6B7677] text-[11px] uppercase tracking-[0.08em]">Especialidades</th>
+                  <th class="py-3 px-4 text-left font-semibold text-[#6B7677] text-[11px] uppercase tracking-[0.08em]">N.º Jornalistas</th>
+                  <th class="py-3 px-4 text-left font-semibold text-[#6B7677] text-[11px] uppercase tracking-[0.08em]">Último contacto</th>
+                  <th class="py-3 px-4 text-right w-10"></th>
                 </tr>
               </thead>
               <tbody id="outlets-table-body" class="divide-y divide-[#1F2A2B]/10 text-xs">
@@ -8329,8 +8329,8 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         const extraFmtsCount = fmtLabels.length - 2;
         const formatsHtml = `
           <div class="flex items-center gap-1.5 flex-wrap">
-            ${visibleFmts.map(fmt => `<span class="inline-block px-2 py-0.5 rounded-md text-xs font-normal bg-[#F2EFE9] text-[#4A4A4A] border border-[#E8E2D8]">${fmt}</span>`).join('')}
-            ${extraFmtsCount > 0 ? `<span class="text-xs text-[#8A8A8A] font-normal">+${extraFmtsCount}</span>` : ''}
+            ${visibleFmts.map(fmt => `<span class="inline-block px-2 py-0.5 rounded text-[11px] font-medium bg-[#FAF8F5] text-[#1A1A1A] border border-[#E4DDD3]">${escapeHtml(fmt)}</span>`).join('')}
+            ${extraFmtsCount > 0 ? `<span class="text-[11px] text-[#8A8A8A] font-medium">+${extraFmtsCount}</span>` : ''}
           </div>
         `;
 
@@ -8338,39 +8338,54 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         const scopeLabel = o.scope ? (o.scope.charAt(0).toUpperCase() + o.scope.slice(1).toLowerCase()) : 'Nacional';
         const periodicityLabel = o.periodicity ? (o.periodicity.charAt(0).toUpperCase() + o.periodicity.slice(1).toLowerCase()) : 'Contínua';
 
-        // Especialidade (1ª como etiqueta cor-de-rosa suave + "+N")
+        // Especialidades (máx 2 neutras + "+N")
         const specs = o.specialties || (o.specialty ? [o.specialty] : ['Geral']);
-        const mainSpec = specs[0] || 'Geral';
-        const extraSpecsCount = specs.length - 1;
+        const visibleSpecs = specs.slice(0, 2);
+        const extraSpecsCount = specs.length - 2;
         const specHtml = `
           <div class="flex items-center gap-1.5 flex-wrap">
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#FBE8EB] text-[#801D38]">
-              ${mainSpec}
-            </span>
-            ${extraSpecsCount > 0 ? `<span class="text-xs text-[#8A8A8A] font-normal">+${extraSpecsCount}</span>` : ''}
+            ${visibleSpecs.map(spec => `<span class="inline-block px-2 py-0.5 rounded-full text-[11px] font-medium bg-[#FAF8F5] text-[#1A1A1A] border border-[#E4DDD3]">${escapeHtml(spec)}</span>`).join('')}
+            ${extraSpecsCount > 0 ? `<span class="text-[11px] text-[#8A8A8A] font-medium">+${extraSpecsCount}</span>` : ''}
           </div>
         `;
 
-        // Email de Agenda (Texto normal, truncado)
-        const agendaEmail = o.agenda_email || o.contact_email || '—';
+        // Email de Agenda
+        const agendaEmail = o.agenda_email || o.contact_email || '';
 
-        // Jornalistas associados (Link clicável para a lista filtrada)
-        const assocJour = localJournalists.filter(j => 
+        // Jornalistas associados
+        const assocJour = (localJournalists || []).filter(j => 
           (j.outlet_ids && j.outlet_ids.includes(o.id)) || 
           (j.outlet_name && j.outlet_name.toLowerCase() === o.name.toLowerCase()) ||
           (j.outlet_names && j.outlet_names.some(on => on.toLowerCase() === o.name.toLowerCase()))
         );
         const jourCount = assocJour.length;
 
+        // Cálculo do Último Contacto do Meio (relativo + ponto de estado)
+        const contactDates = assocJour.map(j => j.last_contact_date).filter(Boolean);
+        let contactTimeLabel = 'Sem contactos';
+        let isOverdue = false;
+        let hasContact = false;
+        if (contactDates.length > 0) {
+          const sortedDates = contactDates.sort((a, b) => new Date(b) - new Date(a));
+          const relInfo = formatRelativeDaysPt(sortedDates[0]);
+          contactTimeLabel = relInfo.text;
+          isOverdue = relInfo.isOverdue;
+          hasContact = true;
+        }
+
         return `
-          <tr onclick="openOutletDetailDrawer('${o.id}')" class="transition-colors cursor-pointer hover:bg-white/60 group">
-            <!-- 1. Meio (Logo + Nome + Grupo) -->
-            <td class="py-3.5 px-4">
+          <tr onclick="openOutletDetailDrawer('${o.id}')" class="transition-colors cursor-pointer hover:bg-white/80 group border-b border-[#E4DDD3]/60">
+            <!-- 1. Meio (Logo + Nome + Grupo + Ações no hover) -->
+            <td class="py-3 px-4">
               <div class="flex items-center gap-3">
                 ${logoHtml}
-                <div>
-                  <span class="font-semibold text-[#1F2A2B] block text-xs group-hover:text-[#1F6F78] transition-colors">${o.name}</span>
-                  <span class="text-xs text-[#5B6668] block">${o.media_group || 'Sem grupo'}</span>
+                <div class="min-w-0">
+                  <span class="font-semibold text-[#1A1A1A] block text-xs group-hover:text-[#1F6F78] transition-colors truncate">${escapeHtml(o.name)}</span>
+                  <span class="text-xs text-[#6B7677] block truncate">${escapeHtml(o.media_group || 'Sem grupo')}</span>
+                  <div class="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 pt-0.5" onclick="event.stopPropagation()">
+                    ${o.website ? `<a href="${o.website.startsWith('http') ? o.website : 'https://' + o.website}" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded bg-[#FAF8F5] border border-[#E4DDD3] text-[#1F6F78] hover:bg-[#F2EFE9] text-[10px] font-medium transition-colors cursor-pointer" title="Abrir site">Site ↗</a>` : ''}
+                    ${agendaEmail ? `<a href="mailto:${agendaEmail}" class="px-2 py-0.5 rounded bg-[#FAF8F5] border border-[#E4DDD3] text-[#1A1A1A] hover:bg-[#F2EFE9] text-[10px] font-medium transition-colors cursor-pointer" title="Email de agenda">Email</a>` : ''}
+                  </div>
                 </div>
               </div>
             </td>
@@ -8382,23 +8397,16 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
 
             <!-- 3. Âmbito & Periodicidade -->
             <td class="py-3 px-4 text-xs">
-              <span class="font-semibold text-[#1A1A1A] block">${scopeLabel}</span>
-              <span class="text-xs text-[#6B6B6B] block">${periodicityLabel}</span>
+              <span class="font-medium text-[#1A1A1A] block text-xs">${escapeHtml(scopeLabel)}</span>
+              <span class="text-[11px] text-[#6B7677] block">${escapeHtml(periodicityLabel)}</span>
             </td>
 
-            <!-- 4. Especialidade -->
+            <!-- 4. Especialidades (máx 2 + N) -->
             <td class="py-3 px-4">
               ${specHtml}
             </td>
 
-            <!-- 5. Email de Agenda -->
-            <td class="py-3 px-4 text-xs">
-              <span class="text-[#1A1A1A] truncate max-w-[210px] block" title="${agendaEmail}">
-                ${agendaEmail}
-              </span>
-            </td>
-
-            <!-- 6. Jornalistas (Ligação) -->
+            <!-- 5. N.º Jornalistas (Ligação filtrável) -->
             <td class="py-3 px-4 text-xs" onclick="event.stopPropagation()">
               <button type="button" onclick="filterJournalistsByOutlet('${o.id}')"
                 class="font-medium text-[#1A1A1A] hover:text-[#1F6F78] hover:underline cursor-pointer">
@@ -8406,26 +8414,36 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
               </button>
             </td>
 
+            <!-- 6. Último contacto (Ponto + Texto) -->
+            <td class="py-3 px-4 text-xs">
+              <div>
+                <span class="inline-flex items-center gap-1.5 text-xs font-medium ${isOverdue ? 'text-[#C53030]' : (hasContact ? 'text-[#1A1A1A]' : 'text-[#8A8A8A]')}">
+                  <span class="w-1.5 h-1.5 rounded-full ${isOverdue ? 'bg-[#C53030]' : (hasContact ? 'bg-[#2E7D32]' : 'bg-[#8A8A8A]')} shrink-0"></span>
+                  ${contactTimeLabel}
+                </span>
+              </div>
+            </td>
+
             <!-- Menu ⋯ -->
             <td class="py-3 px-4 text-right" onclick="event.stopPropagation()">
               <div class="relative inline-block text-left">
                 <button type="button" onclick="toggleOutletRowMenu(event, '${o.id}')"
-                  class="outlet-row-menu-btn w-8 h-8 rounded-lg flex items-center justify-center text-[#8A8A8A] hover:text-[#1A1A1A] hover:bg-[#F2EFE9] transition-all cursor-pointer">
+                  class="outlet-row-menu-btn w-8 h-8 rounded-lg flex items-center justify-center text-[#8A8A8A] hover:text-[#1A1A1A] hover:bg-[#F2EFE9] transition-all cursor-pointer" aria-label="Ações do meio">
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.5"/><circle cx="6" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg>
                 </button>
                 <div id="outlet-menu-${o.id}" class="outlet-row-menu-popover hidden fixed z-50 w-44 bg-white border border-[#E4DDD3] rounded-xl shadow-lg py-1 text-xs">
-                  <button type="button" onclick="closeAllOutletMenus(); openOutletDetailDrawer('${o.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] flex items-center gap-2">
+                  <button type="button" onclick="closeAllOutletMenus(); openOutletDetailDrawer('${o.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] flex items-center gap-2 cursor-pointer">
                     Abrir ficha
                   </button>
-                  <button type="button" onclick="closeAllOutletMenus(); openEditOutletModal('${o.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] flex items-center gap-2">
+                  <button type="button" onclick="closeAllOutletMenus(); openEditOutletModal('${o.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] flex items-center gap-2 cursor-pointer">
                     Editar
                   </button>
-                  <button type="button" onclick="closeAllOutletMenus(); toggleOutletArchive('${o.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#6B6B6B] flex items-center gap-2">
+                  <button type="button" onclick="closeAllOutletMenus(); toggleOutletArchive('${o.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#6B7677] flex items-center gap-2 cursor-pointer">
                     ${o.status === 'extinto' ? 'Reativar meio' : 'Arquivar'}
                   </button>
                   ${currentUserPermissions()?.canDeleteRecords ? `
                     <div class="border-t border-[#E4DDD3] my-1"></div>
-                    <button type="button" onclick="closeAllOutletMenus(); deleteOutlet('${o.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FBEAE8] text-[#C53030] flex items-center gap-2">
+                    <button type="button" onclick="closeAllOutletMenus(); deleteOutlet('${o.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FBEAE8] text-[#C53030] flex items-center gap-2 cursor-pointer">
                       Eliminar
                     </button>
                   ` : ''}
