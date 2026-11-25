@@ -1349,9 +1349,9 @@
 
         <!-- Topo da página: Título + Resumo calculado + Botão Nova tarefa -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div class="flex items-baseline gap-3 flex-wrap">
+          <div>
             <h1 class="text-2xl font-bold text-[#1A1A1A] font-title tracking-tight">Tarefas</h1>
-            <span id="tasks-summary-text" class="text-xs text-[#7A7A7A] font-normal">20 tarefas · 2 em atraso · 3 para hoje</span>
+            <p id="tasks-summary-text" class="text-xs text-[#6B7677] font-normal mt-0.5">11 tarefas · 1 em atraso</p>
           </div>
           <button onclick="openTaskModal()" id="view-tasks-add-btn"
             class="self-start sm:self-auto px-4 py-2 rounded-full text-xs font-semibold bg-[#1C2526] text-white hover:bg-[#2A3739] transition-all flex items-center gap-1.5 shadow-xs cursor-pointer">
@@ -1362,58 +1362,128 @@
           </button>
         </div>
 
-        <!-- Separadores por prazo/estado com contagens -->
-        <div class="border-b border-[#E4DDD3]/70 pt-1">
-          <div class="flex items-center gap-6 overflow-x-auto no-scrollbar text-xs">
-            <button type="button" onclick="setTasksStatusTab('all')" id="task-tab-all"
-              class="task-status-tab flex items-center gap-2 pb-2.5 -mb-[1px] font-semibold text-[#1A1A1A] border-b-2 border-[#1F6F78] transition-all cursor-pointer shrink-0">
-              <span>Todas</span>
-              <span id="task-tab-count-all" class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#1C2526] text-white">0</span>
-            </button>
-            <button type="button" onclick="setTasksStatusTab('today')" id="task-tab-today"
-              class="task-status-tab flex items-center gap-2 pb-2.5 -mb-[1px] font-normal text-[#6B6B6B] hover:text-[#1A1A1A] border-b-2 border-transparent transition-all cursor-pointer shrink-0">
-              <span>Para hoje</span>
-              <span id="task-tab-count-today" class="text-[11px] font-normal text-[#8A8A8A]">0</span>
-            </button>
-            <button type="button" onclick="setTasksStatusTab('week')" id="task-tab-week"
-              class="task-status-tab flex items-center gap-2 pb-2.5 -mb-[1px] font-normal text-[#6B6B6B] hover:text-[#1A1A1A] border-b-2 border-transparent transition-all cursor-pointer shrink-0">
-              <span>Esta semana</span>
-              <span id="task-tab-count-week" class="text-[11px] font-normal text-[#8A8A8A]">0</span>
-            </button>
-            <button type="button" onclick="setTasksStatusTab('overdue')" id="task-tab-overdue"
-              class="task-status-tab flex items-center gap-2 pb-2.5 -mb-[1px] font-normal text-[#6B6B6B] hover:text-[#1A1A1A] border-b-2 border-transparent transition-all cursor-pointer shrink-0">
-              <span>Em atraso</span>
-              <span id="task-tab-count-overdue" class="text-[11px] font-normal text-[#8A8A8A]">0</span>
-            </button>
-            <button type="button" onclick="setTasksStatusTab('my')" id="task-tab-my"
-              class="task-status-tab flex items-center gap-2 pb-2.5 -mb-[1px] font-normal text-[#6B6B6B] hover:text-[#1A1A1A] border-b-2 border-transparent transition-all cursor-pointer shrink-0">
-              <span>Minhas</span>
-              <span id="task-tab-count-my" class="text-[11px] font-normal text-[#8A8A8A]">0</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Barra de filtros numa só linha -->
-        <div class="flex items-center gap-3 pt-1">
-          <!-- Pesquisa de Tarefas -->
-          <div class="relative flex-1">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#8A8A8A]">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        <!-- Barra de Controlos: Vistas (Lista / Quadro / Calendário) e Filtros estilo Linear -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+          <!-- Alternador de Vistas: Lista / Quadro / Calendário -->
+          <div class="flex items-center bg-[#FAF8F5] border border-[#E4DDD3] rounded-xl p-1 shadow-2xs shrink-0 self-start sm:self-auto">
+            <button id="btn-tasks-view-list" type="button" onclick="setTasksViewMode('list')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#1C2526] text-white transition-all cursor-pointer flex items-center gap-2 shadow-xs">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
               </svg>
+              <span>Lista</span>
+            </button>
+            <button id="btn-tasks-view-board" type="button" onclick="setTasksViewMode('board')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-[#6B7677] hover:text-[#1A1A1A] transition-all cursor-pointer flex items-center gap-2">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path>
+              </svg>
+              <span>Quadro</span>
+            </button>
+            <button id="btn-tasks-view-calendar" type="button" onclick="setTasksViewMode('calendar')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-[#6B7677] hover:text-[#1A1A1A] transition-all cursor-pointer flex items-center gap-2">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              <span>Calendário</span>
+            </button>
+          </div>
+
+          <!-- Filtros à Direita: Pílula Ativa + Botão Filtro com Popover -->
+          <div class="flex items-center gap-2.5 relative flex-wrap sm:flex-nowrap justify-start sm:justify-end">
+            <!-- Pílulas de filtros ativos -->
+            <div id="tasks-active-filters-container" class="flex items-center gap-2 flex-wrap">
+              <button type="button" id="pill-filter-my" onclick="toggleTasksMyFilter()"
+                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium border border-[#E4DDD3] bg-white text-[#1A1A1A] shadow-2xs hover:border-[#1F6F78] transition-all cursor-pointer">
+                <span>Responsável: Eu</span>
+                <span class="text-[#8A8A8A] hover:text-[#1A1A1A] text-xs font-bold leading-none">✕</span>
+              </button>
             </div>
-            <input type="text" id="tasks-search-input" oninput="onTasksFilterChange()"
-              placeholder="Pesquisar por tarefa, projeto, cliente ou jornalista..."
-              class="w-full bg-white border border-[#E4DDD3] rounded-xl pl-9 pr-3.5 py-2 text-xs text-[#1A1A1A] placeholder-[#8A8A8A] focus:outline-none focus:border-[#1F6F78] transition-colors shadow-xs">
+
+            <!-- Botão Filtro e Popover Linear -->
+            <div class="relative">
+              <button type="button" id="btn-tasks-filter-toggle" onclick="toggleTasksFilterMenu(event)"
+                class="px-3 py-1.5 rounded-xl border border-[#E4DDD3] bg-white text-[#1A1A1A] hover:bg-[#FAF8F5] text-xs font-medium transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer">
+                <svg class="w-3.5 h-3.5 text-[#6B7677]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                </svg>
+                <span>Filtro</span>
+              </button>
+
+              <!-- Popover Principal: FILTRAR POR -->
+              <div id="tasks-filter-popover" class="hidden absolute right-0 top-full mt-2 w-52 bg-white border border-[#E4DDD3] rounded-2xl shadow-xl z-50 py-2 text-xs divide-y divide-[#EAE5DF]/60">
+                <div class="px-3.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-[#8A8A8A]">FILTRAR POR</div>
+                
+                <div class="py-1">
+                  <button type="button" onclick="openTasksFilterSubmenu('status', event)" class="w-full flex items-center justify-between px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] transition-colors cursor-pointer text-left">
+                    <span class="flex items-center gap-2.5">
+                      <svg class="w-4 h-4 text-[#6B7677]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+                      <span>Estado</span>
+                    </span>
+                    <span class="text-[#8A8A8A] text-xs">›</span>
+                  </button>
+                  <button type="button" onclick="openTasksFilterSubmenu('priority', event)" class="w-full flex items-center justify-between px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] transition-colors cursor-pointer text-left">
+                    <span class="flex items-center gap-2.5">
+                      <svg class="w-4 h-4 text-[#6B7677]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                      <span>Prioridade</span>
+                    </span>
+                    <span class="text-[#8A8A8A] text-xs">›</span>
+                  </button>
+                  <button type="button" onclick="openTasksFilterSubmenu('responsible', event)" class="w-full flex items-center justify-between px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] transition-colors cursor-pointer text-left">
+                    <span class="flex items-center gap-2.5">
+                      <svg class="w-4 h-4 text-[#6B7677]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                      <span>Responsável</span>
+                    </span>
+                    <span class="text-[#8A8A8A] text-xs">›</span>
+                  </button>
+                  <button type="button" onclick="openTasksFilterSubmenu('project', event)" class="w-full flex items-center justify-between px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] transition-colors cursor-pointer text-left">
+                    <span class="flex items-center gap-2.5">
+                      <svg class="w-4 h-4 text-[#6B7677]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                      <span>Projeto</span>
+                    </span>
+                    <span class="text-[#8A8A8A] text-xs">›</span>
+                  </button>
+                  <button type="button" onclick="openTasksFilterSubmenu('journalist', event)" id="filter-btn-menu-jour" class="w-full flex items-center justify-between px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] transition-colors cursor-pointer text-left group">
+                    <span class="flex items-center gap-2.5">
+                      <svg class="w-4 h-4 text-[#6B7677]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                      <span>Jornalista</span>
+                    </span>
+                    <span class="text-[#8A8A8A] text-xs">⌵</span>
+                  </button>
+                  <button type="button" onclick="openTasksFilterSubmenu('due', event)" class="w-full flex items-center justify-between px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] transition-colors cursor-pointer text-left">
+                    <span class="flex items-center gap-2.5">
+                      <svg class="w-4 h-4 text-[#6B7677]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                      <span>Data limite</span>
+                    </span>
+                    <span class="text-[#8A8A8A] text-xs">›</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Sub-Flyout (Jornalista, etc.) -->
+              <div id="tasks-filter-subflyout" class="hidden absolute right-[215px] top-0 w-64 bg-white border border-[#E4DDD3] rounded-2xl shadow-2xl z-50 p-3 space-y-2 text-xs">
+                <!-- Conteúdo gerado dinamicamente -->
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Content Container -->
-        <div id="tasks-content-wrapper" class="space-y-4">
+        <!-- 1. Vista Lista: Secções de Estado Estilo Linear -->
+        <div id="tasks-content-wrapper" class="space-y-6 pt-1">
           <!-- Preenchido dinamicamente por renderFullTasks() -->
         </div>
 
-        <!-- Rodapé da tabela -->
+        <!-- 2. Vista Quadro (Kanban) -->
+        <div id="tasks-kanban-wrapper" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-1">
+          <!-- Preenchido dinamicamente por renderTasksKanban() -->
+        </div>
+
+        <!-- 3. Vista Calendário -->
+        <div id="tasks-calendar-wrapper" class="hidden bg-white rounded-2xl border border-[#E4DDD3] p-5 shadow-xs pt-1 space-y-4">
+          <!-- Preenchido dinamicamente por renderTasksCalendar() -->
+        </div>
+
+        <!-- Rodapé com contagem discreta -->
         <div id="tasks-table-footer" class="text-xs text-[#8A8A8A] pt-2 px-1">
           <!-- Preenchido por renderFullTasks() -->
         </div>
@@ -11814,66 +11884,446 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       }
     }
 
+    let tasksViewMode = 'list';
+    let tasksFilterMy = true;
+    let tasksFilterStatus = 'all';
+    let tasksFilterPriority = 'all';
+    let tasksFilterResponsible = 'all';
+    let tasksFilterProject = 'all';
+    let tasksSelectedJournalists = [];
+    let tasksFilterDueDate = 'all';
+    let tasksCalendarCurrentDate = new Date(2026, 10, 24); // Nov 2026
+
+    function getTaskLinearCode(t, idx) {
+      if (t.code) return t.code;
+      const knownCodes = {
+        'task-1': 'T-137',
+        'task-agenda-1': 'T-142',
+        'task-2': 'T-139',
+        'task-agenda-3': 'T-128',
+        'task-agenda-2': 'T-131',
+        'task-3': 'T-120',
+        'task-4': 'T-133',
+        'task-5': 'T-140',
+        'task-6': 'T-145',
+        'task-7': 'T-124',
+        'task-8': 'T-135'
+      };
+      if (knownCodes[t.id]) return knownCodes[t.id];
+      const numMatch = (t.id || '').match(/\d+/);
+      if (numMatch) {
+        return `T-${120 + parseInt(numMatch[0], 10)}`;
+      }
+      return `T-${130 + (idx || 0)}`;
+    }
+
+    function getTaskLinearPriorityIcon(prio) {
+      const p = (prio || 'media').toLowerCase();
+      if (p === 'alta' || p === 'urgente') {
+        return `<span class="w-5 h-5 rounded-md bg-[#FEE2E2] text-[#DC2626] font-bold text-xs flex items-center justify-center shrink-0" title="Alta">!</span>`;
+      }
+      if (p === 'media' || p === 'normal') {
+        return `
+          <svg class="w-4 h-4 text-[#1F6F78] shrink-0" fill="currentColor" viewBox="0 0 16 16" title="Média">
+            <rect x="2" y="10" width="3" height="4" rx="0.5"/>
+            <rect x="6.5" y="7" width="3" height="7" rx="0.5"/>
+            <rect x="11" y="4" width="3" height="10" rx="0.5"/>
+          </svg>
+        `;
+      }
+      return `
+        <svg class="w-4 h-4 text-[#9CA3AF] shrink-0" fill="currentColor" viewBox="0 0 16 16" title="Baixa">
+          <rect x="2" y="10" width="3" height="4" rx="0.5"/>
+          <rect x="6.5" y="12" width="3" height="2" rx="0.5" opacity="0.4"/>
+          <rect x="11" y="12" width="3" height="2" rx="0.5" opacity="0.4"/>
+        </svg>
+      `;
+    }
+
+    function setTasksViewMode(mode) {
+      tasksViewMode = mode;
+      const listBtn = document.getElementById('btn-tasks-view-list');
+      const boardBtn = document.getElementById('btn-tasks-view-board');
+      const calBtn = document.getElementById('btn-tasks-view-calendar');
+
+      const activeClass = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#1C2526] text-white transition-all cursor-pointer flex items-center gap-2 shadow-xs';
+      const inactiveClass = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-[#6B7677] hover:text-[#1A1A1A] transition-all cursor-pointer flex items-center gap-2';
+
+      if (listBtn) listBtn.className = (mode === 'list') ? activeClass : inactiveClass;
+      if (boardBtn) boardBtn.className = (mode === 'board') ? activeClass : inactiveClass;
+      if (calBtn) calBtn.className = (mode === 'calendar') ? activeClass : inactiveClass;
+
+      const listWrapper = document.getElementById('tasks-content-wrapper');
+      const boardWrapper = document.getElementById('tasks-kanban-wrapper');
+      const calWrapper = document.getElementById('tasks-calendar-wrapper');
+
+      if (listWrapper) listWrapper.classList.toggle('hidden', mode !== 'list');
+      if (boardWrapper) boardWrapper.classList.toggle('hidden', mode !== 'board');
+      if (calWrapper) calWrapper.classList.toggle('hidden', mode !== 'calendar');
+
+      renderFullTasks();
+    }
+
+    function toggleTasksMyFilter() {
+      tasksFilterMy = !tasksFilterMy;
+      const pill = document.getElementById('pill-filter-my');
+      if (pill) {
+        if (tasksFilterMy) {
+          pill.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium border border-[#E4DDD3] bg-white text-[#1A1A1A] shadow-2xs hover:border-[#1F6F78] transition-all cursor-pointer";
+          pill.style.display = 'inline-flex';
+        } else {
+          pill.style.display = 'none';
+        }
+      }
+      renderFullTasks();
+    }
+
+    function toggleTasksFilterMenu(e) {
+      if (e) e.stopPropagation();
+      const popover = document.getElementById('tasks-filter-popover');
+      const subflyout = document.getElementById('tasks-filter-subflyout');
+      if (!popover) return;
+      const isHidden = popover.classList.contains('hidden');
+      if (isHidden) {
+        popover.classList.remove('hidden');
+      } else {
+        popover.classList.add('hidden');
+        if (subflyout) subflyout.classList.add('hidden');
+      }
+    }
+
+    function closeTasksFilterMenu() {
+      const popover = document.getElementById('tasks-filter-popover');
+      const subflyout = document.getElementById('tasks-filter-subflyout');
+      if (popover) popover.classList.add('hidden');
+      if (subflyout) subflyout.classList.add('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const btn = document.getElementById('btn-tasks-filter-toggle');
+      const popover = document.getElementById('tasks-filter-popover');
+      const subflyout = document.getElementById('tasks-filter-subflyout');
+      if (popover && !popover.contains(e.target) && (!btn || !btn.contains(e.target)) && (!subflyout || !subflyout.contains(e.target))) {
+        closeTasksFilterMenu();
+      }
+    });
+
+    function openTasksFilterSubmenu(type, e) {
+      if (e) e.stopPropagation();
+      const subflyout = document.getElementById('tasks-filter-subflyout');
+      if (!subflyout) return;
+      subflyout.classList.remove('hidden');
+
+      if (type === 'journalist') {
+        renderTasksJournalistFilterSubmenu();
+      } else if (type === 'status') {
+        subflyout.innerHTML = `
+          <div class="px-2 py-1 font-semibold text-[11px] text-[#8A8A8A] uppercase tracking-wider">Filtrar por Estado</div>
+          <div class="space-y-1">
+            ${['all', 'em_curso', 'por_fazer', 'em_revisao', 'concluida'].map(st => {
+              const lbl = st === 'all' ? 'Todos os estados' : (st === 'em_curso' ? 'Em curso' : (st === 'por_fazer' ? 'Por fazer' : (st === 'em_revisao' ? 'Em revisão' : 'Concluída')));
+              const isSel = tasksFilterStatus === st;
+              return `
+                <button type="button" onclick="setTasksFilterParam('status', '${st}')" class="w-full text-left px-3 py-1.5 rounded-lg hover:bg-[#FAF8F5] flex items-center justify-between text-xs ${isSel ? 'font-semibold text-[#1F6F78] bg-[#F2EFE9]/40' : 'text-[#1A1A1A]'}">
+                  <span>${lbl}</span>
+                  ${isSel ? '<span class="font-bold">✓</span>' : ''}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+      } else if (type === 'priority') {
+        subflyout.innerHTML = `
+          <div class="px-2 py-1 font-semibold text-[11px] text-[#8A8A8A] uppercase tracking-wider">Filtrar por Prioridade</div>
+          <div class="space-y-1">
+            ${['all', 'alta', 'media', 'baixa'].map(pr => {
+              const lbl = pr === 'all' ? 'Todas' : (pr.charAt(0).toUpperCase() + pr.slice(1));
+              const isSel = tasksFilterPriority === pr;
+              return `
+                <button type="button" onclick="setTasksFilterParam('priority', '${pr}')" class="w-full text-left px-3 py-1.5 rounded-lg hover:bg-[#FAF8F5] flex items-center justify-between text-xs ${isSel ? 'font-semibold text-[#1F6F78] bg-[#F2EFE9]/40' : 'text-[#1A1A1A]'}">
+                  <span>${lbl}</span>
+                  ${isSel ? '<span class="font-bold">✓</span>' : ''}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+      } else if (type === 'responsible') {
+        const responsibles = ['all', 'Tiago Mendes', 'Leonor Rodrigues', 'Helena Ramos', 'Carlos Silva'];
+        subflyout.innerHTML = `
+          <div class="px-2 py-1 font-semibold text-[11px] text-[#8A8A8A] uppercase tracking-wider">Filtrar por Responsável</div>
+          <div class="space-y-1">
+            ${responsibles.map(r => {
+              const lbl = r === 'all' ? 'Todos' : r;
+              const isSel = tasksFilterResponsible === r;
+              return `
+                <button type="button" onclick="setTasksFilterParam('responsible', '${r}')" class="w-full text-left px-3 py-1.5 rounded-lg hover:bg-[#FAF8F5] flex items-center justify-between text-xs ${isSel ? 'font-semibold text-[#1F6F78] bg-[#F2EFE9]/40' : 'text-[#1A1A1A]'}">
+                  <span>${lbl}</span>
+                  ${isSel ? '<span class="font-bold">✓</span>' : ''}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+      } else if (type === 'project') {
+        subflyout.innerHTML = `
+          <div class="px-2 py-1 font-semibold text-[11px] text-[#8A8A8A] uppercase tracking-wider">Filtrar por Projeto</div>
+          <div class="space-y-1 max-h-48 overflow-y-auto">
+            <button type="button" onclick="setTasksFilterParam('project', 'all')" class="w-full text-left px-3 py-1.5 rounded-lg hover:bg-[#FAF8F5] flex items-center justify-between text-xs ${tasksFilterProject === 'all' ? 'font-semibold text-[#1F6F78] bg-[#F2EFE9]/40' : 'text-[#1A1A1A]'}">
+              <span>Todos os projetos</span>
+              ${tasksFilterProject === 'all' ? '<span class="font-bold">✓</span>' : ''}
+            </button>
+            ${(localProjects || []).map(p => {
+              const isSel = tasksFilterProject === p.name || tasksFilterProject === p.id;
+              return `
+                <button type="button" onclick="setTasksFilterParam('project', '${escapeHtml(p.name)}')" class="w-full text-left px-3 py-1.5 rounded-lg hover:bg-[#FAF8F5] flex items-center justify-between text-xs ${isSel ? 'font-semibold text-[#1F6F78] bg-[#F2EFE9]/40' : 'text-[#1A1A1A]'}">
+                  <span class="truncate">${escapeHtml(p.name)}</span>
+                  ${isSel ? '<span class="font-bold">✓</span>' : ''}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+      } else if (type === 'due') {
+        const dues = [
+          { val: 'all', lbl: 'Qualquer data' },
+          { val: 'overdue', lbl: 'Em atraso' },
+          { val: 'today', lbl: 'Para hoje' },
+          { val: 'week', lbl: 'Esta semana' }
+        ];
+        subflyout.innerHTML = `
+          <div class="px-2 py-1 font-semibold text-[11px] text-[#8A8A8A] uppercase tracking-wider">Filtrar por Data</div>
+          <div class="space-y-1">
+            ${dues.map(d => {
+              const isSel = tasksFilterDueDate === d.val;
+              return `
+                <button type="button" onclick="setTasksFilterParam('due', '${d.val}')" class="w-full text-left px-3 py-1.5 rounded-lg hover:bg-[#FAF8F5] flex items-center justify-between text-xs ${isSel ? 'font-semibold text-[#1F6F78] bg-[#F2EFE9]/40' : 'text-[#1A1A1A]'}">
+                  <span>${d.lbl}</span>
+                  ${isSel ? '<span class="font-bold">✓</span>' : ''}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+    }
+
+    function renderTasksJournalistFilterSubmenu(query = '') {
+      const subflyout = document.getElementById('tasks-filter-subflyout');
+      if (!subflyout) return;
+
+      const q = query.trim().toLowerCase();
+      const jourList = (localJournalists && localJournalists.length > 0) ? localJournalists : DEFAULT_SAMPLE_JOURNALISTS;
+      const filteredJour = q ? jourList.filter(j => j.name.toLowerCase().includes(q) || (j.outlet_name || '').toLowerCase().includes(q)) : jourList;
+
+      subflyout.innerHTML = `
+        <div class="relative">
+          <input type="text" id="filter-jour-search-input" value="${escapeHtml(query)}" placeholder="Procurar jornalista..." oninput="renderTasksJournalistFilterSubmenu(this.value)"
+            class="w-full bg-[#FAF8F5] border border-[#E4DDD3] rounded-xl pl-8 pr-3 py-1.5 text-xs text-[#1A1A1A] focus:outline-none focus:border-[#1F6F78]">
+          <svg class="w-3.5 h-3.5 text-[#8A8A8A] absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+        <div class="max-h-56 overflow-y-auto space-y-1 py-1">
+          ${filteredJour.map(j => {
+            const isChecked = tasksSelectedJournalists.includes(j.name) || tasksSelectedJournalists.includes(j.id);
+            const avatar = getUserAvatar(j.name);
+            const outlet = j.outlet_name || (j.outlet_names && j.outlet_names[0]) || 'Geral';
+            return `
+              <label class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-[#FAF8F5] cursor-pointer select-none transition-colors">
+                <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleTasksJournalistFilter('${escapeHtml(j.name)}')"
+                  class="rounded border-[#D1C7BA] text-[#1F6F78] focus:ring-[#1F6F78] w-4 h-4 cursor-pointer">
+                <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0" style="background-color: ${avatar.color};">
+                  ${avatar.initials}
+                </div>
+                <div class="min-w-0 flex-1">
+                  <div class="text-xs font-semibold text-[#1A1A1A] truncate">${escapeHtml(j.name)}</div>
+                  <div class="text-[10px] text-[#6B7677] truncate">${escapeHtml(outlet)}</div>
+                </div>
+              </label>
+            `;
+          }).join('')}
+        </div>
+      `;
+      const input = document.getElementById('filter-jour-search-input');
+      if (input && query) {
+        input.focus();
+        input.setSelectionRange(query.length, query.length);
+      }
+    }
+
+    function toggleTasksJournalistFilter(name) {
+      if (tasksSelectedJournalists.includes(name)) {
+        tasksSelectedJournalists = tasksSelectedJournalists.filter(n => n !== name);
+      } else {
+        tasksSelectedJournalists.push(name);
+      }
+      updateTasksActiveFilterPills();
+      renderFullTasks();
+    }
+
+    function setTasksFilterParam(key, val) {
+      if (key === 'status') tasksFilterStatus = val;
+      if (key === 'priority') tasksFilterPriority = val;
+      if (key === 'responsible') tasksFilterResponsible = val;
+      if (key === 'project') tasksFilterProject = val;
+      if (key === 'due') tasksFilterDueDate = val;
+      closeTasksFilterMenu();
+      updateTasksActiveFilterPills();
+      renderFullTasks();
+    }
+
+    function updateTasksActiveFilterPills() {
+      const container = document.getElementById('tasks-active-filters-container');
+      if (!container) return;
+      let html = '';
+
+      if (tasksFilterMy) {
+        html += `
+          <button type="button" id="pill-filter-my" onclick="toggleTasksMyFilter()"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium border border-[#E4DDD3] bg-white text-[#1A1A1A] shadow-2xs hover:border-[#1F6F78] transition-all cursor-pointer">
+            <span>Responsável: Eu</span>
+            <span class="text-[#8A8A8A] hover:text-[#1A1A1A] text-xs font-bold leading-none">✕</span>
+          </button>
+        `;
+      }
+
+      if (tasksFilterStatus && tasksFilterStatus !== 'all') {
+        const lbl = tasksFilterStatus === 'em_curso' ? 'Em curso' : (tasksFilterStatus === 'por_fazer' ? 'Por fazer' : (tasksFilterStatus === 'em_revisao' ? 'Em revisão' : 'Concluída'));
+        html += `
+          <button type="button" onclick="setTasksFilterParam('status', 'all')"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium border border-[#E4DDD3] bg-white text-[#1A1A1A] shadow-2xs hover:border-[#1F6F78] transition-all cursor-pointer">
+            <span>Estado: ${lbl}</span>
+            <span class="text-[#8A8A8A] hover:text-[#1A1A1A] text-xs font-bold leading-none">✕</span>
+          </button>
+        `;
+      }
+
+      if (tasksFilterPriority && tasksFilterPriority !== 'all') {
+        html += `
+          <button type="button" onclick="setTasksFilterParam('priority', 'all')"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium border border-[#E4DDD3] bg-white text-[#1A1A1A] shadow-2xs hover:border-[#1F6F78] transition-all cursor-pointer">
+            <span>Prioridade: ${tasksFilterPriority}</span>
+            <span class="text-[#8A8A8A] hover:text-[#1A1A1A] text-xs font-bold leading-none">✕</span>
+          </button>
+        `;
+      }
+
+      if (tasksFilterResponsible && tasksFilterResponsible !== 'all') {
+        html += `
+          <button type="button" onclick="setTasksFilterParam('responsible', 'all')"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium border border-[#E4DDD3] bg-white text-[#1A1A1A] shadow-2xs hover:border-[#1F6F78] transition-all cursor-pointer">
+            <span>Resp: ${tasksFilterResponsible.split(' ')[0]}</span>
+            <span class="text-[#8A8A8A] hover:text-[#1A1A1A] text-xs font-bold leading-none">✕</span>
+          </button>
+        `;
+      }
+
+      if (tasksFilterProject && tasksFilterProject !== 'all') {
+        html += `
+          <button type="button" onclick="setTasksFilterParam('project', 'all')"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium border border-[#E4DDD3] bg-white text-[#1A1A1A] shadow-2xs hover:border-[#1F6F78] transition-all cursor-pointer">
+            <span>Proj: ${escapeHtml(tasksFilterProject.substring(0, 15))}</span>
+            <span class="text-[#8A8A8A] hover:text-[#1A1A1A] text-xs font-bold leading-none">✕</span>
+          </button>
+        `;
+      }
+
+      if (tasksSelectedJournalists.length > 0) {
+        html += `
+          <button type="button" onclick="tasksSelectedJournalists = []; updateTasksActiveFilterPills(); renderFullTasks();"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium border border-[#E4DDD3] bg-white text-[#1A1A1A] shadow-2xs hover:border-[#1F6F78] transition-all cursor-pointer">
+            <span>Jornalistas (${tasksSelectedJournalists.length})</span>
+            <span class="text-[#8A8A8A] hover:text-[#1A1A1A] text-xs font-bold leading-none">✕</span>
+          </button>
+        `;
+      }
+
+      if (tasksFilterDueDate && tasksFilterDueDate !== 'all') {
+        const lbl = tasksFilterDueDate === 'overdue' ? 'Em atraso' : (tasksFilterDueDate === 'today' ? 'Hoje' : 'Esta semana');
+        html += `
+          <button type="button" onclick="setTasksFilterParam('due', 'all')"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium border border-[#E4DDD3] bg-white text-[#1A1A1A] shadow-2xs hover:border-[#1F6F78] transition-all cursor-pointer">
+            <span>Data: ${lbl}</span>
+            <span class="text-[#8A8A8A] hover:text-[#1A1A1A] text-xs font-bold leading-none">✕</span>
+          </button>
+        `;
+      }
+
+      container.innerHTML = html;
+    }
+
     function renderFullTasks() {
       if (!localTasks || localTasks.length === 0) {
         localTasks = (typeof DEFAULT_SAMPLE_TASKS !== 'undefined') ? [...DEFAULT_SAMPLE_TASKS] : [];
         try { localStorage.setItem('rep_tasks', JSON.stringify(localTasks)); } catch (e) { }
       }
-      const wrapper = document.getElementById('tasks-content-wrapper');
-      if (!wrapper) return;
 
       const isTaskDone = (t) => t.status === 'concluida' || t.status === 'completed';
       const todayIso = new Date().toISOString().split('T')[0];
 
-      // 1. Contagens para separadores e cabeçalho
+      // 1. Contagens para cabeçalho
       const totalCount = localTasks.length;
-      const todayCount = localTasks.filter(t => !isTaskDone(t) && (isDueToday(t.due_date) || t.due_date === todayIso)).length;
-      const weekCount = localTasks.filter(t => !isTaskDone(t) && isDueThisWeek(t.due_date)).length;
       const overdueCount = localTasks.filter(t => !isTaskDone(t) && isOverdue(t.due_date)).length;
-      const myCount = localTasks.filter(t => {
-        const resp = (t.responsible || t.assignee || t.assignee_name || '').toLowerCase();
-        const cur = (currentUser?.name || currentUser?.user_metadata?.full_name || 'Tiago').toLowerCase();
-        return resp.includes('tiago') || resp.includes(cur.split(' ')[0]);
-      }).length;
-
-      // Atualizar badges dos separadores
-      const cAll = document.getElementById('task-tab-count-all');
-      if (cAll) cAll.innerText = totalCount;
-      const cToday = document.getElementById('task-tab-count-today');
-      if (cToday) cToday.innerText = todayCount;
-      const cWeek = document.getElementById('task-tab-count-week');
-      if (cWeek) cWeek.innerText = weekCount;
-      const cOverdue = document.getElementById('task-tab-count-overdue');
-      if (cOverdue) cOverdue.innerText = overdueCount;
-      const cMy = document.getElementById('task-tab-count-my');
-      if (cMy) cMy.innerText = myCount;
-
-      // Resumo calculado no cabeçalho
       const summaryText = document.getElementById('tasks-summary-text');
       if (summaryText) {
-        summaryText.innerText = `${totalCount} tarefas · ${overdueCount} em atraso · ${todayCount} para hoje`;
+        summaryText.innerText = `${totalCount} tarefas · ${overdueCount} em atraso`;
       }
 
       // 2. Filtragem
       let filtered = [...localTasks];
 
-      // Filtro por separador
-      if (currentTaskTab === 'today') {
-        filtered = filtered.filter(t => isDueToday(t.due_date) || t.due_date === todayIso);
-      } else if (currentTaskTab === 'week') {
-        filtered = filtered.filter(t => isDueThisWeek(t.due_date));
-      } else if (currentTaskTab === 'overdue') {
-        filtered = filtered.filter(t => !isTaskDone(t) && isOverdue(t.due_date));
-      } else if (currentTaskTab === 'my') {
+      // Filtro Responsável: Eu
+      if (tasksFilterMy) {
+        const cur = (currentUser?.name || currentUser?.user_metadata?.full_name || 'Leonor').toLowerCase();
+        const curFirst = cur.split(' ')[0];
         filtered = filtered.filter(t => {
           const resp = (t.responsible || t.assignee || t.assignee_name || '').toLowerCase();
-          const cur = (currentUser?.name || currentUser?.user_metadata?.full_name || 'Tiago').toLowerCase();
-          return resp.includes('tiago') || resp.includes(cur.split(' ')[0]);
+          return resp.includes(curFirst) || resp.includes('leonor');
         });
       }
 
-      // Filtro por pesquisa
-      const searchInput = document.getElementById('tasks-search-input');
+      // Filtro por Estado
+      if (tasksFilterStatus && tasksFilterStatus !== 'all') {
+        filtered = filtered.filter(t => t.status === tasksFilterStatus);
+      }
+
+      // Filtro por Prioridade
+      if (tasksFilterPriority && tasksFilterPriority !== 'all') {
+        filtered = filtered.filter(t => (t.priority || '').toLowerCase() === tasksFilterPriority.toLowerCase());
+      }
+
+      // Filtro por Responsável
+      if (tasksFilterResponsible && tasksFilterResponsible !== 'all') {
+        filtered = filtered.filter(t => {
+          const resp = t.responsible || t.assignee || t.assignee_name || '';
+          return resp === tasksFilterResponsible;
+        });
+      }
+
+      // Filtro por Projeto
+      if (tasksFilterProject && tasksFilterProject !== 'all') {
+        filtered = filtered.filter(t => (t.project_name || t.project || '').toLowerCase() === tasksFilterProject.toLowerCase());
+      }
+
+      // Filtro por Jornalista
+      if (tasksSelectedJournalists.length > 0) {
+        filtered = filtered.filter(t => {
+          const jName = t.journalist_name || '';
+          const jId = t.journalist_id || '';
+          return tasksSelectedJournalists.includes(jName) || tasksSelectedJournalists.includes(jId);
+        });
+      }
+
+      // Filtro por Prazo
+      if (tasksFilterDueDate === 'overdue') {
+        filtered = filtered.filter(t => !isTaskDone(t) && isOverdue(t.due_date));
+      } else if (tasksFilterDueDate === 'today') {
+        filtered = filtered.filter(t => isDueToday(t.due_date) || t.due_date === todayIso);
+      } else if (tasksFilterDueDate === 'week') {
+        filtered = filtered.filter(t => isDueThisWeek(t.due_date));
+      }
+
+      // Filtro por Pesquisa Global
+      const searchInput = document.getElementById('tasks-search-input') || document.getElementById('topbar-search-input');
       const searchQuery = (searchInput ? searchInput.value : '').trim().toLowerCase();
       if (searchQuery) {
         filtered = filtered.filter(t => {
@@ -11885,296 +12335,311 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         });
       }
 
-      // Filtro por tipo
-      const typeFilter = document.getElementById('tasks-filter-type')?.value;
-      if (typeFilter && typeFilter !== 'all') {
-        filtered = filtered.filter(t => t.type === typeFilter);
-      }
-
-      // Filtro por prioridade
-      const prioFilter = document.getElementById('tasks-filter-priority')?.value;
-      if (prioFilter && prioFilter !== 'all') {
-        filtered = filtered.filter(t => (t.priority || '').toLowerCase() === prioFilter.toLowerCase());
-      }
-
-      // Filtro por responsável
-      const respFilter = document.getElementById('tasks-filter-responsible')?.value;
-      if (respFilter && respFilter !== 'all') {
-        filtered = filtered.filter(t => {
-          const resp = t.responsible || t.assignee || t.assignee_name || '';
-          return resp === respFilter;
-        });
-      }
-
-      // 3. Estados vazios
       const footerEl = document.getElementById('tasks-table-footer');
-      if (filtered.length === 0) {
-        if (localTasks.length === 0) {
-          wrapper.innerHTML = `
-            <div class="bg-white rounded-2xl border border-[#E4DDD3] p-12 text-center">
-              <p class="font-bold text-base text-[#1A1A1A] mb-1 font-title">Ainda não tens tarefas</p>
-              <p class="text-xs text-[#8A8A8A] mb-4">Começa por criar a primeira entrega operacional ou contacto com jornalista.</p>
-              <button onclick="openTaskModal()" class="px-5 py-2.5 rounded-full text-xs font-semibold bg-[#1C2526] text-white hover:bg-[#2A3739] transition-all shadow-xs cursor-pointer">
-                + Criar a primeira tarefa
-              </button>
-            </div>
-          `;
-        } else {
-          wrapper.innerHTML = `
-            <div class="bg-white rounded-2xl border border-[#E4DDD3] p-12 text-center">
-              <p class="font-bold text-base text-[#1A1A1A] mb-1 font-title">Nenhuma tarefa com estes filtros</p>
-              <p class="text-xs text-[#8A8A8A] mb-3">Tenta ajustar os filtros ou a barra de pesquisa.</p>
-              <button onclick="clearTasksFilters()" class="text-xs font-semibold text-[#1F6F78] hover:underline cursor-pointer">
-                Limpar filtros
-              </button>
-            </div>
-          `;
-        }
-        if (footerEl) footerEl.innerText = `A mostrar 0 de ${localTasks.length} tarefas`;
+      if (footerEl) footerEl.innerText = `A mostrar ${filtered.length} de ${localTasks.length} tarefas`;
+
+      // 3. Renderização de acordo com o modo
+      if (tasksViewMode === 'board') {
+        renderTasksKanban(filtered);
+        return;
+      }
+      if (tasksViewMode === 'calendar') {
+        renderTasksCalendar(filtered);
         return;
       }
 
-      if (footerEl) footerEl.innerText = `A mostrar ${filtered.length} de ${localTasks.length} tarefas`;
+      // 4. MODO LISTA ESTILO LINEAR (Agrupado por Estado)
+      const wrapper = document.getElementById('tasks-content-wrapper');
+      if (!wrapper) return;
 
-      // 4. Função auxiliar para renderizar uma linha de tarefa
-      function renderTaskTableRow(t) {
+      if (filtered.length === 0) {
+        wrapper.innerHTML = `
+          <div class="bg-white rounded-2xl border border-[#E4DDD3] p-12 text-center">
+            <p class="font-bold text-base text-[#1A1A1A] mb-1 font-title">Nenhuma tarefa encontrada</p>
+            <p class="text-xs text-[#8A8A8A] mb-3">Tenta ajustar os filtros de pesquisa ou responsável.</p>
+            <button onclick="clearAllTasksLinearFilters()" class="text-xs font-semibold text-[#1F6F78] hover:underline cursor-pointer">
+              Limpar todos os filtros
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      // Ordem dos grupos conforme Linear e Maquete: Em curso -> Por fazer -> Em revisão -> Concluída
+      const statusGroupsConfig = [
+        {
+          key: 'em_curso',
+          label: 'Em curso',
+          icon: `<svg class="w-4 h-4 text-[#D97706]" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18V3z" fill="currentColor"/></svg>`
+        },
+        {
+          key: 'por_fazer',
+          label: 'Por fazer',
+          icon: `<svg class="w-4 h-4 text-[#9CA3AF]" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/></svg>`
+        },
+        {
+          key: 'em_revisao',
+          label: 'Em revisão',
+          icon: `<svg class="w-4 h-4 text-[#2563EB]" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>`
+        },
+        {
+          key: 'concluida',
+          label: 'Concluída',
+          icon: `<svg class="w-4 h-4 text-[#16A34A]" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#E6F4EA" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+        }
+      ];
+
+      function renderLinearTaskRow(t, idx) {
         const isDone = isTaskDone(t);
         const dueInfo = getTaskDueInfo(t.due_date, isDone);
         const isTaskOverdue = dueInfo.isOverdue && !isDone;
+        const taskCode = getTaskLinearCode(t, idx);
+        const prioIcon = getTaskLinearPriorityIcon(t.priority);
 
-        const projName = t.project_name || 'Geral';
-        const clientName = t.client || t.client_or_brand || (t.project_id ? (localProjects.find(p => p.id === t.project_id)?.client || '—') : '—');
+        const projName = t.project_name || t.client || (t.project_id ? (localProjects.find(p => p.id === t.project_id)?.name || 'Geral') : 'Geral');
         const respName = t.responsible || t.assignee || t.assignee_name || 'Leonor Rodrigues';
-        const avatar = getUserAvatar(respName);
+        const respAvatar = getUserAvatar(respName);
 
-        // Subtítulo da tarefa: Projeto · Cliente ou Jornalista
-        let detailsHtml = '';
-        if (t.project_id) {
-          detailsHtml = `<button type="button" onclick="event.stopPropagation(); openProjectDetail('${t.project_id}')" class="text-xs text-[#8A8A8A] hover:text-[#1F6F78] hover:underline">${projName}</button><span class="text-[#8A8A8A]"> · ${clientName}</span>`;
-        } else if (t.journalist_name || t.journalist_id) {
-          const jId = t.journalist_id || (localJournalists.find(j => j.name === t.journalist_name)?.id);
-          const jName = t.journalist_name || 'Jornalista';
-          if (jId) {
-            detailsHtml = `<button type="button" onclick="event.stopPropagation(); openJournalistDetailDrawer('${jId}')" class="text-xs text-[#1F6F78] hover:underline font-medium">${jName}</button>`;
-          } else {
-            detailsHtml = `<span class="text-xs text-[#8A8A8A]">${jName}</span>`;
-          }
-        } else {
-          detailsHtml = `<span class="text-xs text-[#8A8A8A]">${projName}</span>`;
-        }
-
-        const rowBgClass = isTaskOverdue
-          ? 'bg-[#FDF6F5] hover:bg-[#FAEFEB]'
-          : (isDone ? 'bg-[#FCFCFC] opacity-70 hover:opacity-100 hover:bg-[#FBF9F6]' : 'bg-white hover:bg-[#FBF9F6]');
-
-        return `
-          <tr class="${rowBgClass} transition-colors cursor-pointer group" onclick="openEditTaskModal('${t.id}')">
-            <!-- 1. Checkbox Conclusão -->
-            <td class="w-10 text-center py-3.5 px-3" onclick="event.stopPropagation()">
-              <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus('${t.id}')"
-                class="w-4 h-4 text-[#1F6F78] rounded border-[#E4DDD3] focus:ring-[#1F6F78] cursor-pointer">
-            </td>
-
-            <!-- 2. Tarefa (Título + Detalhes) -->
-            <td class="py-3.5 px-4 min-w-[200px]">
-              <div class="font-bold text-xs ${isDone ? 'line-through text-[#8A8A8A]' : 'text-[#1A1A1A] group-hover:text-[#1F6F78]'} transition-colors">${t.title}</div>
-              <div class="mt-0.5">${detailsHtml}</div>
-            </td>
-
-            <!-- 3. Tipo -->
-            <td class="py-3.5 px-4 whitespace-nowrap">
-              ${getTaskTypeBadge(t.type)}
-            </td>
-
-            <!-- 4. Responsável -->
-            <td class="py-3.5 px-4 whitespace-nowrap">
-              <div class="flex items-center gap-2">
-                <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0" style="background-color: ${avatar.color};">
-                  ${avatar.initials}
-                </div>
-                <span class="text-xs text-[#1A1A1A]">${avatar.shortName || respName}</span>
-              </div>
-            </td>
-
-            <!-- 5. Prazo -->
-            <td class="py-3.5 px-4 whitespace-nowrap">
-              <div class="font-bold text-xs text-[#1A1A1A]">${dueInfo.formatted}</div>
-              ${dueInfo.relative ? `<div class="text-[11px] ${dueInfo.textClass}">${dueInfo.relative}</div>` : ''}
-            </td>
-
-            <!-- 6. Prioridade -->
-            <td class="py-3.5 px-4 whitespace-nowrap">
-              ${getProjectPriorityBadge(t.priority)}
-            </td>
-
-            <!-- Menu ⋯ -->
-            <td class="py-3.5 px-3 text-right whitespace-nowrap" onclick="event.stopPropagation()">
-              <div class="relative inline-block text-left">
-                <button type="button" onclick="toggleTaskRowMenu('${t.id}', event)"
-                  class="task-row-menu-btn text-[#8A8A8A] hover:text-[#1A1A1A] p-1.5 rounded-lg hover:bg-[#F0ECE7] transition-colors cursor-pointer"
-                  title="Mais opções">
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
-                  </svg>
-                </button>
-                <div id="task-menu-${t.id}" class="task-row-menu-popover hidden fixed z-50 w-44 bg-white border border-[#E4DDD3] rounded-xl shadow-lg py-1 text-xs">
-                  <button type="button" onclick="closeAllTaskMenus(); toggleTaskStatus('${t.id}')"
-                    class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] flex items-center gap-2">
-                    ${isDone ? 'Reabrir tarefa' : 'Concluir tarefa'}
-                  </button>
-                  <button type="button" onclick="closeAllTaskMenus(); openEditTaskModal('${t.id}')"
-                    class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] flex items-center gap-2">
-                    Editar
-                  </button>
-                  ${currentUserPermissions()?.canDeleteRecords ? `
-                    <div class="border-t border-[#E4DDD3] my-1"></div>
-                    <button type="button" onclick="closeAllTaskMenus(); deleteTask('${t.id}')"
-                      class="w-full text-left px-3.5 py-2 hover:bg-[#FBEAE8] text-[#C53030] flex items-center gap-2">
-                      Eliminar
-                    </button>
-                  ` : ''}
-                </div>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      // Ordenação: não concluídas em atraso primeiro, depois prazo mais próximo, concluídas no fim
-      filtered.sort((a, b) => {
-        const isADone = isTaskDone(a);
-        const isBDone = isTaskDone(b);
-        if (isADone && !isBDone) return 1;
-        if (!isADone && isBDone) return -1;
-
-        const isAOverdue = isOverdue(a.due_date) && !isADone;
-        const isBOverdue = isOverdue(b.due_date) && !isBDone;
-        if (isAOverdue && !isBOverdue) return -1;
-        if (!isAOverdue && isBOverdue) return 1;
-
-        return (a.due_date || '').localeCompare(b.due_date || '');
-      });
-
-      // 1. MODO: SEM AGRUPAMENTO
-      if (currentTaskGrouping === 'none') {
-        wrapper.innerHTML = `
-          <div class="bg-white rounded-2xl border border-[#E4DDD3] shadow-xs overflow-hidden">
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="border-b border-[#E4DDD3] bg-[#FAF8F5] text-[11px] font-semibold text-[#8A8A8A] uppercase tracking-wider">
-                    <th class="w-10 text-center py-3 px-3">Estado</th>
-                    <th class="py-3 px-4">Tarefa</th>
-                    <th class="py-3 px-4">Tipo</th>
-                    <th class="py-3 px-4">Responsável</th>
-                    <th class="py-3 px-4">Prazo</th>
-                    <th class="py-3 px-4">Prioridade</th>
-                    <th class="py-3 px-3 text-right"></th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-[#E4DDD3]/60 text-xs">
-                  ${filtered.map(renderTaskTableRow).join('')}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      // 2. MODO: AGRUPAR POR PROJETO
-      if (currentTaskGrouping === 'project') {
-        const groups = {};
-        filtered.forEach(t => {
-          const pName = t.project_name || 'Geral / Sem Projeto';
-          if (!groups[pName]) groups[pName] = [];
-          groups[pName].push(t);
-        });
-
-        wrapper.innerHTML = Object.keys(groups).map(pName => {
-          const groupTasks = groups[pName];
-          const pObj = localProjects.find(p => p.name === pName);
-          const done = groupTasks.filter(isTaskDone).length;
-
-          return `
-            <div class="bg-white rounded-2xl border border-[#E4DDD3] shadow-xs overflow-hidden space-y-0">
-              <div class="p-4 bg-[#FBF9F6] border-b border-[#E4DDD3] flex items-center justify-between">
-                <div class="flex items-center gap-2 flex-wrap">
-                  <h3 class="text-sm font-bold text-[#1A1A1A] font-title">${pName}</h3>
-                  ${pObj?.client ? `<span class="px-2 py-0.5 rounded-full text-[11px] font-medium bg-[#EDE6DE] text-[#5C554E]">${pObj.client}</span>` : ''}
-                </div>
-                <div class="flex items-center gap-3">
-                  <span class="text-xs text-[#8A8A8A]">${done} de ${groupTasks.length} concluídas</span>
-                  ${pObj ? `<button onclick="openProjectDetail('${pObj.id}')" class="text-xs text-[#1F6F78] font-semibold hover:underline">Abrir projeto &rarr;</button>` : ''}
-                </div>
-              </div>
-              <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                  <thead>
-                    <tr class="border-b border-[#E4DDD3] bg-[#FAF8F5] text-[11px] font-semibold text-[#8A8A8A] uppercase tracking-wider">
-                      <th class="w-10 text-center py-3 px-3">Estado</th>
-                      <th class="py-3 px-4">Tarefa</th>
-                      <th class="py-3 px-4">Tipo</th>
-                      <th class="py-3 px-4">Responsável</th>
-                      <th class="py-3 px-4">Prazo</th>
-                      <th class="py-3 px-4">Prioridade</th>
-                      <th class="py-3 px-3 text-right"></th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-[#E4DDD3]/60 text-xs">
-                    ${groupTasks.map(renderTaskTableRow).join('')}
-                  </tbody>
-                </table>
-              </div>
+        // Avatar do Jornalista (se associado)
+        let jourAvatarHtml = '<span class="text-xs text-[#8A8A8A] w-6 text-center">—</span>';
+        if (t.journalist_name || t.journalist_id) {
+          const jName = t.journalist_name || (localJournalists.find(j => j.id === t.journalist_id)?.name || 'Jornalista');
+          const jAvatar = getUserAvatar(jName);
+          jourAvatarHtml = `
+            <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0" style="background-color: ${jAvatar.color};" title="Jornalista: ${escapeHtml(jName)}">
+              ${jAvatar.initials}
             </div>
           `;
-        }).join('');
-        return;
-      }
+        }
 
-      // 3. MODO: AGRUPAR POR PRAZO
-      if (currentTaskGrouping === 'due_date') {
-        const overdue = filtered.filter(t => isOverdue(t.due_date) && !isTaskDone(t));
-        const today = filtered.filter(t => (isDueToday(t.due_date) || t.due_date === todayIso) && !isOverdue(t.due_date));
-        const thisWeek = filtered.filter(t => isDueThisWeek(t.due_date) && t.due_date !== todayIso && !isOverdue(t.due_date));
-        const future = filtered.filter(t => !isOverdue(t.due_date) && t.due_date !== todayIso && !isDueThisWeek(t.due_date));
+        // Data / Prazo
+        let dueTextHtml = '';
+        if (isTaskOverdue) {
+          dueTextHtml = `<span class="text-xs font-semibold text-[#DC2626]" title="${dueInfo.formatted}">${dueInfo.relative || 'em atraso'}</span>`;
+        } else if (dueInfo.isToday) {
+          dueTextHtml = `<span class="text-xs font-semibold text-[#1F6F78]">Hoje</span>`;
+        } else if (dueInfo.formatted) {
+          dueTextHtml = `<span class="text-xs text-[#6B7677]">${dueInfo.formatted}</span>`;
+        }
 
-        const sections = [
-          { title: 'Em Atraso', tasks: overdue, color: 'text-[#A3281E]', badgeBg: 'bg-[#FBEAE8] text-[#A3281E]' },
-          { title: 'Para Hoje', tasks: today, color: 'text-[#1F6F78]', badgeBg: 'bg-[#F4EAE6] text-[#1F6F78]' },
-          { title: 'Esta Semana', tasks: thisWeek, color: 'text-[#1A1A1A]', badgeBg: 'bg-[#F6F2EC] text-[#1A1A1A]' },
-          { title: 'Próximas Semanas & Sem Prazo', tasks: future, color: 'text-[#6B6B6B]', badgeBg: 'bg-[#F6F2EC] text-[#6B6B6B]' }
-        ];
+        // Badge de Estado (apenas nos estados que justificam ou concluídas/revisão)
+        let statusBadgeHtml = '';
+        if (t.status === 'em_revisao') {
+          statusBadgeHtml = `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#EBF2FE] text-[#1E40AF] border border-[#BFDBFE] shrink-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#2563EB]"></span>
+              <span>Em revisão</span>
+            </span>
+          `;
+        } else if (isDone) {
+          statusBadgeHtml = `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#E6F4EA] text-[#1E7E34] border border-[#C3E6CB] shrink-0">
+              <span class="text-xs font-bold leading-none">✓</span>
+              <span>Concluída</span>
+            </span>
+          `;
+        }
 
-        wrapper.innerHTML = sections.filter(s => s.tasks.length > 0).map(s => `
-          <div class="bg-white rounded-2xl border border-[#E4DDD3] shadow-xs overflow-hidden space-y-0">
-            <div class="p-4 bg-[#FBF9F6] border-b border-[#E4DDD3] flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <h3 class="text-sm font-bold ${s.color} font-title">${s.title}</h3>
-                <span class="px-2 py-0.5 rounded-full text-xs font-bold ${s.badgeBg}">${s.tasks.length}</span>
+        return `
+          <div class="px-4 py-3 hover:bg-[#FAF8F5] transition-colors cursor-pointer flex items-center justify-between gap-4 group" onclick="openEditTaskModal('${t.id}')">
+            <!-- Esquerda: Prioridade + Código + Título & Projeto -->
+            <div class="flex items-center gap-3.5 min-w-0 flex-1">
+              <div class="shrink-0 flex items-center justify-center w-5 h-5">
+                ${prioIcon}
+              </div>
+              <span class="font-mono text-xs text-[#8A8A8A] font-medium shrink-0 w-11 select-none">${taskCode}</span>
+              <div class="min-w-0 flex-1">
+                <div class="text-xs font-semibold ${isDone ? 'line-through text-[#8A8A8A]' : 'text-[#1A1A1A] group-hover:text-[#1F6F78]'} transition-colors truncate">
+                  ${escapeHtml(t.title)}
+                </div>
+                <div class="text-[11px] text-[#6B7677] truncate mt-0.5">
+                  ${escapeHtml(projName)}
+                </div>
               </div>
             </div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="border-b border-[#E4DDD3] bg-[#FAF8F5] text-[11px] font-semibold text-[#8A8A8A] uppercase tracking-wider">
-                    <th class="w-10 text-center py-3 px-3">Estado</th>
-                    <th class="py-3 px-4">Tarefa</th>
-                    <th class="py-3 px-4">Tipo</th>
-                    <th class="py-3 px-4">Responsável</th>
-                    <th class="py-3 px-4">Prazo</th>
-                    <th class="py-3 px-4">Prioridade</th>
-                    <th class="py-3 px-3 text-right"></th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-[#E4DDD3]/60 text-xs">
-                  ${s.tasks.map(renderTaskTableRow).join('')}
-                </tbody>
-              </table>
+
+            <!-- Direita: Avatares Jornalista & Responsável + Prazo + Badge Estado -->
+            <div class="flex items-center gap-4 shrink-0">
+              <div class="flex items-center gap-1.5 shrink-0" title="Alvo / Jornalista">
+                ${jourAvatarHtml}
+              </div>
+
+              <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0" style="background-color: ${respAvatar.color};" title="Responsável: ${escapeHtml(respName)}">
+                ${respAvatar.initials}
+              </div>
+
+              <div class="min-w-[60px] text-right shrink-0">
+                ${dueTextHtml}
+              </div>
+
+              ${statusBadgeHtml ? `<div class="shrink-0">${statusBadgeHtml}</div>` : ''}
             </div>
           </div>
-        `).join('');
+        `;
       }
+
+      wrapper.innerHTML = statusGroupsConfig.map(grp => {
+        let grpTasks = filtered.filter(t => {
+          if (grp.key === 'concluida') return isTaskDone(t);
+          if (grp.key === 'em_revisao') return t.status === 'em_revisao';
+          if (grp.key === 'em_curso') return t.status === 'em_curso' && !isTaskDone(t);
+          if (grp.key === 'por_fazer') return (t.status === 'por_fazer' || !t.status) && !isTaskDone(t);
+          return false;
+        });
+
+        if (grpTasks.length === 0) return '';
+
+        return `
+          <div class="space-y-2">
+            <!-- Cabeçalho do Grupo de Estado -->
+            <div class="flex items-center gap-2 px-1 text-xs font-bold text-[#1A1A1A] select-none">
+              <span class="flex items-center justify-center w-4 h-4">${grp.icon}</span>
+              <span>${grp.label}</span>
+              <span class="text-xs text-[#8A8A8A] font-normal">${grpTasks.length}</span>
+            </div>
+
+            <!-- Cartão Branco com Linhas Lineares -->
+            <div class="bg-white rounded-2xl border border-[#E4DDD3] shadow-xs overflow-hidden divide-y divide-[#EAE5DF]/70">
+              ${grpTasks.map(renderLinearTaskRow).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function clearAllTasksLinearFilters() {
+      tasksFilterMy = false;
+      tasksFilterStatus = 'all';
+      tasksFilterPriority = 'all';
+      tasksFilterResponsible = 'all';
+      tasksFilterProject = 'all';
+      tasksSelectedJournalists = [];
+      tasksFilterDueDate = 'all';
+      updateTasksActiveFilterPills();
+      renderFullTasks();
+    }
+
+    function renderTasksKanban(tasksList) {
+      const wrapper = document.getElementById('tasks-kanban-wrapper');
+      if (!wrapper) return;
+
+      const cols = [
+        { key: 'por_fazer', label: 'Por fazer', color: 'border-t-[#8A8A8A]' },
+        { key: 'em_curso', label: 'Em curso', color: 'border-t-[#D97706]' },
+        { key: 'em_revisao', label: 'Em revisão', color: 'border-t-[#2563EB]' },
+        { key: 'concluida', label: 'Concluída', color: 'border-t-[#16A34A]' }
+      ];
+
+      wrapper.innerHTML = cols.map(c => {
+        const colTasks = tasksList.filter(t => {
+          if (c.key === 'concluida') return t.status === 'concluida' || t.status === 'completed';
+          if (c.key === 'em_revisao') return t.status === 'em_revisao';
+          if (c.key === 'em_curso') return t.status === 'em_curso';
+          return t.status === 'por_fazer' || !t.status;
+        });
+
+        return `
+          <div class="bg-[#FAF8F5] rounded-2xl p-3 border border-[#E4DDD3] flex flex-col space-y-3 min-h-[350px]">
+            <div class="flex items-center justify-between px-1">
+              <span class="text-xs font-bold text-[#1A1A1A]">${c.label}</span>
+              <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-white border border-[#E4DDD3] text-[#6B7677]">${colTasks.length}</span>
+            </div>
+            <div class="space-y-2 flex-1 overflow-y-auto">
+              ${colTasks.map((t, idx) => {
+                const code = getTaskLinearCode(t, idx);
+                const resp = t.responsible || t.assignee || 'Leonor Rodrigues';
+                const avatar = getUserAvatar(resp);
+                return `
+                  <div class="p-3 bg-white rounded-xl border border-[#E4DDD3] shadow-xs hover:border-[#1F6F78] transition-all cursor-pointer space-y-2" onclick="openEditTaskModal('${t.id}')">
+                    <div class="flex items-center justify-between text-[11px]">
+                      <span class="font-mono text-[#8A8A8A] font-medium">${code}</span>
+                      ${getTaskLinearPriorityIcon(t.priority)}
+                    </div>
+                    <div class="text-xs font-semibold text-[#1A1A1A] line-clamp-2">${escapeHtml(t.title)}</div>
+                    <div class="text-[11px] text-[#6B7677] truncate">${escapeHtml(t.project_name || t.client || 'Geral')}</div>
+                    <div class="pt-1 flex items-center justify-between border-t border-[#F0ECE7] text-[11px] text-[#8A8A8A]">
+                      <span>${t.due_date ? t.due_date.substring(5) : 'Sem data'}</span>
+                      <div class="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white shrink-0" style="background-color: ${avatar.color};">
+                        ${avatar.initials}
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderTasksCalendar(tasksList) {
+      const wrapper = document.getElementById('tasks-calendar-wrapper');
+      if (!wrapper) return;
+
+      const year = tasksCalendarCurrentDate.getFullYear();
+      const month = tasksCalendarCurrentDate.getMonth();
+      const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+      const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 is Sunday
+      const startingDay = (firstDayOfMonth === 0) ? 6 : firstDayOfMonth - 1; // Mon = 0
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      let daysHtml = '';
+      for (let i = 0; i < startingDay; i++) {
+        daysHtml += `<div class="min-h-[90px] p-2 bg-[#FBF9F6]/50 rounded-xl border border-transparent"></div>`;
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayTasks = tasksList.filter(t => t.due_date === dayStr);
+        const isToday = (dayStr === '2026-11-24' || dayStr === new Date().toISOString().split('T')[0]);
+
+        daysHtml += `
+          <div class="min-h-[90px] p-2 bg-white rounded-xl border border-[#E4DDD3] flex flex-col transition-all hover:border-[#1F6F78]">
+            <div class="flex items-center justify-between text-xs mb-1.5">
+              <span class="font-semibold ${isToday ? 'w-5 h-5 rounded-full bg-[#1F6F78] text-white flex items-center justify-center text-[11px]' : 'text-[#1A1A1A]'}">${day}</span>
+              ${dayTasks.length > 0 ? `<span class="text-[10px] text-[#8A8A8A]">${dayTasks.length}</span>` : ''}
+            </div>
+            <div class="space-y-1 flex-1 overflow-y-auto">
+              ${dayTasks.map(t => {
+                const isDone = t.status === 'concluida';
+                const bg = isDone ? 'bg-[#E6F4EA] text-[#1E7E34]' : 'bg-[#FAF8F5] text-[#1A1A1A] border border-[#E4DDD3]';
+                return `
+                  <div onclick="openEditTaskModal('${t.id}')" class="px-1.5 py-0.5 rounded text-[10px] truncate font-medium cursor-pointer ${bg}" title="${escapeHtml(t.title)}">
+                    ${escapeHtml(t.title)}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      wrapper.innerHTML = `
+        <div class="flex items-center justify-between pb-2 border-b border-[#E4DDD3]">
+          <div class="flex items-center gap-2">
+            <h2 class="text-base font-bold text-[#1A1A1A] font-title">${monthNames[month]} ${year}</h2>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button type="button" onclick="changeTasksCalendarMonth(-1)" class="p-1.5 rounded-lg border border-[#E4DDD3] hover:bg-[#FAF8F5] text-[#1A1A1A] cursor-pointer">‹</button>
+            <button type="button" onclick="tasksCalendarCurrentDate = new Date(2026, 10, 24); renderFullTasks();" class="px-2.5 py-1 text-xs rounded-lg border border-[#E4DDD3] hover:bg-[#FAF8F5] text-[#1A1A1A] font-medium cursor-pointer">Hoje</button>
+            <button type="button" onclick="changeTasksCalendarMonth(1)" class="p-1.5 rounded-lg border border-[#E4DDD3] hover:bg-[#FAF8F5] text-[#1A1A1A] cursor-pointer">›</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-7 gap-2 text-center text-xs font-semibold text-[#8A8A8A] pb-1">
+          <div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div><div>Dom</div>
+        </div>
+
+        <div class="grid grid-cols-7 gap-2">
+          ${daysHtml}
+        </div>
+      `;
+    }
+
+    function changeTasksCalendarMonth(delta) {
+      tasksCalendarCurrentDate = new Date(tasksCalendarCurrentDate.getFullYear(), tasksCalendarCurrentDate.getMonth() + delta, 1);
+      renderFullTasks();
     }
 
     // Estado local para o formulário de Novo Projeto
