@@ -2523,160 +2523,219 @@
   </div>
 
 <!-- ======================================================== -->
-  <!-- PAINEL / DRAWER LATERAL: FICHA DO MEIO (OCS - BASE 1)      -->
+  <!-- ======================================================== -->
+  <!-- PAINEL / DRAWER LATERAL: FICHA DO MEIO (OCS - HIERARQUIA LINEAR) -->
   <!-- ======================================================== -->
   <div id="panel-outlet-detail" class="fixed inset-0 z-50 hidden">
     <!-- Backdrop com fechar ao clicar -->
     <div onclick="closeOutletDetailDrawer()" class="fixed inset-0 bg-[#1F2A2B]/40 backdrop-blur-sm transition-opacity"></div>
 
-    <!-- Gaveta Lateral Deslizante -->
+    <!-- Gaveta Lateral Deslizante (~640px) -->
     <div id="panel-outlet-container"
-      class="fixed inset-y-0 right-0 w-full max-w-2xl bg-white border-l border-[#E4DDD3] shadow-modal flex flex-col transition-all duration-300 z-10 overflow-hidden">
+      class="fixed inset-y-0 right-0 w-full max-w-[640px] bg-white border-l border-[#E4DDD3] shadow-modal flex flex-col transition-all duration-300 z-10 overflow-hidden">
 
-      <!-- Barra de Ferramentas Superior -->
-      <div class="p-4 border-b border-[#E4DDD3] flex items-center justify-between bg-[#FBF9F6]">
-        <div class="flex items-center gap-2 text-xs text-[#6B6B6B]">
-          <span class="font-medium text-[#1A1A1A]">Ficha do Meio</span>
-          <span class="text-[#E4DDD3]">/</span>
-          <span id="od-header-name" class="font-semibold text-[#1A1A1A]">—</span>
+      <!-- Navegação Superior -->
+      <div class="px-6 py-4 border-b border-[#E4DDD3] flex items-center justify-between bg-[#FBF9F6]/90 backdrop-blur-sm shrink-0">
+        <div class="flex items-center gap-2 text-xs text-[#6B7677]">
+          <span>Meios</span>
+          <span class="text-[#D1C7BA]">/</span>
+          <span id="od-header-name" class="font-medium text-[#1A1A1A]">—</span>
         </div>
 
-        <div class="flex items-center gap-2">
-          <button onclick="toggleOutletDrawerExpand()" class="btn-secondary p-1.5 text-xs text-[#6B6B6B] hover:text-[#1A1A1A]" title="Expandir largura">
+        <div class="flex items-center gap-1.5">
+          <button onclick="toggleOutletDrawerExpand()" type="button" class="text-[#6B7677] hover:text-[#1A1A1A] p-1.5 rounded-lg hover:bg-[#F2EFE9] transition-colors cursor-pointer" title="Expandir largura" aria-label="Expandir">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
           </button>
-          <button onclick="closeOutletDetailDrawer()" class="text-[#6B6B6B] hover:text-[#1A1A1A] p-1.5" title="Fechar (Esc)">
+          <button onclick="closeOutletDetailDrawer()" type="button" class="text-[#6B7677] hover:text-[#1A1A1A] p-1.5 rounded-lg hover:bg-[#F2EFE9] transition-colors cursor-pointer" title="Fechar (Esc)" aria-label="Fechar">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
         </div>
       </div>
 
       <!-- Conteúdo com Scroll -->
-      <div class="p-6 space-y-6 flex-1 overflow-y-auto" id="od-drawer-body">
-        <!-- Topo da Ficha: Logo, Nome, Grupo, Website -->
-        <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#E4DDD3]">
-          <div class="flex items-center gap-3">
-            <div id="od-logo-container" class="w-14 h-14 rounded-2xl bg-[#F6F2EC] border border-[#E4DDD3] flex items-center justify-center overflow-hidden shadow-xs">
-              <!-- Imagem do logo ou iniciais -->
-            </div>
-            <div>
-              <h2 id="od-name" class="text-xl font-bold text-[#1A1A1A] font-title tracking-tight">—</h2>
-              <p id="od-group" class="text-xs text-[#6B6B6B] font-medium">—</p>
-              <div id="od-website" class="pt-0.5">
-                <!-- Website URL com ícone externo -->
+      <div class="px-6 py-5 space-y-6 flex-1 overflow-y-auto" id="od-drawer-body">
+        
+        <!-- Cabeçalho Principal: Logótipo, Nome, Meta, Formatos e Ações -->
+        <div class="space-y-4 pb-5 border-b border-[#E4DDD3]">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex items-center gap-3.5">
+              <div id="od-logo-container" class="w-14 h-14 rounded-2xl bg-[#F6F2EC] border border-[#E4DDD3] flex items-center justify-center overflow-hidden shadow-xs shrink-0">
+                <!-- Imagem do logo ou iniciais -->
+              </div>
+              <div class="space-y-0.5">
+                <div class="flex items-center gap-2.5 flex-wrap">
+                  <h2 id="od-name" class="text-xl font-bold text-[#1A1A1A] font-title tracking-tight">—</h2>
+                  <div id="od-status-badge">
+                    <span class="inline-flex items-center gap-1.5 text-xs font-medium text-[#2E7D32]">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#2E7D32]"></span>
+                      Ativo
+                    </span>
+                  </div>
+                </div>
+                <p id="od-group-scope-period" class="text-xs text-[#6B7677] font-medium">—</p>
+                <div id="od-formats-list" class="flex flex-wrap gap-1.5 pt-1">
+                  <!-- Formatos como etiquetas neutras -->
+                </div>
               </div>
             </div>
           </div>
-          <div id="od-status-badge">
-            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-[#DFE7D6] text-[#3F5A2E]">Ativo</span>
+
+          <!-- Barra de Ações do Cabeçalho -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <button id="od-btn-contact-top" onclick="handleContactOutletFromDrawer()" type="button" class="btn-primary py-2 px-3.5 text-xs font-medium inline-flex items-center gap-1.5 cursor-pointer">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              <span>Contactar redação</span>
+            </button>
+            <a id="od-action-site" href="#" target="_blank" class="btn-secondary py-2 px-3 text-xs font-medium inline-flex items-center gap-1.5 cursor-pointer">
+              <svg class="w-3.5 h-3.5 text-[#6B7677]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              <span>Site &nearr;</span>
+            </a>
+            <a id="od-action-email" href="#" class="btn-secondary py-2 px-3 text-xs font-medium inline-flex items-center gap-1.5 cursor-pointer">
+              <svg class="w-3.5 h-3.5 text-[#6B7677]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+              <span>Email de agenda</span>
+            </a>
           </div>
         </div>
 
-        <!-- Indicadores Rápidos: Âmbito, Periodicidade, Audiência Estimada -->
-        <div class="grid grid-cols-3 gap-3 bg-[#FBF9F6] p-3.5 rounded-2xl border border-[#E4DDD3] text-center">
+        <!-- Faixa de 3 Números Destacados (Linear metrics strip) -->
+        <div class="grid grid-cols-3 gap-3 bg-[#FAF8F5] p-3.5 rounded-2xl border border-[#E4DDD3] text-center">
           <div>
-            <span class="text-[10px] uppercase font-semibold tracking-wider text-[#6B6B6B] block">Âmbito</span>
-            <span id="od-scope" class="text-xs font-medium text-[#1A1A1A] mt-0.5 block capitalize">Nacional</span>
+            <div id="od-metric-journalists" class="text-xl font-bold text-[#1A1A1A] font-title">0</div>
+            <span class="text-[10px] text-[#6B7677] uppercase tracking-wider block mt-0.5">Jornalistas</span>
           </div>
           <div class="border-x border-[#E4DDD3]">
-            <span class="text-[10px] uppercase font-semibold tracking-wider text-[#6B6B6B] block">Periodicidade</span>
-            <span id="od-periodicity" class="text-xs font-medium text-[#1A1A1A] mt-0.5 block capitalize">Diário</span>
+            <div id="od-metric-last-contact" class="text-xl font-bold text-[#1A1A1A] font-title">Nunca</div>
+            <span class="text-[10px] text-[#6B7677] uppercase tracking-wider block mt-0.5">Último contacto</span>
           </div>
           <div>
-            <span class="text-[10px] uppercase font-semibold tracking-wider text-[#6B6B6B] block">Audiência Estimada</span>
-            <span id="od-audience" class="text-xs font-medium text-[#1A1A1A] mt-0.5 block font-mono">—</span>
+            <div id="od-metric-open-tasks" class="text-xl font-bold text-[#1A1A1A] font-title">0</div>
+            <span class="text-[10px] text-[#6B7677] uppercase tracking-wider block mt-0.5">Tarefas abertas</span>
           </div>
         </div>
 
-        <!-- Formatos e Especialidades -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="space-y-1.5">
-            <label class="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B]">Formatos Suportados</label>
-            <div id="od-formats-list" class="flex flex-wrap gap-1.5">
-              <!-- Tags de formatos -->
-            </div>
-          </div>
-
-          <div class="space-y-1.5">
-            <label class="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B]">Especialidades / Cobertura</label>
-            <div id="od-specialties-list" class="flex flex-wrap gap-1.5">
-              <!-- Tags de especialidades -->
-            </div>
-          </div>
-        </div>
-
-        <!-- Registo da ERC e Dados Oficiais -->
-        <div class="bg-white p-4 rounded-xl border border-[#E4DDD3] space-y-2 text-xs">
-          <span class="font-semibold text-[#1A1A1A] block">Enquadramento Regulatório (ERC)</span>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-[#6B6B6B]">
-            <div>Tipo de Meio: <span id="od-erc-type" class="text-[#1A1A1A] font-medium block mt-0.5">—</span></div>
-            <div>N.º de Registo ERC: <span id="od-erc-reg" class="font-mono text-[#1A1A1A] font-medium block mt-0.5">—</span></div>
-          </div>
-        </div>
-
-        <!-- Contactos da Redação e Morada -->
-        <div class="bg-[#FBF9F6] p-4 rounded-2xl border border-[#E4DDD3] space-y-2 text-xs">
-          <span class="font-semibold text-[#1A1A1A] block">Contactos Centrais da Redação</span>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-            <div>
-              <span class="text-[11px] text-[#6B6B6B] block">Email de Agenda / Pauta:</span>
-              <span id="od-agenda-email" class="font-mono text-xs text-[#1F6F78] block mt-0.5">—</span>
-            </div>
-            <div>
-              <span class="text-[11px] text-[#6B6B6B] block">Telefone da Redação:</span>
-              <span id="od-phone" class="font-mono text-xs text-[#1A1A1A] block mt-0.5">—</span>
-            </div>
-          </div>
-          <div class="pt-2 border-t border-[#E4DDD3]/60">
-            <span class="text-[11px] text-[#6B6B6B] block">Morada da Sede:</span>
-            <span id="od-address" class="text-xs text-[#1A1A1A] block mt-0.5 leading-relaxed">—</span>
-          </div>
-          <!-- Redes Sociais -->
-          <div id="od-social-links" class="pt-2 flex flex-wrap gap-2 text-xs">
-            <!-- Links para redes do meio -->
-          </div>
-        </div>
-
-        <!-- JORNALISTAS ASSOCIADOS (LIGAÇÃO AUTOMÁTICA DA BASE 2) -->
-        <div class="space-y-3 pt-2">
+        <!-- Secção: JORNALISTAS NESTE MEIO (bloco mais consultado) -->
+        <div class="space-y-3">
           <div class="flex items-center justify-between">
-            <label class="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B]">Jornalistas Associados a este Meio</label>
-            <span id="od-associated-count" class="text-xs font-medium text-[#1F6F78]">0 jornalistas</span>
+            <div class="flex items-center gap-3 flex-1">
+              <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677]">JORNALISTAS NESTE MEIO</span>
+              <div class="flex-1 h-px bg-[#E4DDD3]"></div>
+            </div>
+            <span id="od-associated-count" class="text-xs font-medium text-[#1F6F78] ml-2">0 jornalistas</span>
           </div>
 
           <div id="od-associated-journalists-list" class="space-y-2">
-            <!-- Lista de jornalistas associados gerada dinamicamente -->
+            <!-- Lista compacta de jornalistas associados -->
           </div>
         </div>
-              <!-- PROJETOS COM COBERTURA NESTE MEIO (REGRAS DE LIGAÇÃO CRM) -->
-        <div class="space-y-3 pt-2 border-t border-[#E4DDD3]">
+
+        <!-- Secção: CONTACTO E DADOS (linhas de duas colunas) -->
+        <div>
+          <div class="flex items-center gap-3 mb-2.5">
+            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677]">CONTACTO E DADOS</span>
+            <div class="flex-1 h-px bg-[#E4DDD3]"></div>
+          </div>
+          <div class="space-y-2 text-xs">
+            <!-- Email de agenda -->
+            <div class="flex items-center justify-between py-1.5 border-b border-[#F2EFE9]">
+              <span class="text-[#6B7677] w-36 shrink-0">Email de agenda</span>
+              <span id="od-agenda-email" class="text-right font-mono text-[#1F6F78]">—</span>
+            </div>
+            <!-- Telefone -->
+            <div class="flex items-center justify-between py-1.5 border-b border-[#F2EFE9]">
+              <span class="text-[#6B7677] w-36 shrink-0">Telefone da redação</span>
+              <span id="od-phone" class="text-right font-mono text-[#1A1A1A]">—</span>
+            </div>
+            <!-- Site -->
+            <div class="flex items-center justify-between py-1.5 border-b border-[#F2EFE9]">
+              <span class="text-[#6B7677] w-36 shrink-0">Site</span>
+              <div id="od-website" class="text-right">
+                <!-- Website URL -->
+              </div>
+            </div>
+            <!-- Morada -->
+            <div class="flex items-start justify-between py-1.5 border-b border-[#F2EFE9]">
+              <span class="text-[#6B7677] w-36 shrink-0 pt-0.5">Morada da redação</span>
+              <span id="od-address" class="text-right text-[#1A1A1A] flex-1 leading-relaxed">—</span>
+            </div>
+            <!-- Registo ERC -->
+            <div class="flex items-center justify-between py-1.5 border-b border-[#F2EFE9]">
+              <span class="text-[#6B7677] w-36 shrink-0">Registo ERC</span>
+              <div class="text-right">
+                <span id="od-erc-reg" class="font-mono text-[#1A1A1A] font-medium">—</span>
+                <span id="od-erc-type" class="text-[11px] text-[#8A8A8A] block">—</span>
+              </div>
+            </div>
+            <!-- Audiência Estimada -->
+            <div class="flex items-center justify-between py-1.5 border-b border-[#F2EFE9]">
+              <span class="text-[#6B7677] w-36 shrink-0">Audiência estimada</span>
+              <span id="od-audience" class="text-right font-mono text-[#1A1A1A] font-medium">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secção: ESPECIALIDADES -->
+        <div>
+          <div class="flex items-center gap-3 mb-2.5">
+            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677]">ESPECIALIDADES</span>
+            <div class="flex-1 h-px bg-[#E4DDD3]"></div>
+          </div>
+          <div id="od-specialties-list" class="flex flex-wrap gap-1.5">
+            <!-- Chips de especialidades -->
+          </div>
+        </div>
+
+        <!-- Secção: PROJETOS COM COBERTURA NESTE MEIO -->
+        <div class="space-y-3">
           <div class="flex items-center justify-between">
-            <label class="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B]">Projetos com Cobertura Neste Meio</label>
-            <span id="od-projects-count" class="text-xs font-medium text-[#1F6F78]">0 projetos</span>
+            <div class="flex items-center gap-3 flex-1">
+              <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677]">PROJETOS COM COBERTURA</span>
+              <div class="flex-1 h-px bg-[#E4DDD3]"></div>
+            </div>
+            <span id="od-projects-count" class="text-xs font-medium text-[#1F6F78] ml-2">0 projetos</span>
           </div>
           <div id="od-associated-projects-list" class="space-y-2">
             <!-- Gerado dinamicamente -->
           </div>
         </div>
-      </div>
-<!-- Barra de Ações Inferior -->
-      <div class="p-4 border-t border-[#E4DDD3] bg-[#FBF9F6] flex items-center justify-between gap-3">
-        <div class="flex items-center gap-2">
-          <button onclick="closeOutletDetailDrawer()" class="btn-secondary py-2 px-4 text-xs">
-            Fechar
+
+        <!-- Secção Recolhível: MAIS DETALHES -->
+        <div class="border border-[#E4DDD3] rounded-xl overflow-hidden bg-[#FAF8F5]/60 transition-all">
+          <button type="button" onclick="toggleOutletDrawerMoreDetails()"
+            class="w-full flex items-center justify-between p-3.5 text-xs text-[#1A1A1A] hover:bg-[#F2EFE9] transition-colors cursor-pointer select-none">
+            <span class="font-semibold text-[#1A1A1A]">Mais detalhes</span>
+            <div class="flex items-center gap-2 text-[11px] text-[#6B7677]">
+              <span>Redes sociais, dados regulatórios</span>
+              <svg id="od-more-chevron" class="w-4 h-4 text-[#6B7677] transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
           </button>
-          <button id="od-btn-delete" onclick="handleDeleteOutletFromDrawer()" class="btn-delete-record py-2 px-3 text-xs font-medium text-[#A3281E] hover:bg-[#FBEAE8] border border-[#F5C2BE] rounded-xl transition-colors cursor-pointer">
-            Eliminar Meio
-          </button>
+          
+          <div id="od-more-content" class="hidden p-4 space-y-3.5 bg-white border-t border-[#E4DDD3] text-xs">
+            <div>
+              <span class="block text-[11px] font-medium text-[#6B7677] uppercase tracking-wider mb-1.5">Redes Sociais</span>
+              <div id="od-social-links" class="flex flex-wrap gap-2">
+                <!-- Redes -->
+              </div>
+            </div>
+          </div>
         </div>
-        <button id="od-btn-contact-outlet" onclick="handleContactOutletFromDrawer()" class="btn-primary py-2 px-4 text-xs font-medium flex items-center gap-1.5">
-          <span>Contactar Redação &rarr;</span>
+
+      </div>
+
+      <!-- Rodapé Fixo -->
+      <div class="px-6 py-4 border-t border-[#E4DDD3] bg-[#FBF9F6]/90 backdrop-blur-sm flex items-center justify-between gap-3 shrink-0">
+        <button onclick="closeOutletDetailDrawer()" type="button" class="btn-secondary py-2 px-4 text-xs font-medium cursor-pointer min-h-[44px]">
+          Fechar
+        </button>
+        <button id="od-btn-delete" onclick="handleDeleteOutletFromDrawer()" type="button" class="btn-delete-record py-2 px-3.5 text-xs font-medium text-[#A3281E] hover:bg-[#FBEAE8] border border-[#F5C2BE] rounded-xl transition-colors cursor-pointer min-h-[44px]">
+          Eliminar meio
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ======================================================== -->
+<!-- ======================================================== -->
   <!-- MODAL: NOVA TAREFA                                       -->
   <!-- ======================================================== -->
   
@@ -9238,6 +9297,15 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
     // ========================================================
     // FICHA / GAVETA DO MEIO (BASE 1 -> BASE 2 LIGADA)
     // ========================================================
+    function toggleOutletDrawerMoreDetails() {
+      const content = document.getElementById('od-more-content');
+      const chevron = document.getElementById('od-more-chevron');
+      if (content && chevron) {
+        content.classList.toggle('hidden');
+        chevron.classList.toggle('rotate-180');
+      }
+    }
+
     function openOutletDetailDrawer(outletId) {
       let ocs = localOutlets.find(item => item.id === outletId);
       if (!ocs) {
@@ -9246,10 +9314,15 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       if (!ocs) return;
       currentDrawerOutletId = ocs.id;
 
-      // Nome, grupo e logo
+      // Reset do bloco recolhível
+      const moreContent = document.getElementById('od-more-content');
+      const moreChevron = document.getElementById('od-more-chevron');
+      if (moreContent) moreContent.classList.add('hidden');
+      if (moreChevron) moreChevron.classList.remove('rotate-180');
+
+      // Nome e logo
       document.getElementById('od-header-name').innerText = ocs.name;
       document.getElementById('od-name').innerText = ocs.name;
-      document.getElementById('od-group').innerText = ocs.media_group || 'Independente';
 
       const initials = ocs.name.substring(0, 2).toUpperCase();
       const logoContainer = document.getElementById('od-logo-container');
@@ -9259,39 +9332,69 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
           : `<span class="font-bold text-base text-[#1A1A1A]">${initials}</span>`;
       }
 
-      // Website
-      const siteContainer = document.getElementById('od-website');
-      if (siteContainer) {
-        siteContainer.innerHTML = ocs.website_url
-          ? `<a href="${ocs.website_url}" target="_blank" class="text-xs text-[#1F6F78] hover:underline font-mono inline-flex items-center gap-1">${ocs.website_url.replace(/^https?:\/\//, '')} &nearr;</a>`
-          : '';
-      }
+      // Meta: Grupo · Âmbito · Periodicidade
+      const metaParts = [ocs.media_group || 'Independente', ocs.scope || 'Nacional', ocs.periodicity || 'Diário'];
+      const metaEl = document.getElementById('od-group-scope-period');
+      if (metaEl) metaEl.innerText = metaParts.filter(Boolean).join(' · ');
 
-      // Estado
+      // Estado em ponto + texto
       const statusContainer = document.getElementById('od-status-badge');
       if (statusContainer) {
         statusContainer.innerHTML = (ocs.status || 'ativo') === 'ativo'
-          ? `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-[#DFE7D6] text-[#3F5A2E]">Ativo</span>`
-          : `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-[#E9E5E0] text-[#5C554E]">Extinto</span>`;
+          ? `<span class="inline-flex items-center gap-1.5 text-xs font-medium text-[#2E7D32]"><span class="w-1.5 h-1.5 rounded-full bg-[#2E7D32]"></span>Ativo</span>`
+          : `<span class="inline-flex items-center gap-1.5 text-xs font-medium text-[#5C554E]"><span class="w-1.5 h-1.5 rounded-full bg-[#8A8A8A]"></span>Extinto</span>`;
       }
 
-      // Indicadores: Âmbito, Periodicidade, Audiência
-      document.getElementById('od-scope').innerText = ocs.scope || 'Nacional';
-      document.getElementById('od-periodicity').innerText = ocs.periodicity || 'Diário';
-      document.getElementById('od-audience').innerText = ocs.estimated_audience ? `${ocs.estimated_audience.toLocaleString('pt-PT')} leitores` : 'Não estimada';
-
-      // Formatos
+      // Formatos como etiquetas neutras
       const formatsContainer = document.getElementById('od-formats-list');
       if (formatsContainer) {
         const formats = Array.isArray(ocs.formats) ? ocs.formats : (ocs.formats ? [ocs.formats] : ['Online']);
-        formatsContainer.innerHTML = formats.map(f => renderTag(f)).join('');
+        formatsContainer.innerHTML = formats.map(f => `
+          <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium bg-[#FAF8F5] text-[#1A1A1A] border border-[#E4DDD3]">
+            ${escapeHtml(f)}
+          </span>
+        `).join('');
+      }
+
+      // Ações rápidas no cabeçalho
+      const siteBtn = document.getElementById('od-action-site');
+      if (siteBtn) {
+        if (ocs.website_url) {
+          siteBtn.href = ocs.website_url;
+          siteBtn.classList.remove('hidden');
+        } else {
+          siteBtn.classList.add('hidden');
+        }
+      }
+
+      const emailBtn = document.getElementById('od-action-email');
+      const agendaMail = ocs.agenda_email || ocs.contact_email;
+      if (emailBtn) {
+        if (agendaMail) {
+          emailBtn.href = `mailto:${agendaMail}`;
+          emailBtn.classList.remove('hidden');
+        } else {
+          emailBtn.classList.add('hidden');
+        }
+      }
+
+      // Website URL no detalhe
+      const siteContainer = document.getElementById('od-website');
+      if (siteContainer) {
+        siteContainer.innerHTML = ocs.website_url
+          ? `<a href="${ocs.website_url}" target="_blank" class="text-xs text-[#1F6F78] hover:underline font-mono inline-flex items-center gap-1">${escapeHtml(ocs.website_url.replace(/^https?:\/\//, ''))} &nearr;</a>`
+          : '<span class="text-[#8A8A8A]">—</span>';
       }
 
       // Especialidades
       const specsContainer = document.getElementById('od-specialties-list');
       if (specsContainer) {
         const specs = ocs.specialties || (ocs.specialty ? [ocs.specialty] : ['Geral']);
-        specsContainer.innerHTML = specs.map(s => renderTag(s)).join('');
+        specsContainer.innerHTML = specs.map(s => `
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#FAF8F5] text-[#1A1A1A] border border-[#E4DDD3]">
+            ${escapeHtml(s)}
+          </span>
+        `).join('');
       }
 
       // ERC
@@ -9302,20 +9405,21 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       document.getElementById('od-agenda-email').innerText = ocs.agenda_email || ocs.contact_email || '—';
       document.getElementById('od-phone').innerText = ocs.phone || '—';
       document.getElementById('od-address').innerText = ocs.address || '—';
+      document.getElementById('od-audience').innerText = ocs.estimated_audience ? `${ocs.estimated_audience.toLocaleString('pt-PT')} leitores` : 'Não estimada';
 
       // Redes Sociais
       const socialContainer = document.getElementById('od-social-links');
       if (socialContainer) {
         const links = [];
-        if (ocs.social_links?.linkedin) links.push(`<a href="${ocs.social_links.linkedin}" target="_blank" class="px-2 py-0.5 rounded bg-white border border-[#E4DDD3] hover:text-[#1F6F78]">LinkedIn</a>`);
-        if (ocs.social_links?.twitter_x) links.push(`<a href="${ocs.social_links.twitter_x}" target="_blank" class="px-2 py-0.5 rounded bg-white border border-[#E4DDD3] hover:text-[#1F6F78]">X / Twitter</a>`);
-        if (ocs.social_links?.instagram) links.push(`<a href="${ocs.social_links.instagram}" target="_blank" class="px-2 py-0.5 rounded bg-white border border-[#E4DDD3] hover:text-[#1F6F78]">Instagram</a>`);
-        if (ocs.social_links?.facebook) links.push(`<a href="${ocs.social_links.facebook}" target="_blank" class="px-2 py-0.5 rounded bg-white border border-[#E4DDD3] hover:text-[#1F6F78]">Facebook</a>`);
-        socialContainer.innerHTML = links.length > 0 ? links.join('') : '<span class="text-[11px] text-[#6B6B6B]">Nenhuma rede social registada.</span>';
+        if (ocs.social_links?.linkedin) links.push(`<a href="${ocs.social_links.linkedin}" target="_blank" class="px-2.5 py-1 rounded-lg bg-[#FAF8F5] border border-[#E4DDD3] hover:text-[#1F6F78] font-medium transition-colors">LinkedIn &nearr;</a>`);
+        if (ocs.social_links?.twitter_x) links.push(`<a href="${ocs.social_links.twitter_x}" target="_blank" class="px-2.5 py-1 rounded-lg bg-[#FAF8F5] border border-[#E4DDD3] hover:text-[#1F6F78] font-medium transition-colors">X / Twitter &nearr;</a>`);
+        if (ocs.social_links?.instagram) links.push(`<a href="${ocs.social_links.instagram}" target="_blank" class="px-2.5 py-1 rounded-lg bg-[#FAF8F5] border border-[#E4DDD3] hover:text-[#1F6F78] font-medium transition-colors">Instagram &nearr;</a>`);
+        if (ocs.social_links?.facebook) links.push(`<a href="${ocs.social_links.facebook}" target="_blank" class="px-2.5 py-1 rounded-lg bg-[#FAF8F5] border border-[#E4DDD3] hover:text-[#1F6F78] font-medium transition-colors">Facebook &nearr;</a>`);
+        socialContainer.innerHTML = links.length > 0 ? links.join('') : '<span class="text-xs text-[#8A8A8A]">Nenhuma rede social registada.</span>';
       }
 
       // ========================================================
-      // JORNALISTAS ASSOCIADOS (LIGAÇÃO AUTOMÁTICA DA BASE 2)
+      // JORNALISTAS ASSOCIADOS E MÉTRICAS LINEAR
       // ========================================================
       const associatedList = localJournalists.filter(j => 
         (j.outlet_ids && j.outlet_ids.includes(ocs.id)) || 
@@ -9323,42 +9427,74 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         (j.outlet_names && j.outlet_names.some(on => on.toLowerCase() === ocs.name.toLowerCase()))
       );
 
-      document.getElementById('od-associated-count').innerText = `${associatedList.length} ${associatedList.length === 1 ? 'jornalista associado' : 'jornalistas associados'}`;
+      // Faixa de 3 números
+      document.getElementById('od-metric-journalists').innerText = associatedList.length;
+
+      let latestContactDate = null;
+      associatedList.forEach(j => {
+        if (j.last_contact_date && (!latestContactDate || j.last_contact_date > latestContactDate)) {
+          latestContactDate = j.last_contact_date;
+        }
+      });
+      const relContact = latestContactDate ? ((typeof formatRelativeDaysPt === 'function') ? formatRelativeDaysPt(latestContactDate).text : latestContactDate) : 'Nunca';
+      document.getElementById('od-metric-last-contact').innerText = relContact;
+
+      const assocJourIds = associatedList.map(j => j.id);
+      const assocJourNames = associatedList.map(j => (j.name || '').toLowerCase());
+      const openTasks = localTasks.filter(t => 
+        (t.status !== 'concluida' && t.status !== 'completed') && 
+        (assocJourIds.includes(t.journalist_id) || assocJourNames.includes((t.journalist_name || '').toLowerCase()) || (t.outlet_name && t.outlet_name.toLowerCase() === ocs.name.toLowerCase()))
+      );
+      document.getElementById('od-metric-open-tasks').innerText = openTasks.length;
+
+      document.getElementById('od-associated-count').innerText = `${associatedList.length} ${associatedList.length === 1 ? 'jornalista' : 'jornalistas'}`;
+      
       const assocContainer = document.getElementById('od-associated-journalists-list');
       if (assocContainer) {
         if (associatedList.length === 0) {
           assocContainer.innerHTML = `
-            <div class="p-4 bg-white rounded-xl border border-[#E4DDD3] text-center text-xs text-[#6B6B6B]">
-              <p>Nenhum jornalista registado associado a este meio.</p>
-              <button onclick="openJournalistModalForOutlet('${ocs.name.replace(/'/g, "\\'")}')" class="mt-2 text-[#1F6F78] font-medium hover:underline inline-block">
+            <div class="p-4 bg-white rounded-xl border border-[#E4DDD3] text-center text-xs text-[#8A8A8A]">
+              <p>Nenhum jornalista associado a este meio.</p>
+              <button type="button" onclick="openJournalistModalForOutlet('${ocs.name.replace(/'/g, "\\'")}')" class="mt-2 text-[#1F6F78] font-medium hover:underline inline-block cursor-pointer">
                 + Associar Novo Jornalista a este Meio
               </button>
             </div>
           `;
         } else {
-          assocContainer.innerHTML = associatedList.map(j => {
+          const visibleJournalists = associatedList.slice(0, 5);
+          let html = visibleJournalists.map(j => {
             const jInitials = j.name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
-            const email = (j.emails && j.emails.length > 0) ? j.emails[0] : (j.contact_email || '—');
+            const relTime = (typeof formatRelativeDaysPt === 'function') ? formatRelativeDaysPt(j.last_contact_date).text : (j.last_contact_date || 'Nunca');
             return `
-              <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-[#E4DDD3] hover:border-[#1F6F78]/40 transition-all shadow-xs">
-                <div class="flex items-center gap-3">
+              <div onclick="openJournalistDetailDrawer('${j.id}')" class="flex items-center justify-between p-2.5 bg-white rounded-xl border border-[#E4DDD3] hover:border-[#1F6F78]/50 transition-all shadow-xs cursor-pointer group">
+                <div class="flex items-center gap-2.5 min-w-0">
                   <div class="w-8 h-8 rounded-lg bg-[#1C2526] text-white flex items-center justify-center font-bold text-xs shrink-0">
                     ${jInitials}
                   </div>
-                  <div>
-                    <h4 class="font-bold text-xs text-[#1A1A1A]">${j.name}</h4>
-                    <p class="text-[11px] text-[#6B6B6B]">${j.role_title || 'Jornalista'}</p>
-                    <span class="font-mono text-[10px] text-[#1F6F78]">${email}</span>
+                  <div class="min-w-0">
+                    <h4 class="font-medium text-xs text-[#1A1A1A] group-hover:text-[#1F6F78] transition-colors truncate">${escapeHtml(j.name)}</h4>
+                    <p class="text-[11px] text-[#6B7677] truncate">${escapeHtml(j.role_title || 'Jornalista')}</p>
                   </div>
                 </div>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="openJournalistDetailDrawer('${j.id}')" class="btn-secondary py-1 px-2.5 text-xs text-[#1F6F78] font-medium" title="Ver ficha do jornalista">
-                    Ver Ficha &rarr;
-                  </button>
+                <div class="flex items-center gap-2 shrink-0">
+                  <span class="text-[11px] text-[#8A8A8A] font-mono">${relTime}</span>
+                  <svg class="w-4 h-4 text-[#8A8A8A] group-hover:text-[#1F6F78] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </div>
               </div>
             `;
           }).join('');
+
+          if (associatedList.length > 5) {
+            html += `
+              <div class="pt-1 text-center">
+                <button type="button" onclick="closeOutletDetailDrawer(); switchView('journalists');" class="text-xs text-[#1F6F78] font-medium hover:underline cursor-pointer">
+                  Ver todos os ${associatedList.length} jornalistas &rarr;
+                </button>
+              </div>
+            `;
+          }
+
+          assocContainer.innerHTML = html;
         }
       }
 
