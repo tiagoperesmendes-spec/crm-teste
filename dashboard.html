@@ -3359,19 +3359,25 @@
 <!-- ======================================================== -->
   <!-- MODAL: NOVO ÓRGÃO DE COMUNICAÇÃO SOCIAL (BASE 1 COMPLETA) -->
   <!-- ======================================================== -->
-    <!-- MODAL: NOVO MEIO (REDESENHADO) -->
+    <!-- MODAL: NOVO MEIO (REDESENHADO - HIERARQUIA LINEAR) -->
   <div id="modal-new-outlet"
     class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-[#1F2A2B]/40 backdrop-blur-md">
     <div
-      class="glass-dense w-full max-w-xl rounded-[28px] border border-white/80 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150 flex flex-col max-h-[92vh]">
+      class="glass-dense w-full max-w-[720px] rounded-[24px] border border-white/80 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150 flex flex-col max-h-[90vh]">
       
       <!-- Cabeçalho -->
-      <div class="p-5 border-b border-[#E4DDD3] flex items-start justify-between bg-[#FBF9F6] shrink-0">
+      <div class="px-6 py-5 border-b border-[#E4DDD3] flex items-center justify-between bg-[#FBF9F6]/90 backdrop-blur-sm shrink-0">
         <div>
-          <h3 class="text-base font-semibold text-[#1A1A1A] font-title">Novo meio</h3>
-          <p class="text-xs text-[#6B6B6B] mt-0.5">Só precisas de 4 campos para começar. O resto podes preencher depois.</p>
+          <div class="flex items-center gap-2.5">
+            <h3 class="text-base font-semibold text-[#1A1A1A] font-title">Novo meio</h3>
+            <span id="new-outlet-required-badge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#F2EFE9] text-[#6B7677] border border-[#E8E2D8] transition-colors" aria-live="polite">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#8A8A8A]" id="new-outlet-required-dot"></span>
+              <span id="new-outlet-required-text">0 de 4 obrigatórios</span>
+            </span>
+          </div>
+          <p class="text-xs text-[#6B7677] mt-0.5">Só precisas de 4 campos para começar. O resto podes preencher depois.</p>
         </div>
-        <button onclick="closeOutletModal()" type="button" class="text-[#6B6B6B] hover:text-[#1A1A1A] p-1 rounded-lg transition-colors" title="Fechar">
+        <button onclick="closeOutletModal()" type="button" class="text-[#6B7677] hover:text-[#1A1A1A] p-2 rounded-lg hover:bg-[#F2EFE9] transition-colors cursor-pointer" title="Fechar" aria-label="Fechar">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
@@ -3379,106 +3385,127 @@
       </div>
 
       <!-- Formulário com scroll -->
-      <form id="form-new-outlet" onsubmit="handleNewOutletSubmit(event)" class="p-5 space-y-4 text-xs overflow-y-auto flex-1">
-        <!-- 1. Nome do meio * -->
+      <form id="form-new-outlet" onsubmit="handleNewOutletSubmit(event)" class="px-6 py-5 space-y-5 text-xs overflow-y-auto flex-1">
+        
+        <!-- SECÇÃO: ESSENCIAL -->
         <div>
-          <label class="block font-medium text-[#1A1A1A] mb-1">Nome do meio *</label>
-          <input type="text" id="new-outlet-name" required placeholder="Ex.: Jornal de Notícias"
-            class="crm-input py-2 text-xs" oninput="validateNewOutletForm()">
-        </div>
-
-        <!-- 2. Formatos * (um ou vários) -->
-        <div>
-          <label class="block font-medium text-[#1A1A1A] mb-1">Formatos * <span class="text-[#8A8A8A] font-normal">(um ou vários)</span></label>
-          <div id="new-outlet-formats-chips" class="flex flex-wrap gap-1.5 pt-1">
-            <button type="button" onclick="toggleOutletNewFormat(this, 'Online')" class="px-3 py-1.5 rounded-full border border-[#D1C7BA] bg-white text-[#1A1A1A] font-medium transition-all cursor-pointer text-xs" data-fmt="Online">Online</button>
-            <button type="button" onclick="toggleOutletNewFormat(this, 'Papel')" class="px-3 py-1.5 rounded-full border border-[#D1C7BA] bg-white text-[#1A1A1A] font-medium transition-all cursor-pointer text-xs" data-fmt="Papel">Papel</button>
-            <button type="button" onclick="toggleOutletNewFormat(this, 'TV')" class="px-3 py-1.5 rounded-full border border-[#D1C7BA] bg-white text-[#1A1A1A] font-medium transition-all cursor-pointer text-xs" data-fmt="TV">TV</button>
-            <button type="button" onclick="toggleOutletNewFormat(this, 'Rádio')" class="px-3 py-1.5 rounded-full border border-[#D1C7BA] bg-white text-[#1A1A1A] font-medium transition-all cursor-pointer text-xs" data-fmt="Rádio">Rádio</button>
-            <button type="button" onclick="toggleOutletNewFormat(this, 'Podcast')" class="px-3 py-1.5 rounded-full border border-[#D1C7BA] bg-white text-[#1A1A1A] font-medium transition-all cursor-pointer text-xs" data-fmt="Podcast">Podcast</button>
-            <button type="button" onclick="toggleOutletNewFormat(this, 'Agência noticiosa')" class="px-3 py-1.5 rounded-full border border-[#D1C7BA] bg-white text-[#1A1A1A] font-medium transition-all cursor-pointer text-xs" data-fmt="Agência noticiosa">Agência noticiosa</button>
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677]">ESSENCIAL</span>
+            <div class="flex-1 h-px bg-[#E4DDD3]"></div>
           </div>
-        </div>
-
-        <!-- 3. Âmbito * e Email de agenda * -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block font-medium text-[#1A1A1A] mb-1">Âmbito *</label>
-            <div class="flex items-center p-0.5 bg-[#FAF8F5] border border-[#E4DDD3] rounded-xl text-xs h-[38px]" id="new-outlet-scope-segmented">
-              <button type="button" onclick="setOutletScope('nacional')" class="flex-1 py-1.5 rounded-lg font-medium text-center transition-all bg-white text-[#1A1A1A] shadow-xs" data-scope="nacional">Nacional</button>
-              <button type="button" onclick="setOutletScope('regional')" class="flex-1 py-1.5 rounded-lg font-medium text-center transition-all text-[#6B6B6B] hover:text-[#1A1A1A]" data-scope="regional">Regional</button>
-              <button type="button" onclick="setOutletScope('local')" class="flex-1 py-1.5 rounded-lg font-medium text-center transition-all text-[#6B6B6B] hover:text-[#1A1A1A]" data-scope="local">Local</button>
+          <div class="space-y-3.5">
+            <!-- 1. Nome do meio * -->
+            <div>
+              <label for="new-outlet-name" class="block font-medium text-[#1A1A1A] mb-1">Nome do meio <span class="text-[#C53030]">*</span></label>
+              <input type="text" id="new-outlet-name" required placeholder="Ex.: Jornal de Notícias, Observador"
+                class="crm-input py-2 text-xs" oninput="validateNewOutletForm()">
             </div>
-            <input type="hidden" id="new-outlet-scope-value" value="nacional">
-          </div>
 
-          <div>
-            <label class="block font-medium text-[#1A1A1A] mb-1">Email de agenda *</label>
-            <input type="email" id="new-outlet-agenda-email" required placeholder="agenda@redacao.pt"
-              class="crm-input py-2 text-xs" oninput="validateNewOutletForm()">
-          </div>
-        </div>
-
-        <!-- 4. Grupo e Periodicidade -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <div class="flex items-center justify-between mb-1">
-              <label class="block font-medium text-[#1A1A1A]">Grupo</label>
-              <button type="button" onclick="promptCreateOutletGroup()" class="text-xs text-[#1F6F78] font-medium hover:underline cursor-pointer">
-                + Criar grupo
-              </button>
+            <!-- 2. Formatos * -->
+            <div>
+              <label class="block font-medium text-[#1A1A1A] mb-1">Formatos <span class="text-[#C53030]">*</span> <span class="text-[#8A8A8A] font-normal">(um ou vários)</span></label>
+              <div id="new-outlet-formats-chips" class="flex flex-wrap gap-1.5 pt-1">
+                <!-- Gerado dinamicamente -->
+              </div>
             </div>
-            <select id="new-outlet-group" class="crm-select text-xs py-2 bg-white">
-              <option value="">Sem grupo</option>
-            </select>
-          </div>
 
-          <div>
-            <label class="block font-medium text-[#1A1A1A] mb-1">Periodicidade</label>
-            <select id="new-outlet-periodicity" class="crm-select text-xs py-2 bg-white">
-              <option value="diario" selected>Diário</option>
-              <option value="semanal">Semanal</option>
-              <option value="mensal">Mensal</option>
-              <option value="continua">Contínua</option>
-              <option value="outra">Outra</option>
-            </select>
+            <!-- 3. Âmbito * e 4. Email de agenda * -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label class="block font-medium text-[#1A1A1A] mb-1.5">Âmbito <span class="text-[#C53030]">*</span></label>
+                <div class="flex items-center p-1 bg-[#F2EFE9] border border-[#E4DDD3] rounded-xl text-xs h-[40px]" id="new-outlet-scope-segmented">
+                  <button type="button" onclick="setOutletScope('nacional')" class="flex-1 py-1.5 rounded-lg font-medium text-center transition-all bg-white text-[#1A1A1A] shadow-xs cursor-pointer" data-scope="nacional">Nacional</button>
+                  <button type="button" onclick="setOutletScope('regional')" class="flex-1 py-1.5 rounded-lg font-medium text-center transition-all text-[#6B7677] hover:text-[#1A1A1A] cursor-pointer" data-scope="regional">Regional</button>
+                  <button type="button" onclick="setOutletScope('local')" class="flex-1 py-1.5 rounded-lg font-medium text-center transition-all text-[#6B7677] hover:text-[#1A1A1A] cursor-pointer" data-scope="local">Local</button>
+                </div>
+                <input type="hidden" id="new-outlet-scope-value" value="nacional">
+              </div>
+
+              <div>
+                <label for="new-outlet-agenda-email" class="block font-medium text-[#1A1A1A] mb-1">Email de agenda <span class="text-[#C53030]">*</span></label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#8A8A8A]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                  </span>
+                  <input type="email" id="new-outlet-agenda-email" required placeholder="agenda@redacao.pt"
+                    class="crm-input pl-9 py-2 text-xs" oninput="validateNewOutletForm()">
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- 5. Especialidades -->
+        <!-- SECÇÃO: ORGANIZAÇÃO -->
         <div>
-          <label class="block font-medium text-[#1A1A1A] mb-1">Especialidades <span class="text-[#8A8A8A] font-normal">(a mesma lista das áreas dos jornalistas)</span></label>
+          <div class="flex items-center gap-3 mb-3 pt-1">
+            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677]">ORGANIZAÇÃO</span>
+            <div class="flex-1 h-px bg-[#E4DDD3]"></div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label for="new-outlet-group" class="block font-medium text-[#1A1A1A]">Grupo editorial</label>
+                <button type="button" onclick="promptCreateOutletGroup()" class="text-[11px] text-[#1F6F78] font-medium hover:underline cursor-pointer">
+                  + Criar grupo
+                </button>
+              </div>
+              <select id="new-outlet-group" class="crm-select text-xs py-2 bg-white">
+                <option value="">Sem grupo</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="new-outlet-periodicity" class="block font-medium text-[#1A1A1A] mb-1">Periodicidade</label>
+              <select id="new-outlet-periodicity" class="crm-select text-xs py-2 bg-white">
+                <option value="diario" selected>Diário</option>
+                <option value="semanal">Semanal</option>
+                <option value="mensal">Mensal</option>
+                <option value="continua">Contínua</option>
+                <option value="outra">Outra</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECÇÃO: ESPECIALIDADES -->
+        <div>
+          <div class="flex items-center gap-3 mb-2.5 pt-1">
+            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677]">ESPECIALIDADES</span>
+            <span class="text-[11px] text-[#8A8A8A] font-normal">(mesma lista das áreas dos jornalistas)</span>
+            <div class="flex-1 h-px bg-[#E4DDD3]"></div>
+          </div>
           <div id="new-outlet-specialties-chips" class="flex flex-wrap gap-1.5 pt-1">
             <!-- Gerado dinamicamente -->
           </div>
         </div>
 
-        <!-- 6. Secção Recolhível "Mais detalhes (opcional)" -->
-        <div class="border border-[#E4DDD3] rounded-xl overflow-hidden bg-[#FAF8F5]/50">
+        <!-- SECÇÃO: MAIS DETALHES (RECOLHÍVEL) -->
+        <div class="border border-[#E4DDD3] rounded-xl overflow-hidden bg-[#FAF8F5]/60 transition-all">
           <button type="button" onclick="toggleOutletDetailsSection()"
-            class="w-full flex items-center justify-between p-3.5 text-xs font-semibold text-[#1A1A1A] hover:bg-[#F6F2EC] transition-colors cursor-pointer select-none">
-            <span class="flex items-center gap-2">
-              <span>Mais detalhes (opcional)</span>
-            </span>
-            <svg id="outlet-details-chevron" class="w-4 h-4 text-[#6B6B6B] transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
+            class="w-full flex items-center justify-between p-3.5 text-xs text-[#1A1A1A] hover:bg-[#F2EFE9] transition-colors cursor-pointer select-none">
+            <span class="font-semibold text-[#1A1A1A]">Mais detalhes</span>
+            <div class="flex items-center gap-2 text-[11px] text-[#6B7677]">
+              <span>Morada, registo ERC, site, redes, logótipo</span>
+              <svg id="outlet-details-chevron" class="w-4 h-4 text-[#6B7677] transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
           </button>
           
-          <div id="outlet-details-content" class="hidden p-4 space-y-3 bg-white border-t border-[#E4DDD3]">
+          <div id="outlet-details-content" class="hidden p-4 space-y-3.5 bg-white border-t border-[#E4DDD3]">
             <!-- Site e Logo -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Site</label>
+                <label for="new-outlet-website" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Site</label>
                 <input type="url" id="new-outlet-website" placeholder="https://www.jornal.pt" class="crm-input text-xs py-1.5">
               </div>
               <div>
-                <label class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Logo</label>
+                <label class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Logótipo</label>
                 <button type="button" onclick="triggerOutletLogoUpload()" class="w-full flex items-center justify-center gap-2 border border-dashed border-[#D1C7BA] hover:border-[#1F6F78] rounded-xl py-1.5 px-3 text-xs text-[#1A1A1A] transition-all cursor-pointer bg-[#FAF8F5]">
-                  <svg class="w-4 h-4 text-[#6B6B6B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-4 h-4 text-[#6B7677]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                   </svg>
-                  <span id="new-outlet-logo-label">Carregar logo</span>
+                  <span id="new-outlet-logo-label">Carregar logótipo</span>
                 </button>
                 <input type="file" id="new-outlet-logo-input" accept="image/*" class="hidden" onchange="handleOutletLogoSelected(event)">
                 <input type="hidden" id="new-outlet-logo-url" value="">
@@ -3488,11 +3515,11 @@
             <!-- Morada e Telefone -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Morada da redação</label>
+                <label for="new-outlet-address" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Morada da redação</label>
                 <input type="text" id="new-outlet-address" placeholder="Rua, código postal, localidade" class="crm-input text-xs py-1.5">
               </div>
               <div>
-                <label class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Telefone da redação</label>
+                <label for="new-outlet-phone" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Telefone da redação</label>
                 <input type="text" id="new-outlet-phone" placeholder="+351 210 000 000" class="crm-input text-xs py-1.5">
               </div>
             </div>
@@ -3500,7 +3527,7 @@
             <!-- Tipo de meio e Registo ERC -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Tipo de meio (registo ERC)</label>
+                <label for="new-outlet-erc-type" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Tipo de meio (registo ERC)</label>
                 <select id="new-outlet-erc-type" class="crm-select text-xs py-1.5 bg-white">
                   <option value="Publicação periódica" selected>Publicação periódica</option>
                   <option value="Rádio">Rádio</option>
@@ -3510,14 +3537,14 @@
                 </select>
               </div>
               <div>
-                <label class="block text-[11px] font-medium text-[#1A1A1A] mb-1">N.º de registo na ERC</label>
+                <label for="new-outlet-erc-reg" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">N.º de registo na ERC</label>
                 <input type="text" id="new-outlet-erc-reg" placeholder="Ex.: ERC-12345" class="crm-input text-xs py-1.5">
               </div>
             </div>
 
             <!-- Audiência Estimada -->
             <div>
-              <label class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Audiência estimada</label>
+              <label for="new-outlet-audience" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Audiência estimada</label>
               <input type="number" id="new-outlet-audience" placeholder="Ex.: 500000" class="crm-input text-xs py-1.5 max-w-xs">
               <p class="text-[11px] text-[#8A8A8A] mt-1">Só se tiveres uma fonte fiável.</p>
             </div>
@@ -3525,15 +3552,15 @@
             <!-- Redes Sociais -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label class="block text-[11px] font-medium text-[#1A1A1A] mb-1">LinkedIn</label>
+                <label for="new-outlet-linkedin" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">LinkedIn</label>
                 <input type="text" id="new-outlet-linkedin" placeholder="linkedin.com/company/..." class="crm-input text-xs py-1.5">
               </div>
               <div>
-                <label class="block text-[11px] font-medium text-[#1A1A1A] mb-1">X</label>
+                <label for="new-outlet-twitter" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">X</label>
                 <input type="text" id="new-outlet-twitter" placeholder="x.com/..." class="crm-input text-xs py-1.5">
               </div>
               <div>
-                <label class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Instagram</label>
+                <label for="new-outlet-instagram" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Instagram</label>
                 <input type="text" id="new-outlet-instagram" placeholder="instagram.com/..." class="crm-input text-xs py-1.5">
               </div>
             </div>
@@ -3542,20 +3569,24 @@
       </form>
 
       <!-- Rodapé Fixo -->
-      <div class="p-4 border-t border-[#E4DDD3] bg-[#FBF9F6] flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
-        <span id="new-outlet-missing-msg" class="text-xs text-[#8A8A8A] leading-tight">
-          Falta: nome do meio e email de agenda
-        </span>
-        <div class="flex items-center justify-end gap-2 shrink-0">
-          <button type="button" onclick="closeOutletModal()" class="btn-secondary py-2 px-4 text-xs font-medium cursor-pointer">Cancelar</button>
-          <button type="button" onclick="document.getElementById('form-new-outlet').requestSubmit()" id="new-outlet-submit-btn" disabled class="btn-primary py-2 px-4 text-xs font-medium opacity-50 cursor-not-allowed">Criar meio</button>
+      <div class="px-6 py-4 border-t border-[#E4DDD3] bg-[#FBF9F6]/90 backdrop-blur-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
+        <div>
+          <span class="block text-xs text-[#6B7677] leading-tight">
+            Podes acrescentar jornalistas a este meio depois de o criares.
+          </span>
+          <span id="new-outlet-missing-msg" class="block text-[11px] text-[#8A8A8A] mt-0.5">
+            Falta: nome do meio e email de agenda
+          </span>
+        </div>
+        <div class="flex items-center justify-end gap-2.5 shrink-0">
+          <button type="button" onclick="closeOutletModal()" class="btn-secondary py-2 px-4 text-xs font-medium cursor-pointer min-h-[44px]">Cancelar</button>
+          <button type="button" onclick="document.getElementById('form-new-outlet').requestSubmit()" id="new-outlet-submit-btn" disabled class="btn-primary py-2 px-4 text-xs font-medium opacity-50 cursor-not-allowed min-h-[44px]">Criar meio</button>
         </div>
       </div>
     </div>
   </div>
 
-
-  <!-- ======================================================== -->
+<!-- ======================================================== -->
   <!-- MODAL: REGISTAR PEDIDO DE IMPRENSA (HISTÓRICO AVE)       -->
   <!-- ======================================================== -->
   <div id="modal-new-request"
@@ -8657,9 +8688,9 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       if (seg) {
         seg.querySelectorAll('button').forEach(btn => {
           if (btn.getAttribute('data-scope') === scope) {
-            btn.className = "flex-1 py-1.5 rounded-lg font-medium text-center transition-all bg-white text-[#1A1A1A] shadow-xs";
+            btn.className = "flex-1 py-1.5 rounded-lg font-medium text-center transition-all bg-white text-[#1A1A1A] shadow-xs cursor-pointer";
           } else {
-            btn.className = "flex-1 py-1.5 rounded-lg font-medium text-center transition-all text-[#6B6B6B] hover:text-[#1A1A1A]";
+            btn.className = "flex-1 py-1.5 rounded-lg font-medium text-center transition-all text-[#6B7677] hover:text-[#1A1A1A] cursor-pointer";
           }
         });
       }
@@ -8674,12 +8705,12 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       container.innerHTML = formats.map(fmt => {
         const isSel = selectedNewOutletFormats.includes(fmt);
         const cls = isSel 
-          ? 'bg-[#FBE8EB] border-[#1F6F78] text-[#801D38] font-medium'
-          : 'bg-white border-[#D1C7BA] text-[#1A1A1A] hover:bg-[#FAF8F5]';
+          ? 'bg-[#1F6F78]/10 border-[#1F6F78] text-[#1F6F78] font-medium shadow-xs'
+          : 'bg-white border-[#E4DDD3] text-[#1A1A1A] hover:bg-[#FAF8F5]';
         return `
           <button type="button" onclick="toggleOutletFormatChip(this, '${fmt}')"
             class="px-3 py-1.5 rounded-full border text-xs transition-all cursor-pointer ${cls}" data-fmt="${fmt}">
-            ${fmt}
+            ${escapeHtml(fmt)}
           </button>
         `;
       }).join('');
@@ -8702,17 +8733,17 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       container.innerHTML = sharedAreasList.map(spec => {
         const isSel = selectedNewOutletSpecialties.includes(spec);
         const cls = isSel 
-          ? 'bg-[#FBE8EB] border-[#1F6F78] text-[#801D38] font-medium'
-          : 'bg-white border-[#D1C7BA] text-[#1A1A1A] hover:bg-[#FAF8F5]';
+          ? 'bg-[#1F6F78]/10 border-[#1F6F78] text-[#1F6F78] font-medium shadow-xs'
+          : 'bg-white border-[#E4DDD3] text-[#1A1A1A] hover:bg-[#FAF8F5]';
         return `
           <button type="button" onclick="toggleOutletSpecChip('${spec.replace(/'/g, "\\'")}')"
             class="px-3 py-1 rounded-full border text-xs transition-all cursor-pointer ${cls}">
-            ${spec}
+            ${escapeHtml(spec)}
           </button>
         `;
       }).join('') + `
         <button type="button" onclick="promptAddNewSharedArea('outlet')"
-          class="px-3 py-1 rounded-full border border-dashed border-[#D1C7BA] text-[#6B6B6B] hover:border-[#1F6F78] hover:text-[#1F6F78] text-xs transition-all cursor-pointer">
+          class="px-3 py-1 rounded-full border border-dashed border-[#D1C7BA] text-[#6B7677] hover:border-[#1F6F78] hover:text-[#1F6F78] text-xs transition-all cursor-pointer">
           + Nova
         </button>
       `;
@@ -8765,26 +8796,41 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       const email = document.getElementById('new-outlet-agenda-email')?.value.trim();
       const hasFormats = selectedNewOutletFormats.length > 0;
       const scope = document.getElementById('new-outlet-scope-value')?.value;
-      const isValidEmail = email && email.includes('@');
+      const isValidEmail = !!(email && email.includes('@'));
 
       const missing = [];
-      if (!name) missing.push('nome do meio');
-      if (!hasFormats) missing.push('formatos');
-      if (!scope) missing.push('âmbito');
-      if (!isValidEmail) missing.push('email de agenda');
+      let count = 0;
+      if (name) { count++; } else { missing.push('nome do meio'); }
+      if (hasFormats) { count++; } else { missing.push('formatos'); }
+      if (scope) { count++; } else { missing.push('âmbito'); }
+      if (isValidEmail) { count++; } else { missing.push('email de agenda'); }
+
+      const badge = document.getElementById('new-outlet-required-badge');
+      const badgeText = document.getElementById('new-outlet-required-text');
+      const badgeDot = document.getElementById('new-outlet-required-dot');
+      if (badge && badgeText && badgeDot) {
+        badgeText.textContent = `${count} de 4 obrigatórios`;
+        if (count === 4) {
+          badge.className = "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#E8F5E9] text-[#2E7D32] border border-[#C8E6C9] transition-colors";
+          badgeDot.className = "w-1.5 h-1.5 rounded-full bg-[#2E7D32]";
+        } else {
+          badge.className = "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#F2EFE9] text-[#6B7677] border border-[#E8E2D8] transition-colors";
+          badgeDot.className = "w-1.5 h-1.5 rounded-full bg-[#8A8A8A]";
+        }
+      }
 
       const missingEl = document.getElementById('new-outlet-missing-msg');
       if (missingEl) {
         if (missing.length === 0) {
           missingEl.innerText = "Tudo pronto para criar o meio.";
-          missingEl.className = "text-xs text-[#2A5C45] font-medium";
+          missingEl.className = "block text-[11px] text-[#2E7D32] font-medium mt-0.5";
         } else {
           missingEl.innerText = `Falta: ${missing.join(' e ')}`;
-          missingEl.className = "text-xs text-[#8A8A8A]";
+          missingEl.className = "block text-[11px] text-[#8A8A8A] mt-0.5";
         }
       }
 
-      const isReady = missing.length === 0;
+      const isReady = count === 4;
       const btn = document.getElementById('new-outlet-submit-btn');
       if (btn) {
         btn.disabled = !isReady;
