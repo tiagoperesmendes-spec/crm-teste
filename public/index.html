@@ -1847,13 +1847,13 @@
           <div class="overflow-x-auto">
             <table class="crm-table w-full" id="journalists-table">
               <thead>
-                <tr class="border-b border-[#1F2A2B]/10 micro-label">
-                  <th class="py-3.5 px-4 text-left">Jornalista</th>
-                  <th class="py-3.5 px-4 text-left">Meio</th>
-                  <th class="py-3.5 px-4 text-left">Área</th>
-                  <th class="py-3.5 px-4 text-left">Contacto</th>
-                  <th class="py-3.5 px-4 text-left">Último contacto</th>
-                  <th class="py-3.5 px-4 text-right w-10"></th>
+                <tr class="border-b border-[#E4DDD3] micro-label bg-[#FAF8F5]/80">
+                  <th class="py-3 px-4 text-left font-semibold text-[#6B7677] text-[11px] uppercase tracking-[0.08em]">Jornalista</th>
+                  <th class="py-3 px-4 text-left font-semibold text-[#6B7677] text-[11px] uppercase tracking-[0.08em]">Meio</th>
+                  <th class="py-3 px-4 text-left font-semibold text-[#6B7677] text-[11px] uppercase tracking-[0.08em]">Áreas</th>
+                  <th class="py-3 px-4 text-left font-semibold text-[#6B7677] text-[11px] uppercase tracking-[0.08em]">Contacto</th>
+                  <th class="py-3 px-4 text-left font-semibold text-[#6B7677] text-[11px] uppercase tracking-[0.08em]">Último contacto</th>
+                  <th class="py-3 px-4 text-right w-10"></th>
                 </tr>
               </thead>
               <tbody id="journalists-table-body" class="divide-y divide-[#1F2A2B]/10 text-xs">
@@ -8044,72 +8044,105 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
         // Último projeto associado
         const lastProj = j.last_project_name || 'Ainda sem contacto';
 
+        // Áreas neutras: máx. 2 etiquetas + "+N"
+        const visibleAreas = areas.slice(0, 2);
+        const extraAreas = areas.length - 2;
+        const areasDisplay = `
+          <div class="flex items-center gap-1.5 flex-wrap">
+            ${visibleAreas.map(a => `<span class="inline-block px-2 py-0.5 rounded-full text-[11px] font-medium bg-[#FAF8F5] text-[#1A1A1A] border border-[#E4DDD3]">${escapeHtml(a)}</span>`).join('')}
+            ${extraAreas > 0 ? `<span class="text-[11px] text-[#8A8A8A] font-medium">+${extraAreas}</span>` : ''}
+          </div>
+        `;
+
+        // Meio com avatar/logótipo
+        const matchedOcs = (localOutlets || []).find(o => o.name && o.name.toLowerCase() === mainOcs.toLowerCase());
+        const ocsInitials = mainOcs.substring(0, 2).toUpperCase();
+        const ocsDisplayLinear = `
+          <div class="flex items-center gap-2 min-w-0">
+            <div class="w-6 h-6 rounded-md bg-[#FAF8F5] border border-[#E4DDD3] flex items-center justify-center text-[10px] font-bold text-[#6B7677] shrink-0 overflow-hidden">
+              ${matchedOcs && matchedOcs.logo_url ? `<img src="${matchedOcs.logo_url}" class="w-full h-full object-contain p-0.5">` : ocsInitials}
+            </div>
+            <div class="min-w-0">
+              <span class="font-medium text-[#1A1A1A] block truncate">${escapeHtml(mainOcs)}</span>
+              ${extraOcsCount > 0 ? `<span class="text-[10px] text-[#8A8A8A] block">+${extraOcsCount} ${extraOcsCount === 1 ? 'outro' : 'outros'}</span>` : ''}
+            </div>
+          </div>
+        `;
+
+        const phone = (j.phones && j.phones.length > 0) ? j.phones[0] : (j.contact_phone || '');
+
         return `
-          <tr onclick="openJournalistDetailDrawer('${j.id}')" class="transition-colors cursor-pointer hover:bg-white/60 group">
+          <tr onclick="openJournalistDetailDrawer('${j.id}')" class="transition-colors cursor-pointer hover:bg-white/80 group border-b border-[#E4DDD3]/60">
             <!-- 1. Jornalista -->
-            <td class="py-3.5 px-4">
+            <td class="py-3 px-4">
               <div class="flex items-center gap-3">
                 <div class="w-9 h-9 rounded-full font-bold text-xs flex items-center justify-center shrink-0 shadow-xs"
                   style="background-color: ${getStableToneById(j.name || j.id).bg}; color: ${getStableToneById(j.name || j.id).color};">
                   ${initials}
                 </div>
-                <div>
-                  <span class="font-semibold text-[#1F2A2B] block text-xs group-hover:text-[#1F6F78] transition-colors">${j.name}</span>
-                  <span class="text-xs text-[#5B6668] block">${j.role_title || 'Jornalista'}</span>
+                <div class="min-w-0">
+                  <span class="font-semibold text-[#1A1A1A] block text-xs group-hover:text-[#1F6F78] transition-colors truncate">${escapeHtml(j.name)}</span>
+                  <span class="text-xs text-[#6B7677] block truncate">${escapeHtml(j.role_title || 'Jornalista')}</span>
                 </div>
               </div>
             </td>
 
             <!-- 2. Meio -->
-            <td class="py-3.5 px-4 text-xs text-[#1F2A2B] font-normal">
-              ${ocsDisplay}
+            <td class="py-3 px-4 text-xs text-[#1A1A1A]">
+              ${ocsDisplayLinear}
             </td>
 
-            <!-- 3. Área (Etiqueta Neutra) -->
-            <td class="py-3.5 px-4">
-              <span class="category-tag-neutral">
-                ${j.area || j.editorial_desk || 'Geral'}
-              </span>
+            <!-- 3. Áreas (máx. 2 + N) -->
+            <td class="py-3 px-4">
+              ${areasDisplay}
             </td>
 
-            <!-- 4. Contacto -->
-            <td class="py-3.5 px-4 text-xs">
-              <span class="text-[#1F2A2B] block font-medium">${email}</span>
-              <span class="text-xs text-[#5B6668] block">${prefLabel}</span>
+            <!-- 4. Contacto com Ações Rápidas Funcionais no Hover -->
+            <td class="py-3 px-4 text-xs">
+              <div class="space-y-0.5">
+                <span class="text-[#1A1A1A] font-mono block text-xs truncate max-w-[190px]">${email ? escapeHtml(email) : '—'}</span>
+                ${phone ? `<span class="text-[11px] text-[#6B7677] font-mono block">${escapeHtml(phone)}</span>` : ''}
+                <div class="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 pt-0.5" onclick="event.stopPropagation()">
+                  ${email ? `<a href="mailto:${email}" class="px-2 py-0.5 rounded bg-[#FAF8F5] border border-[#E4DDD3] text-[#1F6F78] hover:bg-[#F2EFE9] text-[10px] font-medium transition-colors cursor-pointer" title="Enviar email">Email</a>` : ''}
+                  ${phone ? `<a href="tel:${phone}" class="px-2 py-0.5 rounded bg-[#FAF8F5] border border-[#E4DDD3] text-[#1A1A1A] hover:bg-[#F2EFE9] text-[10px] font-medium transition-colors cursor-pointer" title="Ligar">Ligar</a>` : ''}
+                </div>
+              </div>
             </td>
 
             <!-- 5. Último contacto (Ponto + Texto) -->
-            <td class="py-3.5 px-4 text-xs">
-              <span class="status-item">
-                <span class="status-dot ${isRed ? 'status-dot-red' : 'status-dot-green'}"></span>
-                <span class="text-xs font-medium ${isRed ? 'text-[#C0392B]' : 'text-[#1F2A2B]'}">${contactTimeLabel}</span>
-              </span>
-              <span class="text-xs text-[#5B6668] block truncate max-w-[190px]" title="${lastProj}">${lastProj}</span>
+            <td class="py-3 px-4 text-xs">
+              <div>
+                <span class="inline-flex items-center gap-1.5 text-xs font-medium ${isRed ? 'text-[#C53030]' : 'text-[#1A1A1A]'}">
+                  <span class="w-1.5 h-1.5 rounded-full ${isRed ? 'bg-[#C53030]' : 'bg-[#2E7D32]'} shrink-0"></span>
+                  ${contactTimeLabel}
+                </span>
+                <span class="text-[11px] text-[#8A8A8A] block truncate max-w-[180px]" title="${escapeHtml(lastProj)}">${escapeHtml(lastProj)}</span>
+              </div>
             </td>
 
             <!-- Menu ⋯ -->
             <td class="py-3 px-4 text-right" onclick="event.stopPropagation()">
               <div class="relative inline-block text-left">
                 <button type="button" onclick="toggleJournalistRowMenu(event, '${j.id}')"
-                  class="jour-row-menu-btn w-8 h-8 rounded-lg flex items-center justify-center text-[#8A8A8A] hover:text-[#1A1A1A] hover:bg-[#F2EFE9] transition-all cursor-pointer">
+                  class="jour-row-menu-btn w-8 h-8 rounded-lg flex items-center justify-center text-[#8A8A8A] hover:text-[#1A1A1A] hover:bg-[#F2EFE9] transition-all cursor-pointer" aria-label="Ações do jornalista">
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.5"/><circle cx="6" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg>
                 </button>
                 <div id="jour-menu-${j.id}" class="jour-row-menu-popover hidden fixed z-50 w-44 bg-white border border-[#E4DDD3] rounded-xl shadow-lg py-1 text-xs">
-                  <button type="button" onclick="closeAllJourMenus(); openJournalistDetailDrawer('${j.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] flex items-center gap-2">
+                  <button type="button" onclick="closeAllJourMenus(); openJournalistDetailDrawer('${j.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] flex items-center gap-2 cursor-pointer">
                     Abrir ficha
                   </button>
-                  <button type="button" onclick="closeAllJourMenus(); openEditJournalistModal('${j.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] flex items-center gap-2">
+                  <button type="button" onclick="closeAllJourMenus(); openEditJournalistModal('${j.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1A1A1A] flex items-center gap-2 cursor-pointer">
                     Editar
                   </button>
-                  <button type="button" onclick="closeAllJourMenus(); openTaskModalForJournalist('${j.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1F6F78] font-medium flex items-center gap-2">
+                  <button type="button" onclick="closeAllJourMenus(); openTaskModalForJournalist('${j.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#1F6F78] font-medium flex items-center gap-2 cursor-pointer">
                     Criar tarefa de contacto
                   </button>
-                  <button type="button" onclick="closeAllJourMenus(); toggleJournalistArchive('${j.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#6B6B6B] flex items-center gap-2">
+                  <button type="button" onclick="closeAllJourMenus(); toggleJournalistArchive('${j.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FAF8F5] text-[#6B7677] flex items-center gap-2 cursor-pointer">
                     ${j.status === 'arquivado' ? 'Desarquivar' : 'Arquivar'}
                   </button>
                   ${currentUserPermissions()?.canDeleteRecords ? `
                     <div class="border-t border-[#E4DDD3] my-1"></div>
-                    <button type="button" onclick="closeAllJourMenus(); deleteJournalist('${j.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FBEAE8] text-[#C53030] flex items-center gap-2">
+                    <button type="button" onclick="closeAllJourMenus(); deleteJournalist('${j.id}')" class="w-full text-left px-3.5 py-2 hover:bg-[#FBEAE8] text-[#C53030] flex items-center gap-2 cursor-pointer">
                       Eliminar
                     </button>
                   ` : ''}
