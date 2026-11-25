@@ -3290,50 +3290,50 @@
   <!-- ======================================================== -->
     <!-- MODAL: NOVO JORNALISTA (REDESENHADO - HIERARQUIA LINEAR) -->
   <div id="modal-new-journalist"
-    class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-[#1F2A2B]/40 backdrop-blur-md">
+    class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
     <div
-      class="glass-dense w-full max-w-[720px] rounded-[24px] border border-white/80 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150 flex flex-col max-h-[90vh]">
+      class="bg-white w-full max-w-[720px] rounded-[24px] border border-[#E4DDD3] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150 flex flex-col max-h-[90vh]">
       
       <!-- Cabeçalho -->
-      <div class="px-6 py-5 border-b border-[#E4DDD3] flex items-center justify-between bg-[#FBF9F6]/90 backdrop-blur-sm shrink-0">
+      <div class="px-7 py-5 border-b border-[#EAE5DF] flex items-start justify-between bg-white shrink-0">
         <div>
-          <div class="flex items-center gap-2.5">
-            <h3 class="text-base font-semibold text-[#1A1A1A] font-title">Novo jornalista</h3>
-            <span id="new-jour-required-badge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#F2EFE9] text-[#6B7677] border border-[#E8E2D8] transition-colors" aria-live="polite">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#8A8A8A]" id="new-jour-required-dot"></span>
-              <span id="new-jour-required-text">0 de 3 obrigatórios</span>
-            </span>
-          </div>
-          <p class="text-xs text-[#6B7677] mt-0.5">Só precisas de 3 campos para começar. O resto podes preencher depois.</p>
+          <h3 class="text-xl font-bold text-[#1A1A1A] font-title">Novo jornalista</h3>
+          <p class="text-xs text-[#6B7677] mt-1">Só precisas de 3 campos para começar. O resto podes preencher depois.</p>
         </div>
-        <button onclick="closeJournalistModal()" type="button" class="text-[#6B7677] hover:text-[#1A1A1A] p-2 rounded-lg hover:bg-[#F2EFE9] transition-colors cursor-pointer" title="Fechar" aria-label="Fechar">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
+        <div class="flex items-center gap-2.5 shrink-0">
+          <span id="new-jour-required-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#F2EFE9] text-[#6B7677] border border-[#E8E2D8] transition-colors" aria-live="polite">
+            <span id="new-jour-required-icon" class="hidden text-xs font-bold text-[#1E7E34]">✓</span>
+            <span id="new-jour-required-text">0 de 3 obrigatórios</span>
+          </span>
+          <button onclick="closeJournalistModal()" type="button" class="w-8 h-8 rounded-full border border-[#E4DDD3] flex items-center justify-center text-[#6B7677] hover:text-[#1A1A1A] hover:bg-[#FAF8F5] transition-colors cursor-pointer" title="Fechar" aria-label="Fechar">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
       </div>
 
       <!-- Formulário com scroll -->
-      <form id="form-new-journalist" onsubmit="handleNewJournalistSubmit(event)" class="px-6 py-5 space-y-5 text-xs overflow-y-auto flex-1">
+      <form id="form-new-journalist" onsubmit="handleNewJournalistSubmit(event)" class="px-7 py-5 space-y-5 text-xs overflow-y-auto flex-1 bg-white">
         
         <!-- SECÇÃO: ESSENCIAL -->
         <div>
-          <div class="flex items-center gap-3 mb-3">
-            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677]">ESSENCIAL</span>
-            <div class="flex-1 h-px bg-[#E4DDD3]"></div>
+          <div class="flex items-center gap-3 mb-3.5">
+            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677] shrink-0">ESSENCIAL</span>
+            <div class="flex-1 h-px bg-[#EAE5DF]"></div>
           </div>
-          <div class="space-y-3.5">
+          <div class="space-y-4">
             <!-- 1. Nome do jornalista * -->
             <div>
-              <label for="new-jour-name" class="block font-medium text-[#1A1A1A] mb-1">Nome completo <span class="text-[#C53030]">*</span></label>
+              <label for="new-jour-name" class="block font-semibold text-[#1A1A1A] text-xs mb-1.5">Nome completo <span class="text-[#C53030]">*</span></label>
               <input type="text" id="new-jour-name" required placeholder="Ex.: Marta Figueiredo"
-                class="crm-input py-2 text-xs" oninput="validateNewJourForm()">
+                class="w-full bg-white border border-[#E4DDD3] rounded-xl px-3.5 py-2.5 text-xs text-[#1A1A1A] placeholder-[#8A8A8A] focus:outline-none focus:border-[#1F6F78] transition-colors" oninput="validateNewJourForm()">
             </div>
 
             <!-- 2. Meio * (com pesquisa, múltiplos e tags) -->
             <div>
-              <label class="block font-medium text-[#1A1A1A] mb-1">Meio de comunicação <span class="text-[#C53030]">*</span></label>
-              <div id="new-jour-outlets-box" class="min-h-[42px] p-2 border border-[#E4DDD3] rounded-xl bg-white flex flex-wrap items-center gap-1.5 focus-within:border-[#1F6F78] focus-within:ring-1 focus-within:ring-[#1F6F78]/20 transition-all">
+              <label class="block font-semibold text-[#1A1A1A] text-xs mb-1.5">Meio de comunicação <span class="text-[#C53030]">*</span></label>
+              <div id="new-jour-outlets-box" class="min-h-[44px] p-2 border border-[#E4DDD3] rounded-xl bg-white flex flex-wrap items-center gap-2 focus-within:border-[#1F6F78] transition-all">
                 <div id="new-jour-selected-outlets" class="flex flex-wrap items-center gap-1.5"></div>
                 <div class="relative flex-1 min-w-[150px]">
                   <input type="text" id="new-jour-outlet-input" placeholder="Adicionar outro meio..." autocomplete="off"
@@ -3342,18 +3342,18 @@
                   <div id="new-jour-outlet-suggestions" class="hidden absolute top-full left-0 mt-1 w-full min-w-[220px] max-h-48 overflow-y-auto bg-white border border-[#E4DDD3] rounded-xl shadow-lg z-30 py-1 text-xs"></div>
                 </div>
               </div>
-              <p class="text-[11px] text-[#8A8A8A] mt-1">Podes escolher mais do que um meio (ex.: freelancers ou colaborações fixas).</p>
+              <p class="text-[11px] text-[#6B7677] mt-1">Podes escolher mais do que um meio (ex.: freelancers ou colaborações fixas).</p>
             </div>
 
             <!-- 3. Email * com ícone -->
             <div>
-              <label for="new-jour-email" class="block font-medium text-[#1A1A1A] mb-1">Email profissional <span class="text-[#C53030]">*</span></label>
+              <label for="new-jour-email" class="block font-semibold text-[#1A1A1A] text-xs mb-1.5">Email profissional <span class="text-[#C53030]">*</span></label>
               <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#8A8A8A]">
+                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#6B7677]">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                 </span>
                 <input type="email" id="new-jour-email" required placeholder="marta.figueiredo@exemplo.pt"
-                  class="crm-input pl-9 py-2 text-xs" oninput="validateNewJourForm()">
+                  class="w-full bg-white border border-[#E4DDD3] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-[#1A1A1A] placeholder-[#8A8A8A] focus:outline-none focus:border-[#1F6F78] transition-colors" oninput="validateNewJourForm()">
               </div>
             </div>
           </div>
@@ -3361,28 +3361,28 @@
 
         <!-- SECÇÃO: CONTACTO -->
         <div>
-          <div class="flex items-center gap-3 mb-3 pt-1">
-            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677]">CONTACTO</span>
-            <div class="flex-1 h-px bg-[#E4DDD3]"></div>
+          <div class="flex items-center gap-3 mb-3.5 pt-2">
+            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677] shrink-0">CONTACTO</span>
+            <div class="flex-1 h-px bg-[#EAE5DF]"></div>
           </div>
-          <div class="space-y-3.5">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label for="new-jour-phone" class="block font-medium text-[#1A1A1A] mb-1">Telemóvel</label>
+                <label for="new-jour-phone" class="block font-semibold text-[#1A1A1A] text-xs mb-1.5">Telemóvel</label>
                 <input type="text" id="new-jour-phone" placeholder="+351 910 000 000"
-                  class="crm-input py-2 text-xs">
+                  class="w-full bg-white border border-[#E4DDD3] rounded-xl px-3.5 py-2.5 text-xs text-[#1A1A1A] placeholder-[#8A8A8A] focus:outline-none focus:border-[#1F6F78] transition-colors">
               </div>
               <div>
-                <label for="new-jour-role" class="block font-medium text-[#1A1A1A] mb-1">Cargo</label>
+                <label for="new-jour-role" class="block font-semibold text-[#1A1A1A] text-xs mb-1.5">Cargo</label>
                 <input type="text" id="new-jour-role" placeholder="Ex.: Redatora Principal, Editor"
-                  class="crm-input py-2 text-xs">
+                  class="w-full bg-white border border-[#E4DDD3] rounded-xl px-3.5 py-2.5 text-xs text-[#1A1A1A] placeholder-[#8A8A8A] focus:outline-none focus:border-[#1F6F78] transition-colors">
               </div>
             </div>
 
             <div>
-              <label class="block font-medium text-[#1A1A1A] mb-1.5">Preferência de contacto</label>
-              <div class="flex items-center p-1 bg-[#F2EFE9] border border-[#E4DDD3] rounded-xl text-xs h-[40px] max-w-sm" id="new-jour-pref-segmented">
-                <button type="button" onclick="setJourPref('email')" class="flex-1 py-1.5 rounded-lg font-medium text-center transition-all bg-white text-[#1A1A1A] shadow-xs cursor-pointer" data-pref="email">Email</button>
+              <label class="block font-semibold text-[#1A1A1A] text-xs mb-1.5">Preferência de contacto</label>
+              <div class="flex items-center p-1 bg-[#F2EFE9] border border-[#E4DDD3] rounded-xl text-xs h-[42px] max-w-sm" id="new-jour-pref-segmented">
+                <button type="button" onclick="setJourPref('email')" class="flex-1 py-1.5 rounded-lg font-semibold text-center transition-all bg-white text-[#1A1A1A] shadow-xs cursor-pointer" data-pref="email">Email</button>
                 <button type="button" onclick="setJourPref('telefone')" class="flex-1 py-1.5 rounded-lg font-medium text-center transition-all text-[#6B7677] hover:text-[#1A1A1A] cursor-pointer" data-pref="telefone">Telefone</button>
                 <button type="button" onclick="setJourPref('whatsapp')" class="flex-1 py-1.5 rounded-lg font-medium text-center transition-all text-[#6B7677] hover:text-[#1A1A1A] cursor-pointer" data-pref="whatsapp">WhatsApp</button>
               </div>
@@ -3393,22 +3393,22 @@
 
         <!-- SECÇÃO: ÁREAS DE INTERVENÇÃO -->
         <div>
-          <div class="flex items-center gap-3 mb-2.5 pt-1">
-            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677]">ÁREAS DE INTERVENÇÃO</span>
-            <span class="text-[11px] text-[#8A8A8A] font-normal">(mesma lista das especialidades dos meios)</span>
-            <div class="flex-1 h-px bg-[#E4DDD3]"></div>
+          <div class="flex items-center gap-3 mb-1.5 pt-2">
+            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677] shrink-0">ÁREAS DE INTERVENÇÃO</span>
+            <div class="flex-1 h-px bg-[#EAE5DF]"></div>
           </div>
-          <div id="new-jour-areas-chips" class="flex flex-wrap gap-1.5 pt-1">
+          <p class="text-xs text-[#6B7677] mb-2.5">Mesma lista das especialidades dos meios.</p>
+          <div id="new-jour-areas-chips" class="flex flex-wrap gap-2 pt-0.5">
             <!-- Gerado dinamicamente -->
           </div>
         </div>
 
         <!-- SECÇÃO: MAIS DETALHES (RECOLHÍVEL) -->
-        <div class="border border-[#E4DDD3] rounded-xl overflow-hidden bg-[#FAF8F5]/60 transition-all">
+        <div class="border border-[#E4DDD3] rounded-2xl overflow-hidden bg-white transition-all shadow-2xs">
           <button type="button" onclick="toggleJourDetailsSection()"
-            class="w-full flex items-center justify-between p-3.5 text-xs text-[#1A1A1A] hover:bg-[#F2EFE9] transition-colors cursor-pointer select-none">
-            <span class="font-semibold text-[#1A1A1A]">Mais detalhes</span>
-            <div class="flex items-center gap-2 text-[11px] text-[#6B7677]">
+            class="w-full flex items-center justify-between p-4 text-xs text-[#1A1A1A] hover:bg-[#FAF8F5] transition-colors cursor-pointer select-none">
+            <span class="font-bold text-[#1A1A1A] text-xs">Mais detalhes</span>
+            <div class="flex items-center gap-2 text-xs text-[#6B7677]">
               <span>Links, notas, RGPD, origem do contacto</span>
               <svg id="jour-details-chevron" class="w-4 h-4 text-[#6B7677] transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -3416,69 +3416,69 @@
             </div>
           </button>
           
-          <div id="jour-details-content" class="hidden p-4 space-y-3.5 bg-white border-t border-[#E4DDD3]">
+          <div id="jour-details-content" class="hidden p-5 space-y-4 bg-white border-t border-[#EAE5DF]">
             <!-- Redes e Autor -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
               <div>
-                <label for="new-jour-linkedin" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">LinkedIn</label>
-                <input type="text" id="new-jour-linkedin" placeholder="linkedin.com/in/..." class="crm-input text-xs py-1.5">
+                <label for="new-jour-linkedin" class="block text-xs font-semibold text-[#1A1A1A] mb-1">LinkedIn</label>
+                <input type="text" id="new-jour-linkedin" placeholder="linkedin.com/in/..." class="w-full bg-white border border-[#E4DDD3] rounded-xl px-3 py-2 text-xs text-[#1A1A1A] focus:outline-none focus:border-[#1F6F78]">
               </div>
               <div>
-                <label for="new-jour-twitter" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">X</label>
-                <input type="text" id="new-jour-twitter" placeholder="x.com/..." class="crm-input text-xs py-1.5">
+                <label for="new-jour-twitter" class="block text-xs font-semibold text-[#1A1A1A] mb-1">X</label>
+                <input type="text" id="new-jour-twitter" placeholder="x.com/..." class="w-full bg-white border border-[#E4DDD3] rounded-xl px-3 py-2 text-xs text-[#1A1A1A] focus:outline-none focus:border-[#1F6F78]">
               </div>
               <div>
-                <label for="new-jour-author" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Página de autor</label>
-                <input type="text" id="new-jour-author" placeholder="https://..." class="crm-input text-xs py-1.5">
+                <label for="new-jour-author" class="block text-xs font-semibold text-[#1A1A1A] mb-1">Página de autor</label>
+                <input type="text" id="new-jour-author" placeholder="https://..." class="w-full bg-white border border-[#E4DDD3] rounded-xl px-3 py-2 text-xs text-[#1A1A1A] focus:outline-none focus:border-[#1F6F78]">
               </div>
             </div>
 
             <!-- Estado e Origem -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               <div>
-                <label for="new-jour-status" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Estado</label>
-                <select id="new-jour-status" class="crm-select text-xs py-1.5 bg-white">
+                <label for="new-jour-status" class="block text-xs font-semibold text-[#1A1A1A] mb-1">Estado</label>
+                <select id="new-jour-status" class="w-full bg-white border border-[#E4DDD3] rounded-xl px-3 py-2 text-xs text-[#1A1A1A] focus:outline-none focus:border-[#1F6F78]">
                   <option value="ativo" selected>Ativo</option>
                   <option value="mudou_de_meio">Mudou de meio</option>
                   <option value="reformado">Reformado</option>
                 </select>
               </div>
               <div>
-                <label for="new-jour-origin" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Origem do contacto</label>
-                <input type="text" id="new-jour-origin" placeholder="Ex.: evento, indicação, site do meio" class="crm-input text-xs py-1.5">
+                <label for="new-jour-origin" class="block text-xs font-semibold text-[#1A1A1A] mb-1">Origem do contacto</label>
+                <input type="text" id="new-jour-origin" placeholder="Ex.: evento, indicação, site do meio" class="w-full bg-white border border-[#E4DDD3] rounded-xl px-3 py-2 text-xs text-[#1A1A1A] focus:outline-none focus:border-[#1F6F78]">
               </div>
             </div>
 
             <!-- RGPD -->
-            <div class="p-3 bg-[#FAF8F5] rounded-xl border border-[#E4DDD3] space-y-2.5">
+            <div class="p-3.5 bg-[#FAF8F5] rounded-xl border border-[#E4DDD3] space-y-2.5">
               <label class="flex items-center gap-2 cursor-pointer select-none">
                 <input type="checkbox" id="new-jour-rgpd" checked class="rounded border-[#D1C7BA] text-[#1F6F78] focus:ring-[#1F6F78]">
-                <span class="text-xs font-medium text-[#1A1A1A]">Consentimento RGPD</span>
+                <span class="text-xs font-semibold text-[#1A1A1A]">Consentimento RGPD</span>
                 <span class="text-xs text-[#6B7677]">— Tenho consentimento para guardar estes dados</span>
               </label>
               <div>
-                <label for="new-jour-rgpd-date" class="block text-[11px] text-[#6B7677] mb-1">Data do consentimento</label>
-                <input type="date" id="new-jour-rgpd-date" class="crm-input text-xs py-1.5 max-w-[180px]">
+                <label for="new-jour-rgpd-date" class="block text-xs text-[#6B7677] mb-1">Data do consentimento</label>
+                <input type="date" id="new-jour-rgpd-date" class="bg-white border border-[#E4DDD3] rounded-xl px-3 py-1.5 text-xs text-[#1A1A1A] max-w-[180px]">
               </div>
             </div>
 
             <!-- Notas -->
             <div>
-              <label for="new-jour-notes" class="block text-[11px] font-medium text-[#1A1A1A] mb-1">Notas</label>
-              <textarea id="new-jour-notes" rows="3" placeholder="Temas que cobre, melhor hora para contactar, o que correu bem ou mal..." class="crm-input text-xs resize-none"></textarea>
+              <label for="new-jour-notes" class="block text-xs font-semibold text-[#1A1A1A] mb-1">Notas</label>
+              <textarea id="new-jour-notes" rows="3" placeholder="Temas que cobre, melhor hora para contactar, o que correu bem ou mal..." class="w-full bg-white border border-[#E4DDD3] rounded-xl p-3 text-xs text-[#1A1A1A] focus:outline-none focus:border-[#1F6F78] resize-none"></textarea>
             </div>
           </div>
         </div>
       </form>
 
       <!-- Rodapé Fixo -->
-      <div class="px-6 py-4 border-t border-[#E4DDD3] bg-[#FBF9F6]/90 backdrop-blur-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
+      <div class="px-7 py-4 border-t border-[#EAE5DF] bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
         <span class="text-xs text-[#6B7677] leading-tight">
           O último contacto atualiza-se sozinho quando concluíres uma tarefa de contacto.
         </span>
         <div class="flex items-center justify-end gap-2.5 shrink-0">
-          <button type="button" onclick="closeJournalistModal()" class="btn-secondary py-2 px-4 text-xs font-medium cursor-pointer min-h-[44px]">Cancelar</button>
-          <button type="button" onclick="document.getElementById('form-new-journalist').requestSubmit()" id="new-jour-submit-btn" disabled class="btn-primary py-2 px-4 text-xs font-medium opacity-50 cursor-not-allowed min-h-[44px]">Criar jornalista</button>
+          <button type="button" onclick="closeJournalistModal()" class="btn-secondary py-2 px-4 text-xs font-semibold cursor-pointer min-h-[44px]">Cancelar</button>
+          <button type="button" onclick="document.getElementById('form-new-journalist').requestSubmit()" id="new-jour-submit-btn" disabled class="btn-primary py-2 px-4 text-xs font-semibold opacity-50 cursor-not-allowed min-h-[44px]">Criar jornalista</button>
         </div>
       </div>
     </div>
@@ -3490,60 +3490,60 @@
   <!-- ======================================================== -->
     <!-- MODAL: NOVO MEIO (REDESENHADO - HIERARQUIA LINEAR) -->
   <div id="modal-new-outlet"
-    class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-[#1F2A2B]/40 backdrop-blur-md">
+    class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
     <div
-      class="glass-dense w-full max-w-[720px] rounded-[24px] border border-white/80 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150 flex flex-col max-h-[90vh]">
+      class="bg-white w-full max-w-[720px] rounded-[24px] border border-[#E4DDD3] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150 flex flex-col max-h-[90vh]">
       
       <!-- Cabeçalho -->
-      <div class="px-6 py-5 border-b border-[#E4DDD3] flex items-center justify-between bg-[#FBF9F6]/90 backdrop-blur-sm shrink-0">
+      <div class="px-7 py-5 border-b border-[#EAE5DF] flex items-start justify-between bg-white shrink-0">
         <div>
-          <div class="flex items-center gap-2.5">
-            <h3 class="text-base font-semibold text-[#1A1A1A] font-title">Novo meio</h3>
-            <span id="new-outlet-required-badge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#F2EFE9] text-[#6B7677] border border-[#E8E2D8] transition-colors" aria-live="polite">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#8A8A8A]" id="new-outlet-required-dot"></span>
-              <span id="new-outlet-required-text">0 de 4 obrigatórios</span>
-            </span>
-          </div>
-          <p class="text-xs text-[#6B7677] mt-0.5">Só precisas de 4 campos para começar. O resto podes preencher depois.</p>
+          <h3 class="text-xl font-bold text-[#1A1A1A] font-title">Novo meio</h3>
+          <p class="text-xs text-[#6B7677] mt-1">Só precisas de 4 campos para começar. O resto podes preencher depois.</p>
         </div>
-        <button onclick="closeOutletModal()" type="button" class="text-[#6B7677] hover:text-[#1A1A1A] p-2 rounded-lg hover:bg-[#F2EFE9] transition-colors cursor-pointer" title="Fechar" aria-label="Fechar">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
+        <div class="flex items-center gap-2.5 shrink-0">
+          <span id="new-outlet-required-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#F2EFE9] text-[#6B7677] border border-[#E8E2D8] transition-colors" aria-live="polite">
+            <span id="new-outlet-required-icon" class="hidden text-xs font-bold text-[#1E7E34]">✓</span>
+            <span id="new-outlet-required-text">0 de 4 obrigatórios</span>
+          </span>
+          <button onclick="closeOutletModal()" type="button" class="w-8 h-8 rounded-full border border-[#E4DDD3] flex items-center justify-center text-[#6B7677] hover:text-[#1A1A1A] hover:bg-[#FAF8F5] transition-colors cursor-pointer" title="Fechar" aria-label="Fechar">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
       </div>
 
       <!-- Formulário com scroll -->
-      <form id="form-new-outlet" onsubmit="handleNewOutletSubmit(event)" class="px-6 py-5 space-y-5 text-xs overflow-y-auto flex-1">
+      <form id="form-new-outlet" onsubmit="handleNewOutletSubmit(event)" class="px-7 py-5 space-y-5 text-xs overflow-y-auto flex-1 bg-white">
         
         <!-- SECÇÃO: ESSENCIAL -->
         <div>
-          <div class="flex items-center gap-3 mb-3">
-            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677]">ESSENCIAL</span>
-            <div class="flex-1 h-px bg-[#E4DDD3]"></div>
+          <div class="flex items-center gap-3 mb-3.5">
+            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677] shrink-0">ESSENCIAL</span>
+            <div class="flex-1 h-px bg-[#EAE5DF]"></div>
           </div>
-          <div class="space-y-3.5">
+          <div class="space-y-4">
             <!-- 1. Nome do meio * -->
             <div>
-              <label for="new-outlet-name" class="block font-medium text-[#1A1A1A] mb-1">Nome do meio <span class="text-[#C53030]">*</span></label>
-              <input type="text" id="new-outlet-name" required placeholder="Ex.: Jornal de Notícias, Observador"
-                class="crm-input py-2 text-xs" oninput="validateNewOutletForm()">
+              <label for="new-outlet-name" class="block font-semibold text-[#1A1A1A] text-xs mb-1.5">Nome do meio <span class="text-[#C53030]">*</span></label>
+              <input type="text" id="new-outlet-name" required placeholder="Jornal de Negócios"
+                class="w-full bg-white border border-[#E4DDD3] rounded-xl px-3.5 py-2.5 text-xs text-[#1A1A1A] placeholder-[#8A8A8A] focus:outline-none focus:border-[#1F6F78] transition-colors" oninput="validateNewOutletForm()">
             </div>
 
-            <!-- 2. Formatos * -->
+            <!-- 2. Formatos * · um ou vários -->
             <div>
-              <label class="block font-medium text-[#1A1A1A] mb-1">Formatos <span class="text-[#C53030]">*</span> <span class="text-[#8A8A8A] font-normal">(um ou vários)</span></label>
-              <div id="new-outlet-formats-chips" class="flex flex-wrap gap-1.5 pt-1">
+              <label class="block font-semibold text-[#1A1A1A] text-xs mb-1.5">Formatos <span class="text-[#C53030]">*</span> <span class="text-[#6B7677] font-normal">· um ou vários</span></label>
+              <div id="new-outlet-formats-chips" class="flex flex-wrap gap-2 pt-0.5">
                 <!-- Gerado dinamicamente -->
               </div>
             </div>
 
             <!-- 3. Âmbito * e 4. Email de agenda * -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block font-medium text-[#1A1A1A] mb-1.5">Âmbito <span class="text-[#C53030]">*</span></label>
-                <div class="flex items-center p-1 bg-[#F2EFE9] border border-[#E4DDD3] rounded-xl text-xs h-[40px]" id="new-outlet-scope-segmented">
-                  <button type="button" onclick="setOutletScope('nacional')" class="flex-1 py-1.5 rounded-lg font-medium text-center transition-all bg-white text-[#1A1A1A] shadow-xs cursor-pointer" data-scope="nacional">Nacional</button>
+                <label class="block font-semibold text-[#1A1A1A] text-xs mb-1.5">Âmbito <span class="text-[#C53030]">*</span></label>
+                <div class="flex items-center p-1 bg-[#F2EFE9] border border-[#E4DDD3] rounded-xl text-xs h-[42px]" id="new-outlet-scope-segmented">
+                  <button type="button" onclick="setOutletScope('nacional')" class="flex-1 py-1.5 rounded-lg font-semibold text-center transition-all bg-white text-[#1A1A1A] shadow-xs cursor-pointer" data-scope="nacional">Nacional</button>
                   <button type="button" onclick="setOutletScope('regional')" class="flex-1 py-1.5 rounded-lg font-medium text-center transition-all text-[#6B7677] hover:text-[#1A1A1A] cursor-pointer" data-scope="regional">Regional</button>
                   <button type="button" onclick="setOutletScope('local')" class="flex-1 py-1.5 rounded-lg font-medium text-center transition-all text-[#6B7677] hover:text-[#1A1A1A] cursor-pointer" data-scope="local">Local</button>
                 </div>
@@ -3551,13 +3551,13 @@
               </div>
 
               <div>
-                <label for="new-outlet-agenda-email" class="block font-medium text-[#1A1A1A] mb-1">Email de agenda <span class="text-[#C53030]">*</span></label>
+                <label for="new-outlet-agenda-email" class="block font-semibold text-[#1A1A1A] text-xs mb-1.5">Email de agenda <span class="text-[#C53030]">*</span></label>
                 <div class="relative">
-                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#8A8A8A]">
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#6B7677]">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                   </span>
-                  <input type="email" id="new-outlet-agenda-email" required placeholder="agenda@redacao.pt"
-                    class="crm-input pl-9 py-2 text-xs" oninput="validateNewOutletForm()">
+                  <input type="email" id="new-outlet-agenda-email" required placeholder="agenda@jornaldenegocios.pt"
+                    class="w-full bg-white border border-[#E4DDD3] rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-[#1A1A1A] placeholder-[#8A8A8A] focus:outline-none focus:border-[#1F6F78] transition-colors" oninput="validateNewOutletForm()">
                 </div>
               </div>
             </div>
@@ -3566,62 +3566,70 @@
 
         <!-- SECÇÃO: ORGANIZAÇÃO -->
         <div>
-          <div class="flex items-center gap-3 mb-3 pt-1">
-            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677]">ORGANIZAÇÃO</span>
-            <div class="flex-1 h-px bg-[#E4DDD3]"></div>
+          <div class="flex items-center gap-3 mb-3.5 pt-2">
+            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677] shrink-0">ORGANIZAÇÃO</span>
+            <div class="flex-1 h-px bg-[#EAE5DF]"></div>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="new-outlet-group" class="block font-medium text-[#1A1A1A]">Grupo editorial</label>
-                <button type="button" onclick="promptCreateOutletGroup()" class="text-[11px] text-[#1F6F78] font-medium hover:underline cursor-pointer">
-                  + Criar grupo
-                </button>
+              <label for="new-outlet-group" class="block font-semibold text-[#1A1A1A] text-xs mb-1.5">Grupo</label>
+              <div class="relative">
+                <select id="new-outlet-group" class="w-full bg-white border border-[#E4DDD3] rounded-xl px-3.5 py-2.5 text-xs text-[#1A1A1A] focus:outline-none focus:border-[#1F6F78] transition-colors cursor-pointer appearance-none pr-8">
+                  <option value="">Sem grupo</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[#8A8A8A]">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
               </div>
-              <select id="new-outlet-group" class="crm-select text-xs py-2 bg-white">
-                <option value="">Sem grupo</option>
-              </select>
+              <button type="button" onclick="promptCreateOutletGroup()" class="text-xs text-[#1F6F78] font-semibold hover:underline cursor-pointer mt-1.5 inline-block">
+                + Criar grupo
+              </button>
             </div>
 
             <div>
-              <label for="new-outlet-periodicity" class="block font-medium text-[#1A1A1A] mb-1">Periodicidade</label>
-              <select id="new-outlet-periodicity" class="crm-select text-xs py-2 bg-white">
-                <option value="diario" selected>Diário</option>
-                <option value="semanal">Semanal</option>
-                <option value="mensal">Mensal</option>
-                <option value="continua">Contínua</option>
-                <option value="outra">Outra</option>
-              </select>
+              <label for="new-outlet-periodicity" class="block font-semibold text-[#1A1A1A] text-xs mb-1.5">Periodicidade</label>
+              <div class="relative">
+                <select id="new-outlet-periodicity" class="w-full bg-white border border-[#E4DDD3] rounded-xl px-3.5 py-2.5 text-xs text-[#1A1A1A] focus:outline-none focus:border-[#1F6F78] transition-colors cursor-pointer appearance-none pr-8">
+                  <option value="diario" selected>Diário</option>
+                  <option value="semanal">Semanal</option>
+                  <option value="mensal">Mensal</option>
+                  <option value="continua">Contínua</option>
+                  <option value="outra">Outra</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[#8A8A8A]">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- SECÇÃO: ESPECIALIDADES -->
         <div>
-          <div class="flex items-center gap-3 mb-2.5 pt-1">
-            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677]">ESPECIALIDADES</span>
-            <span class="text-[11px] text-[#8A8A8A] font-normal">(mesma lista das áreas dos jornalistas)</span>
-            <div class="flex-1 h-px bg-[#E4DDD3]"></div>
+          <div class="flex items-center gap-3 mb-1.5 pt-2">
+            <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6B7677] shrink-0">ESPECIALIDADES</span>
+            <div class="flex-1 h-px bg-[#EAE5DF]"></div>
           </div>
-          <div id="new-outlet-specialties-chips" class="flex flex-wrap gap-1.5 pt-1">
+          <p class="text-xs text-[#6B7677] mb-2.5">Mesma lista das áreas dos jornalistas.</p>
+          <div id="new-outlet-specialties-chips" class="flex flex-wrap gap-2 pt-0.5">
             <!-- Gerado dinamicamente -->
           </div>
         </div>
 
         <!-- SECÇÃO: MAIS DETALHES (RECOLHÍVEL) -->
-        <div class="border border-[#E4DDD3] rounded-xl overflow-hidden bg-[#FAF8F5]/60 transition-all">
+        <div class="border border-[#E4DDD3] rounded-2xl overflow-hidden bg-white transition-all shadow-2xs">
           <button type="button" onclick="toggleOutletDetailsSection()"
-            class="w-full flex items-center justify-between p-3.5 text-xs text-[#1A1A1A] hover:bg-[#F2EFE9] transition-colors cursor-pointer select-none">
-            <span class="font-semibold text-[#1A1A1A]">Mais detalhes</span>
-            <div class="flex items-center gap-2 text-[11px] text-[#6B7677]">
-              <span>Morada, registo ERC, site, redes, logótipo</span>
+            class="w-full flex items-center justify-between p-4 text-xs text-[#1A1A1A] hover:bg-[#FAF8F5] transition-colors cursor-pointer select-none">
+            <span class="font-bold text-[#1A1A1A] text-xs">Mais detalhes</span>
+            <div class="flex items-center gap-2 text-xs text-[#6B7677]">
+              <span>Morada, registo ERC, site, logótipo</span>
               <svg id="outlet-details-chevron" class="w-4 h-4 text-[#6B7677] transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
               </svg>
             </div>
           </button>
           
-          <div id="outlet-details-content" class="hidden p-4 space-y-3.5 bg-white border-t border-[#E4DDD3]">
+          <div id="outlet-details-content" class="hidden p-5 space-y-4 bg-white border-t border-[#EAE5DF]">
             <!-- Site e Logo -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
@@ -8668,17 +8676,17 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       container.innerHTML = sharedAreasList.map(area => {
         const isSel = selectedNewJourAreas.includes(area);
         const cls = isSel 
-          ? 'bg-[#1F6F78]/10 border-[#1F6F78] text-[#1F6F78] font-medium shadow-xs'
-          : 'bg-white border-[#E4DDD3] text-[#1A1A1A] hover:bg-[#FAF8F5]';
+          ? 'bg-[#D5EAEC] border-[#1F6F78] text-[#1F6F78] font-semibold'
+          : 'bg-white border-[#E4DDD3] text-[#1A1A1A] hover:bg-[#FAF8F5] font-normal';
         return `
           <button type="button" onclick="toggleJourAreaChip('${area.replace(/'/g, "\\'")}')"
-            class="px-3 py-1 rounded-full border text-xs transition-all cursor-pointer ${cls}">
-            ${escapeHtml(area)}
+            class="px-3.5 py-1.5 rounded-full border text-xs transition-all cursor-pointer ${cls}">
+            ${isSel ? '<span class="mr-1 font-bold">✓</span>' : ''}${escapeHtml(area)}
           </button>
         `;
       }).join('') + `
         <button type="button" onclick="promptAddNewSharedArea('jour')"
-          class="px-3 py-1 rounded-full border border-dashed border-[#D1C7BA] text-[#6B7677] hover:border-[#1F6F78] hover:text-[#1F6F78] text-xs transition-all cursor-pointer">
+          class="px-3.5 py-1.5 rounded-full border border-dashed border-[#D1C7BA] text-[#6B7677] hover:border-[#1F6F78] hover:text-[#1F6F78] text-xs transition-all cursor-pointer">
           + Nova
         </button>
       `;
@@ -8706,15 +8714,15 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
 
       const badge = document.getElementById('new-jour-required-badge');
       const badgeText = document.getElementById('new-jour-required-text');
-      const badgeDot = document.getElementById('new-jour-required-dot');
-      if (badge && badgeText && badgeDot) {
+      const badgeIcon = document.getElementById('new-jour-required-icon');
+      if (badge && badgeText) {
         badgeText.textContent = `${count} de 3 obrigatórios`;
         if (count === 3) {
-          badge.className = "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#E8F5E9] text-[#2E7D32] border border-[#C8E6C9] transition-colors";
-          badgeDot.className = "w-1.5 h-1.5 rounded-full bg-[#2E7D32]";
+          badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-[#E6F4EA] text-[#1E7E34] border border-[#C3E6CB] transition-colors";
+          if (badgeIcon) badgeIcon.classList.remove('hidden');
         } else {
-          badge.className = "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#F2EFE9] text-[#6B7677] border border-[#E8E2D8] transition-colors";
-          badgeDot.className = "w-1.5 h-1.5 rounded-full bg-[#8A8A8A]";
+          badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-[#F2EFE9] text-[#6B7677] border border-[#E8E2D8] transition-colors";
+          if (badgeIcon) badgeIcon.classList.add('hidden');
         }
       }
 
@@ -8885,12 +8893,12 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       container.innerHTML = formats.map(fmt => {
         const isSel = selectedNewOutletFormats.includes(fmt);
         const cls = isSel 
-          ? 'bg-[#1F6F78]/10 border-[#1F6F78] text-[#1F6F78] font-medium shadow-xs'
-          : 'bg-white border-[#E4DDD3] text-[#1A1A1A] hover:bg-[#FAF8F5]';
+          ? 'bg-[#D5EAEC] border-[#1F6F78] text-[#1F6F78] font-semibold'
+          : 'bg-white border-[#E4DDD3] text-[#1A1A1A] hover:bg-[#FAF8F5] font-normal';
         return `
           <button type="button" onclick="toggleOutletFormatChip(this, '${fmt}')"
-            class="px-3 py-1.5 rounded-full border text-xs transition-all cursor-pointer ${cls}" data-fmt="${fmt}">
-            ${escapeHtml(fmt)}
+            class="px-3.5 py-1.5 rounded-full border text-xs transition-all cursor-pointer ${cls}" data-fmt="${fmt}">
+            ${isSel ? '<span class="mr-1 font-bold">✓</span>' : ''}${escapeHtml(fmt)}
           </button>
         `;
       }).join('');
@@ -8913,17 +8921,17 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
       container.innerHTML = sharedAreasList.map(spec => {
         const isSel = selectedNewOutletSpecialties.includes(spec);
         const cls = isSel 
-          ? 'bg-[#1F6F78]/10 border-[#1F6F78] text-[#1F6F78] font-medium shadow-xs'
-          : 'bg-white border-[#E4DDD3] text-[#1A1A1A] hover:bg-[#FAF8F5]';
+          ? 'bg-[#D5EAEC] border-[#1F6F78] text-[#1F6F78] font-semibold'
+          : 'bg-white border-[#E4DDD3] text-[#1A1A1A] hover:bg-[#FAF8F5] font-normal';
         return `
           <button type="button" onclick="toggleOutletSpecChip('${spec.replace(/'/g, "\\'")}')"
-            class="px-3 py-1 rounded-full border text-xs transition-all cursor-pointer ${cls}">
-            ${escapeHtml(spec)}
+            class="px-3.5 py-1.5 rounded-full border text-xs transition-all cursor-pointer ${cls}">
+            ${isSel ? '<span class="mr-1 font-bold">✓</span>' : ''}${escapeHtml(spec)}
           </button>
         `;
       }).join('') + `
         <button type="button" onclick="promptAddNewSharedArea('outlet')"
-          class="px-3 py-1 rounded-full border border-dashed border-[#D1C7BA] text-[#6B7677] hover:border-[#1F6F78] hover:text-[#1F6F78] text-xs transition-all cursor-pointer">
+          class="px-3.5 py-1.5 rounded-full border border-dashed border-[#D1C7BA] text-[#6B7677] hover:border-[#1F6F78] hover:text-[#1F6F78] text-xs transition-all cursor-pointer">
           + Nova
         </button>
       `;
@@ -8987,15 +8995,15 @@ const DEFAULT_SAMPLE_JOURNALISTS = [
 
       const badge = document.getElementById('new-outlet-required-badge');
       const badgeText = document.getElementById('new-outlet-required-text');
-      const badgeDot = document.getElementById('new-outlet-required-dot');
-      if (badge && badgeText && badgeDot) {
+      const badgeIcon = document.getElementById('new-outlet-required-icon');
+      if (badge && badgeText) {
         badgeText.textContent = `${count} de 4 obrigatórios`;
         if (count === 4) {
-          badge.className = "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#E8F5E9] text-[#2E7D32] border border-[#C8E6C9] transition-colors";
-          badgeDot.className = "w-1.5 h-1.5 rounded-full bg-[#2E7D32]";
+          badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-[#E6F4EA] text-[#1E7E34] border border-[#C3E6CB] transition-colors";
+          if (badgeIcon) badgeIcon.classList.remove('hidden');
         } else {
-          badge.className = "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#F2EFE9] text-[#6B7677] border border-[#E8E2D8] transition-colors";
-          badgeDot.className = "w-1.5 h-1.5 rounded-full bg-[#8A8A8A]";
+          badge.className = "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-[#F2EFE9] text-[#6B7677] border border-[#E8E2D8] transition-colors";
+          if (badgeIcon) badgeIcon.classList.add('hidden');
         }
       }
 
